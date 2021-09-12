@@ -15,19 +15,20 @@ import { faStackOverflow, faGithub, faMedium, faGit } from '@fortawesome/free-br
   exports: [
     SidenavComponent,
     MaterialModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FontAwesomeModule
   ],
   imports: [
     CommonModule,
     MaterialModule,
     AppRoutingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    
   ]
 })
 export class SharedModule {
   
   constructor(private library: FaIconLibrary) {
-
     library.addIcons(faCoffee,faGit,faGithub,faStackOverflow,faMedium, faBook, faProjectDiagram)
   }
 }

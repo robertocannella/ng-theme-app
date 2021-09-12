@@ -1,7 +1,6 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
-import { faCoffee, faBook, faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
-import { faStackOverflow, faGithub, faMedium, faGit } from '@fortawesome/free-brands-svg-icons';
+
 
 
 @Component({
@@ -13,13 +12,7 @@ export class SidenavComponent implements OnInit {
 
   themeColor: 'primary' | 'accent' | 'warn' = 'primary';
   isDark = true;
-  faCoffee = faCoffee;
-  faGitHub = faGithub;
-  faMedium = faMedium;
-  faGit = faGit;
-  faStackOverflow = faStackOverflow;
-  faBook = faBook;
-  faProjectDiagram = faProjectDiagram;
+
 
   constructor(private overlayContainer: OverlayContainer) { }
 
