@@ -1,0 +1,52 @@
+// scr/theme.scss
+@use '~@angular/material' as mat;
+// Importing 'Work Sans' font for headings
+@include mat.core();
+@import url("https://fonts.google.com/css2?family=Work+Sans:wght@300;400;500&display=swap");
+
+$theming-material-components-primary: mat.deifine-palette(mat.$indigo-palette);
+$theming-material-components-accent: mat.define-palette(
+  mat.$pink-palette,
+  A200,
+  A100,
+  A400
+);
+$theming-material-components-warn: mat.define-palette(mat.$red-palette);
+
+$theming-material-components-theme: mat.define-light-theme(
+  $theming-material-components-primary,
+  $theming-material-components-accent,
+  $theming-material-components-warn
+);
+
+// alternate dark theme
+@include mat.core-theme($theming-material-components-theme);
+@include mat.core-button($theming-material-components-theme);
+
+// $dark-primary: mat-palette($mat-blue-grey);
+// $dark-accent: mat-palette($mat-amber, A200, A100, A400);
+// $dark-warn: mat-palette($mat-deep-orange);
+
+// $dark-theme: mat-dark-theme(
+//   (
+//     color: (
+//       primary: $dark-primary,
+//       accent: $dark-accent,
+//       warn: $dark-warn,
+//     ),
+//   )
+// );
+
+//define a custome heading typography config
+// Angular typography only works if content is wrapped within mat-typography CSS class
+// chekc index.html file mat-typography class is added to body tag
+//  ususally automatically done when running ng add @angular/material from CLI
+$heading-font-family: "'Work Sans', sans-serif";
+$typography: mat-typography-config(
+  $display-4: mat-typography-level(112px, $font-family: $heading-font-family),
+  $display-3: mat-typography-level(56px, $font-family: $heading-font-family),
+  $display-2: mat-typography-level(45px, $font-family: $heading-font-family),
+  $display-1: mat-typography-level(34px, $font-family: $heading-font-family),
+  $headline: mat-typography-level(24px, $font-family: $heading-font-family),
+  $title: mat-typography-level(20px, $font-family: $heading-font-family),
+);
