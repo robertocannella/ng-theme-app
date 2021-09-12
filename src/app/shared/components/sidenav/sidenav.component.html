@@ -50,15 +50,14 @@
 
         <mat-sidenav #sidenav mode="side" opened>
             <mat-nav-list>
-                <h1>Sidenav</h1>
-                <a mat-list-item href="#">Link 1</a>
-                <a mat-list-item href="#">Link 2</a>
-                <a mat-list-item href="#">Link 3</a>
+                <!-- <h1>Sidenav</h1> -->
+                <a mat-list-item routerLink="/journal" routerLinkActive="active current">Journal</a>
+                <a mat-list-item href="#">Projects</a>
+                <a mat-list-item href="#"></a>
             </mat-nav-list>
         </mat-sidenav>
 
         <mat-sidenav-content>
-
             <!-- ? our main content will be loaded here. -->
 
             <ng-content></ng-content>

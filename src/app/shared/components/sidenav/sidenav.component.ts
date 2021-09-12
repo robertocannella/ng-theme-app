@@ -25,6 +25,5 @@ export class SidenavComponent implements OnInit {
       this.overlayContainer.getContainerElement().classList.remove('light-theme');
     }
       
-
   }
 }

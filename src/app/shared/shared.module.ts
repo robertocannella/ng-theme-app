@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material/material.module';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { AppRoutingModule } from '../app-routing.module';
 
 
 
@@ -11,11 +12,13 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
   ],
   exports: [
     SidenavComponent,
-    MaterialModule
+    MaterialModule,
+    AppRoutingModule
   ],
   imports: [
     CommonModule,
-    MaterialModule
+    MaterialModule,
+    AppRoutingModule
   ]
 })
 export class SharedModule { }
