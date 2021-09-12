@@ -12,7 +12,8 @@ export class SidenavComponent implements OnInit {
 
   themeColor: 'primary' | 'accent' | 'warn' = 'primary';
   isDark = true;
-
+  isOpen = true;
+  brand = "Roberto Cannella";
 
   constructor(private overlayContainer: OverlayContainer) { }
 
@@ -27,5 +28,13 @@ export class SidenavComponent implements OnInit {
       this.overlayContainer.getContainerElement().classList.remove('light-theme');
     }
       
+  }
+  toggleSideNav() {
+    this.isOpen = !this.isOpen;
+    if (this.isOpen) {
+      this.brand = 'Roberto Cannlla';
+    } else {
+      this.brand = '/r.c';
+    }
   }
 }

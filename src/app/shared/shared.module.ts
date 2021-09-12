@@ -4,7 +4,7 @@ import { MaterialModule } from '../material/material.module';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCoffee, faBook, faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
+import { faCoffee, faBook, faProjectDiagram, faLessThan, faGreaterThan } from '@fortawesome/free-solid-svg-icons';
 import { faStackOverflow, faGithub, faMedium, faGit } from '@fortawesome/free-brands-svg-icons';
 import { TextPostComponent } from './components/text-post/text-post.component';
 import { MatInputModule } from '@angular/material/input';
@@ -46,6 +46,10 @@ import { CodeBlockComponent } from './components/code-block/code-block.component
 export class SharedModule {
   
   constructor(private library: FaIconLibrary) {
-    library.addIcons(faCoffee,faGit,faGithub,faStackOverflow,faMedium, faBook, faProjectDiagram)
+    library.addIcons(
+      faCoffee, faGit, faGithub,
+      faStackOverflow, faMedium,
+      faBook, faProjectDiagram,
+      faLessThan, faGreaterThan)
   }
 }

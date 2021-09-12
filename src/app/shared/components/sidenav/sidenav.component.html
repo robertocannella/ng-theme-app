@@ -3,7 +3,11 @@
 <div [class.dark-theme]="isDark">
     <!-- ? we're wrapping whole content in a div, to handle dark/light theme -->
     <mat-toolbar [color]="themeColor">
-        <span>Roberto Cannella</span>
+                <fa-icon [icon]="['far', 'less-than']"></fa-icon>
+
+        <fa-icon icon="less-than"></fa-icon>&nbsp;
+        <span (click)="toggleSideNav()" class="brand">{{ brand }}</span>&nbsp;
+        <fa-icon icon="greater-than"></fa-icon>
         <span class="example-spacer"></span>
 
         <!-- ? below button will help us change the theme at run-time. -->
@@ -59,7 +63,7 @@
     </mat-toolbar>
     <mat-sidenav-container class="example-container">
 
-        <mat-sidenav #sidenav mode="side" opened>
+        <mat-sidenav #sidenav mode="side" [opened]="isOpen">
             <mat-nav-list>
                 <!-- <h1>Sidenav</h1> -->
                 <a mat-list-item routerLink="/journal" routerLinkActive="active current">
