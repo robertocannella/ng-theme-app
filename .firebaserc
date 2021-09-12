@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "robertocannella-f5b4b"
+  },
+  "targets": {
+    "robertocannella-f5b4b": {
+      "hosting": {
+        "ng-theme-app": [
+          "robertocannella-f5b4b"
+        ]
+      }
+    }
+  }
+}
