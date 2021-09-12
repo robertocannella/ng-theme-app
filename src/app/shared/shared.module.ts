@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material/material.module';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { AppRoutingModule } from '../app-routing.module';
-
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faCoffee, faBook, faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
+import { faStackOverflow, faGithub, faMedium, faGit } from '@fortawesome/free-brands-svg-icons';
 
 
 @NgModule({
@@ -18,7 +20,14 @@ import { AppRoutingModule } from '../app-routing.module';
   imports: [
     CommonModule,
     MaterialModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FontAwesomeModule
   ]
 })
-export class SharedModule { }
+export class SharedModule {
+  
+  constructor(private library: FaIconLibrary) {
+
+    library.addIcons(faCoffee,faGit,faGithub,faStackOverflow,faMedium, faBook, faProjectDiagram)
+  }
+}
