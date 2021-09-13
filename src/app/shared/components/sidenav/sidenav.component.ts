@@ -32,7 +32,7 @@ export class SidenavComponent implements OnInit {
   toggleSideNav() {
     this.isOpen = !this.isOpen;
     if (this.isOpen) {
-      this.brand = 'Roberto Cannlla';
+      this.brand = 'Roberto Cannella';
     } else {
       this.brand = '/r.c';
     }

@@ -3,11 +3,12 @@
 <div [class.dark-theme]="isDark">
     <!-- ? we're wrapping whole content in a div, to handle dark/light theme -->
     <mat-toolbar [color]="themeColor">
-                <fa-icon [icon]="['far', 'less-than']"></fa-icon>
 
-        <fa-icon icon="less-than"></fa-icon>&nbsp;
-        <span (click)="toggleSideNav()" class="brand">{{ brand }}</span>&nbsp;
-        <fa-icon icon="greater-than"></fa-icon>
+        <button mat-button (click)="toggleSideNav()" class="brand">
+            <fa-icon icon="less-than"></fa-icon>&nbsp;
+            {{ brand }}
+            &nbsp;<fa-icon icon="greater-than"></fa-icon>
+        </button>&nbsp;
         <span class="example-spacer"></span>
 
         <!-- ? below button will help us change the theme at run-time. -->
@@ -21,8 +22,8 @@
             <fa-icon icon="coffee"></fa-icon>
         </button>
         <!-- ? Link to GitHub. -->
-        <button mat-icon-button  matTooltip="My GitHub">
-            <a href="https://github.com/robertocannella">
+        <button mat-icon-button  matTooltip="My GitHub"><!-- Prevent Tab-Nabbing with nooppener/noreferrer-->
+            <a href="https://github.com/robertocannella" target="_blank" rel="noopener noreferrer" >
 
                 <fa-icon [icon]="['fab', 'github']"></fa-icon>
 
@@ -66,11 +67,11 @@
         <mat-sidenav #sidenav mode="side" [opened]="isOpen">
             <mat-nav-list>
                 <!-- <h1>Sidenav</h1> -->
-                <a mat-list-item routerLink="/journal" routerLinkActive="active current">
+                <a mat-list-item routerLink="/journal" (click)="toggleSideNav()" routerLinkActive="active current">
                     <fa-icon icon="book"></fa-icon>&nbsp;
                     Journal
                 </a>
-                <a mat-list-item routerLink="/projects" routerLinkActive="active current" >
+                <a mat-list-item routerLink="/projects" (click)="toggleSideNav()" routerLinkActive="active current" >
                     <fa-icon icon="project-diagram" ></fa-icon>&nbsp;
                     Projects
                 </a>
