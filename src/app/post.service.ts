@@ -28,11 +28,11 @@ export class PostService {
   get() {
     return this.afs.collection('posts').doc('coding').collection('angular').doc('G0bujgFhU0qmr3MAIcsU').valueChanges();
   }
-  update(productId: string, product: any){
-    return this.afs.collection('products').doc(productId).update(product);
+  update(post: any){
+    return this.afs.collection('posts').doc('coding').collection('angular').doc('G0bujgFhU0qmr3MAIcsU').update(post);
   }
   delete(productId: any) {
-    return this.afs.collection('products').doc(productId).delete();
+    return this.afs.collection('posts').doc(productId).delete();
   }
 }
 

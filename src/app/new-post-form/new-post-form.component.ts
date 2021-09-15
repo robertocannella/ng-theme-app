@@ -1,6 +1,6 @@
+import { PostService } from './../post.service';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
-
 @Component({
   selector: 'app-new-post-form',
   templateUrl: './new-post-form.component.html',
@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewPostFormComponent implements OnInit {
 
-  constructor(public overlayContainer: OverlayContainer) {
+  constructor(public overlayContainer: OverlayContainer, private postService: PostService) {
       console.log(this.overlayContainer.getContainerElement().classList)
   }
   
@@ -16,9 +16,8 @@ export class NewPostFormComponent implements OnInit {
   ngOnInit(): void {
   }
   
-  toggleTheme(overlayContainer: OverlayContainer) {
-    let classList = overlayContainer.getContainerElement().classList;
-    (classList.contains('dark-theme')) ? null : classList.toggle('dark-theme');
+  save(form: any) {
+    console.log(form);
+   this.postService.update(form);
   }
-
 }

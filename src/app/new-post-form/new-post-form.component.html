@@ -1,26 +1,42 @@
-<form class="form">
-    <h2>New Post</h2>
-    <mat-form-field class="full-width" appearance="standard">
+
+
+    <div>
+        <h2 class="inline-heading">New Post</h2>
+        <div class="post-buttons">
+            <button type="button" mat-mini-fab>
+                <mat-icon>thumb_up</mat-icon>
+            </button>
+        </div>
+    
+    </div>
+
+<form  #f="ngForm" (ngSubmit)="save(f.value)" class="form">
+    <mat-form-field class="full-width form-group" appearance="standard">
         <mat-label>Post Title</mat-label>
-        <input matInput  value="">
+        <input matInput name="title" ngModel class="form-control" value="">
     </mat-form-field>
 
     <table class="full-width" cellspacing="0">
         <tr>
             <td>
                 <!-- Generage this section with ngFor Directive -->
-                <mat-form-field appearance="standard" class="full-width">
+                <mat-form-field appearance="standard" class="full-width"  class="form-control">
                     <mat-label>Category</mat-label>
-                    <mat-select>
+                    <mat-select name="category" ngModel class="form-control">
                         <mat-option value="coding">Coding</mat-option>
                         <mat-option value="recipies">Recipies</mat-option>
                     </mat-select>
                 </mat-form-field>
             </td>
             <td>
-                <mat-form-field class="full-width" appearance="standard">
-                    <mat-label>Like</mat-label>
-                    <input matInput>
+                <!-- Generage this section with ngFor Directive -->
+                <mat-form-field appearance="standard" class="full-width">
+                    <mat-label>Sub-Category</mat-label>
+                    <mat-select name="subCategory" ngModel class="form-control">
+                        <mat-option value="angular">Angular</mat-option>
+                        <mat-option value="react">React</mat-option>
+                        <mat-option value="vue">Vue</mat-option>
+                    </mat-select>
                 </mat-form-field>
             </td>
         </tr>
@@ -30,6 +46,8 @@
         <mat-form-field class="full-width" appearance="standard">
             <mat-label>Post</mat-label>
             <textarea matInput
+                    ngModel 
+                    name="post"
                     cdkTextareaAutosize
                     cdkAutosizeMinRows="5"
                     cdkAutosizeMaxRows="50">
@@ -38,28 +56,5 @@
             <mat-hint>autosize area</mat-hint>
         </mat-form-field>
     </p>
-
-    <table class="example-full-width" cellspacing="0">
-        <tr>
-            <td>
-                <mat-form-field class="example-full-width" appearance="standard">
-                    <mat-label>City</mat-label>
-                    <input matInput placeholder="Ex. San Francisco">
-                </mat-form-field>
-            </td>
-            <td>
-                <mat-form-field class="example-full-width" appearance="standard">
-                    <mat-label>State</mat-label>
-                    <input matInput placeholder="Ex. California">
-                </mat-form-field>
-            </td>
-            <td>
-                <mat-form-field class="example-full-width" appearance="standard">
-                    <mat-label>Postal Code</mat-label>
-                    <input matInput #postalCode maxlength="5" placeholder="Ex. 94105" value="94043">
-                    <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
-                </mat-form-field>
-            </td>
-        </tr>
-    </table>
+    <button mat-raised-button type="submit">save</button>
 </form>

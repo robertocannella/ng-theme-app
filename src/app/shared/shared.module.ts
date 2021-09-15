@@ -15,7 +15,8 @@ import { CodeBlockComponent } from './components/code-block/code-block.component
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatSelectModule } from '@angular/material/select'
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { MatSelectModule } from '@angular/material/select'
     DragDropModule,
     OverlayModule,
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    FormsModule
   ],
   imports: [
     CommonModule,

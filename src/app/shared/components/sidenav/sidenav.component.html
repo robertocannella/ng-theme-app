@@ -12,7 +12,7 @@
         <!-- ? below button will help us change the theme at run-time. -->
         <button mat-icon-button (click)="toggleTheme()" matTooltip="Toggle dark theme">
             <mat-icon>
-                brightness_6
+                {{ isDark ? 'light_mode' : 'dark_mode' }}
             </mat-icon>
         </button>
         <!-- ? Link to CoffeeBreak. -->

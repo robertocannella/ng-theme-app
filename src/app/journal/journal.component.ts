@@ -23,14 +23,9 @@ export class JournalComponent implements OnDestroy{
   }
   openDialog() {
     const dialogRef = this.dialog.open(NewPostFormComponent)
-    this.isOpen = !this.isOpen;
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-    
-    
+    this.isOpen = !this.isOpen;    
   }
-  
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe()
   }
