@@ -4,8 +4,8 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    
-    "public": "dist/ng-theme-app",
+    "target": "ng-theme-app",
+    "public": "dist/ng-theme-app/",
     "ignore": [
       "firebase.json",
       "**/.*",

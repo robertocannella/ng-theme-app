@@ -1,0 +1,65 @@
+<form class="form">
+    <h2>New Post</h2>
+    <mat-form-field class="full-width" appearance="standard">
+        <mat-label>Post Title</mat-label>
+        <input matInput  value="">
+    </mat-form-field>
+
+    <table class="full-width" cellspacing="0">
+        <tr>
+            <td>
+                <!-- Generage this section with ngFor Directive -->
+                <mat-form-field appearance="standard" class="full-width">
+                    <mat-label>Category</mat-label>
+                    <mat-select>
+                        <mat-option value="coding">Coding</mat-option>
+                        <mat-option value="recipies">Recipies</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="full-width" appearance="standard">
+                    <mat-label>Like</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </td>
+        </tr>
+    </table>
+
+    <p>
+        <mat-form-field class="full-width" appearance="standard">
+            <mat-label>Post</mat-label>
+            <textarea matInput
+                    cdkTextareaAutosize
+                    cdkAutosizeMinRows="5"
+                    cdkAutosizeMaxRows="50">
+            </textarea>
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            <mat-hint>autosize area</mat-hint>
+        </mat-form-field>
+    </p>
+
+    <table class="example-full-width" cellspacing="0">
+        <tr>
+            <td>
+                <mat-form-field class="example-full-width" appearance="standard">
+                    <mat-label>City</mat-label>
+                    <input matInput placeholder="Ex. San Francisco">
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="example-full-width" appearance="standard">
+                    <mat-label>State</mat-label>
+                    <input matInput placeholder="Ex. California">
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="example-full-width" appearance="standard">
+                    <mat-label>Postal Code</mat-label>
+                    <input matInput #postalCode maxlength="5" placeholder="Ex. 94105" value="94043">
+                    <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
+                </mat-form-field>
+            </td>
+        </tr>
+    </table>
+</form>

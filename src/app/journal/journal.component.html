@@ -1,6 +1,17 @@
 <div class="container">
-    <h1 class="mat-display-3">
-        <fa-icon icon="book"></fa-icon>&nbsp;Journal</h1>
+    <h2 class="mat-display-2">
+        <fa-icon icon="book"></fa-icon>&nbsp;Journal
+      
+        <!-- This button triggers the overlay and is it's origin -->
+        <button mat-icon-button (click)="openDialog()" matTooltip="New Entry" 
+        (click)="isOpen = !isOpen" type="button" 
+       >
+
+        <fa-icon [icon]="isOpen ? 'minus' : 'plus'"></fa-icon>
+
+        </button>
+    </h2>
+
     <!-- add journal topics menu-->
     <!-- add post components-->
     <div class="container">
@@ -8,4 +19,26 @@
         <app-image-post></app-image-post>
         <app-code-post></app-code-post>
     </div>
+
+    <!-- /****  This template displays the overlay content and is connected to the button  ****/ -->
+    
+    <!-- <div cdkOverlayOrigin #trigger="cdkOverlayOrigin"></div>
+    
+
+ <ng-template cdkConnectedOverlay  [cdkConnectedOverlayOrigin]="trigger" [cdkConnectedOverlayOpen]="isOpen">
+    <form (submit)="$event.preventDefault()">
+        <mat-form-field appearance="fill">
+            <mat-label>First name</mat-label>
+            <input matInput #first>
+            <mat-hint>Autofilled!</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Last name</mat-label>
+            <input matInput #last>
+            <mat-hint>Autofilled!</mat-hint>
+        </mat-form-field>
+        <button mat-raised-button>Submit</button>
+    </form>
+    </ng-template> -->
+-->
 </div>

@@ -1,9 +1,10 @@
 // Custom Theming for Angular Material
-
 // For more information: https://material.angular.io/guide/theming
 @use '~@angular/material' as mat;
 // Plus imports for other components in your app.
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500&display=swap");
+@import "~@angular/cdk/overlay-prebuilt.css";
+
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
@@ -55,9 +56,13 @@ $dark-theme: mat.define-dark-theme(
   @include mat.all-component-themes($dark-theme);
 }
 //@include mat.all-component-themes($dark-theme);
-
-@include mat.core-color($ng-theme-app-theme);
-@include mat.button-color($ng-theme-app-theme);
+.light-theme {
+  @include mat.core-theme($ng-theme-app-theme);
+  @include mat.button-theme($ng-theme-app-theme);
+  @include mat.all-component-themes($ng-theme-app-theme);
+}
+//@include mat.core-color($ng-theme-app-theme);
+//@include mat.button-color($ng-theme-app-theme);
 @include mat.all-component-themes($ng-theme-app-theme);
 
 $heading-font-family: "'Work Sans', sans-serif";

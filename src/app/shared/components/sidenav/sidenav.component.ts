@@ -2,7 +2,6 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
 
 
-
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
@@ -11,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class SidenavComponent implements OnInit {
 
   themeColor: 'primary' | 'accent' | 'warn' = 'primary';
-  isDark = true;
+  isDark = false;
   isOpen = true;
   brand = "Roberto Cannella";
 
@@ -19,22 +18,13 @@ export class SidenavComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
   toggleTheme(): void {
     this.isDark = !this.isDark;
-    if (!this.isDark) {
-      this.overlayContainer.getContainerElement().classList.add('light-theme');
-      
-    } else {
-      this.overlayContainer.getContainerElement().classList.remove('light-theme');
-    }
-      
+    this.overlayContainer.getContainerElement().classList.toggle('dark-theme');
   }
+
   toggleSideNav() {
     this.isOpen = !this.isOpen;
-    if (this.isOpen) {
-      this.brand = 'Roberto Cannella';
-    } else {
-      this.brand = '/r.c';
-    }
   }
 }

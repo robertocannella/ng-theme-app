@@ -4,11 +4,9 @@
     <!-- ? we're wrapping whole content in a div, to handle dark/light theme -->
     <mat-toolbar [color]="themeColor">
 
-        <button mat-button (click)="toggleSideNav()" class="brand">
-            <fa-icon icon="less-than"></fa-icon>&nbsp;
-            {{ brand }}
-            &nbsp;<fa-icon icon="greater-than"></fa-icon>
-        </button>&nbsp;
+        <button mat-icon-button (click)="toggleSideNav()">
+            <fa-icon [icon]="isOpen ? 'minus' : 'plus'"></fa-icon>
+        </button>
         <span class="example-spacer"></span>
 
         <!-- ? below button will help us change the theme at run-time. -->

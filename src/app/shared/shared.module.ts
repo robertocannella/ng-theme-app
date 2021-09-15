@@ -4,15 +4,18 @@ import { MaterialModule } from '../material/material.module';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCoffee, faBook, faProjectDiagram, faLessThan, faGreaterThan } from '@fortawesome/free-solid-svg-icons';
+import { faCoffee, faBook, faProjectDiagram, faLessThan, faGreaterThan, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { faStackOverflow, faGithub, faMedium, faGit } from '@fortawesome/free-brands-svg-icons';
 import { TextPostComponent } from './components/text-post/text-post.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule} from '@angular/material/card';
 import { CodePostComponent } from './components/code-post/code-post.component';
 import { ImagePostComponent } from './components/image-post/image-post.component';
-import { CodeBlockComponent } from './components/code-block/code-block.component'
-
+import { CodeBlockComponent } from './components/code-block/code-block.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select'
 
 @NgModule({
   declarations: [
@@ -31,8 +34,12 @@ import { CodeBlockComponent } from './components/code-block/code-block.component
     MatInputModule,
     MatCardModule,
     CodePostComponent,
+    CodeBlockComponent,
     ImagePostComponent,
-    CodeBlockComponent
+    DragDropModule,
+    OverlayModule,
+    MatDialogModule,
+    MatSelectModule
   ],
   imports: [
     CommonModule,
@@ -50,6 +57,7 @@ export class SharedModule {
       faCoffee, faGit, faGithub,
       faStackOverflow, faMedium,
       faBook, faProjectDiagram,
-      faLessThan, faGreaterThan)
+      faLessThan, faGreaterThan,
+    faPlus, faMinus)
   }
 }
