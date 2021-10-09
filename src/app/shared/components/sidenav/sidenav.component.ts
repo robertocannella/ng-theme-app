@@ -11,7 +11,7 @@ export class SidenavComponent implements OnInit {
 
   themeColor: 'primary' | 'accent' | 'warn' = 'primary';
   isDark = false;
-  isOpen = true;
+  isOpen = false;
   brand = "Roberto Cannella";
 
   constructor(private overlayContainer: OverlayContainer) { }
