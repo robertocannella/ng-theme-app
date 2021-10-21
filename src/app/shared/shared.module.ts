@@ -8,7 +8,7 @@ import { faCoffee, faBook, faProjectDiagram, faLessThan, faGreaterThan, faPlus, 
 import { faStackOverflow, faGithub, faMedium, faGit } from '@fortawesome/free-brands-svg-icons';
 import { TextPostComponent } from './components/text-post/text-post.component';
 import { MatInputModule } from '@angular/material/input';
-import { MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { CodePostComponent } from './components/code-post/code-post.component';
 import { ImagePostComponent } from './components/image-post/image-post.component';
 import { CodeBlockComponent } from './components/code-block/code-block.component';
@@ -17,6 +17,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { FormsModule } from '@angular/forms';
     OverlayModule,
     MatDialogModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    MatGridListModule,
+    MatProgressBarModule
   ],
   imports: [
     CommonModule,
@@ -53,13 +57,13 @@ import { FormsModule } from '@angular/forms';
   ]
 })
 export class SharedModule {
-  
+
   constructor(private library: FaIconLibrary) {
     library.addIcons(
       faCoffee, faGit, faGithub,
       faStackOverflow, faMedium,
       faBook, faProjectDiagram,
       faLessThan, faGreaterThan,
-    faPlus, faMinus)
+      faPlus, faMinus)
   }
 }
