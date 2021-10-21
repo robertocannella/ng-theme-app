@@ -7,6 +7,7 @@
         <button mat-icon-button (click)="toggleSideNav()">
             <fa-icon [icon]="isOpen ? 'minus' : 'plus'"></fa-icon>
         </button>
+        <span>{{brand}}</span>
         <span class="example-spacer"></span>
 
         <!-- ? below button will help us change the theme at run-time. -->
@@ -16,12 +17,13 @@
             </mat-icon>
         </button>
         <!-- ? Link to CoffeeBreak. -->
-        <button mat-icon-button  matTooltip="Coffee Break">
+        <button mat-icon-button matTooltip="Coffee Break">
             <fa-icon icon="coffee"></fa-icon>
         </button>
         <!-- ? Link to GitHub. -->
-        <button mat-icon-button  matTooltip="My GitHub"><!-- Prevent Tab-Nabbing with nooppener/noreferrer-->
-            <a href="https://github.com/robertocannella" target="_blank" rel="noopener noreferrer" >
+        <button mat-icon-button matTooltip="My GitHub">
+            <!-- Prevent Tab-Nabbing with nooppener/noreferrer-->
+            <a href="https://github.com/robertocannella" target="_blank" rel="noopener noreferrer">
 
                 <fa-icon [icon]="['fab', 'github']"></fa-icon>
 
@@ -64,13 +66,17 @@
 
         <mat-sidenav #sidenav mode="side" [opened]="isOpen">
             <mat-nav-list>
+                <a mat-list-item routerLink="/algorithms" (click)="toggleSideNav()" routerLinkActive="active current">
+                    <fa-icon icon="project-diagram"></fa-icon>&nbsp;
+                    Algorthims
+                </a>
                 <!-- <h1>Sidenav</h1> -->
                 <a mat-list-item routerLink="/journal" (click)="toggleSideNav()" routerLinkActive="active current">
                     <fa-icon icon="book"></fa-icon>&nbsp;
                     Journal
                 </a>
-                <a mat-list-item routerLink="/projects" (click)="toggleSideNav()" routerLinkActive="active current" >
-                    <fa-icon icon="project-diagram" ></fa-icon>&nbsp;
+                <a mat-list-item routerLink="/projects" (click)="toggleSideNav()" routerLinkActive="active current">
+                    <fa-icon icon="project-diagram"></fa-icon>&nbsp;
                     Projects
                 </a>
                 <a mat-list-item href="#"></a>

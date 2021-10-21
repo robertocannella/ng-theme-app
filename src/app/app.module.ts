@@ -13,6 +13,7 @@ import { ProjectsComponent } from './projects/projects.component';
 import { TopicsComponent } from './journal/topics/topics.component';
 import { NewEntryComponent } from './new-entry/new-entry.component';
 import { NewPostFormComponent } from './new-post-form/new-post-form.component';
+import { AlgorithmsComponent } from './algorithms/algorithms.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { NewPostFormComponent } from './new-post-form/new-post-form.component';
     ProjectsComponent,
     TopicsComponent,
     NewEntryComponent,
-    NewPostFormComponent
+    NewPostFormComponent,
+    AlgorithmsComponent
   ],
   imports: [
     BrowserModule,

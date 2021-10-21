@@ -1,6 +1,7 @@
 import { PostService } from './../post.service';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
+
 @Component({
   selector: 'app-new-post-form',
   templateUrl: './new-post-form.component.html',
@@ -9,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class NewPostFormComponent implements OnInit {
 
   constructor(public overlayContainer: OverlayContainer, private postService: PostService) {
-      console.log(this.overlayContainer.getContainerElement().classList)
+     console.log(this.overlayContainer.getContainerElement().classList)
   }
   
 
@@ -17,7 +18,7 @@ export class NewPostFormComponent implements OnInit {
   }
   
   save(form: any) {
-    console.log(form);
+   console.log(form);
    this.postService.update(form);
   }
 }
