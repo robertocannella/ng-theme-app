@@ -85,16 +85,15 @@ body {
   height: 100%;
 }
 body {
-  margin: 0;
+  margin-left: 2px;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-.container {
-  margin: 2px;
-}
 @media screen and (min-width: 720px) {
-  body {
 
-    margin: 2px;
+}
+
+@media screen and (max-width: 420px) {
+body{
+  margin-left:2px
   }
-
 }
