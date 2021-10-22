@@ -7,7 +7,7 @@
         <button mat-icon-button (click)="toggleSideNav()">
             <fa-icon [icon]="isOpen ? 'minus' : 'plus'"></fa-icon>
         </button>
-        <span>{{brand}}</span>
+        {{brand}}
         <span class="example-spacer"></span>
 
         <!-- ? below button will help us change the theme at run-time. -->
@@ -69,6 +69,11 @@
                 <a mat-list-item routerLink="/algorithms" (click)="toggleSideNav()" routerLinkActive="active current">
                     <fa-icon icon="project-diagram"></fa-icon>&nbsp;
                     Algorthims
+                </a>
+                <a mat-list-item routerLink="/datastructures" (click)="toggleSideNav()"
+                    routerLinkActive="active current">
+                    <fa-icon icon="project-diagram"></fa-icon>&nbsp;
+                    Data Structures
                 </a>
                 <!-- <h1>Sidenav</h1> -->
                 <a mat-list-item routerLink="/journal" (click)="toggleSideNav()" routerLinkActive="active current">

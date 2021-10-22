@@ -15,6 +15,7 @@ import { NewEntryComponent } from './new-entry/new-entry.component';
 import { NewPostFormComponent } from './new-post-form/new-post-form.component';
 import { AlgorithmsComponent } from './algorithms/algorithms.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { DatastructuresComponent } from './datastructures/datastructures.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { WelcomeComponent } from './welcome/welcome.component';
     NewEntryComponent,
     NewPostFormComponent,
     AlgorithmsComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    DatastructuresComponent
   ],
   imports: [
     BrowserModule,
