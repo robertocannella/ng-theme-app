@@ -8,13 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AlgorithmsComponent implements OnInit {
 
-  public screenWidth: any;
-  public screenHeight: any;
+  public innerWidth: number = 0;
+
   constructor() { }
 
   ngOnInit() {
-    this.screenWidth = window.innerWidth * 90;
-    this.screenHeight = window.innerHeight * 90;
+    this.innerWidth = window.innerWidth * .9;
   }
 
 
