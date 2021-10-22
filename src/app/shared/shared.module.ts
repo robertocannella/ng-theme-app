@@ -19,6 +19,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { YouTubePlayerModule } from "@angular/youtube-player";
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatSelectModule,
     FormsModule,
     MatGridListModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    YouTubePlayerModule
   ],
   imports: [
     CommonModule,
