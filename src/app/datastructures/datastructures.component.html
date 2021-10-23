@@ -35,7 +35,7 @@
         <mat-card-title>Trees / AVL Trees</mat-card-title>
         <mat-card-subtitle></mat-card-subtitle>
         <mat-card-content>
-            <video src="../../assets/images/AVL_001.mp4" autoplay controls></video>
+
             <div>
                 <svg width="250" height="250" style="cursor: pointer;">
                     <!--Edge 1-->
@@ -44,6 +44,10 @@
                         opacity="0" />
                     <animate id="edge-one-anim" xlink:href="#edge-one" attributeName="opacity" from="0.0" to="1.0"
                         dur="1s" begin="node-2-anim.end + 0s" fill="freeze" />
+
+                    <!-- For Cycle One -->
+                    <line id="edge-one-2" x1="125" y1="120" x2="175" y2="70" stroke="midnightblue" stroke-width="3"
+                        opacity="0" />
 
                     <!-- Edge 2-->
                     <line id="edge-two" x1="175" y1="70" x2="230" y2="125" stroke="midnightblue" stroke-width="3"
@@ -82,9 +86,9 @@
                         begin="node-1-anim.end + .5s" fill="freeze" />
 
 
-                    <!--Edge 1 -->
-                    <!-- <line x1="250" y1="250" x2="125" y2="250" stroke="black" stroke-width="2" /> -->
+
                     <!-- Node 3-->
+
                     <!-- add 50 to each y component-->
                     <!-- ABS 50 to each x component from Node one End at each Node Level-->
 
@@ -98,6 +102,26 @@
                         begin="node-2-anim.end + .5s" fill="freeze" />
                     <animate xlink:href="#text-node-3" attributeName="x" from="16" to="222" dur="1.5s"
                         begin="node-2-anim.end + .5s" fill="freeze" />
+
+                    <!-- AVL Cycle One -->
+                    <!-- Hide Edge One -->
+                    <animate id="cycle-1-hide-edge-1" xlink:href="#edge-one" attributeName="opacity" from="1" to="0"
+                        dur="1s" begin="node-3-anim.end + .5s" fill="freeze" />
+                    <!-- Shift Node 1 down -->
+
+                    <animate id="cycle-1-shift-node-1" xlink:href="#node-1" attributeName="cy" from="20" to="120"
+                        dur="1s" begin="cycle-1-hide-edge-1.end + 0s" fill="freeze" />
+                    <animate id="cycle-1-shift-node-1-back" xlink:href="#node-1-back" attributeName="cy" from="20"
+                        to="120" dur="1s" begin="cycle-1-hide-edge-1.end +0s" fill="freeze" />
+                    <animate id="cycle-1-shift-node-1-text" xlink:href="#text-node-1" attributeName="y" from="25"
+                        to="125" dur="1s" begin="cycle-1-hide-edge-1.end +0s" fill="freeze" />
+
+                    <!-- Show Edge One-->
+
+                    <animate id="cycle-1-show-edge-one-2" xlink:href="#edge-one-2" attributeName="opacity" from="0"
+                        to="1" dur="1s" begin="cycle-1-shift-node-1.end + .5s" fill="freeze" />
+
+                    <!-- Shift Node 2 - Node 3 Up-->
 
                 </svg>
             </div>
