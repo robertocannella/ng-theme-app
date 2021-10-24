@@ -22,8 +22,23 @@ export class CircleTree {
         if (value < node.value)
             node.leftChild = this.insert(value, cx, cy, node.leftChild);
 
+
+        if (this.isLeftHeavy(node))
+            console.log(node.value + " is left heavy");
+        if (this.isRightHeavy(node))
+            console.log(node.value + " is right heavy")
+
         node.height = Math.max(this.height(node.leftChild), this.height(node.rightChild)) + 1;
         return node;
+    }
+    private isLeftHeavy(node: CircleNode): boolean {
+        return this.balanceFactor(node) > 1;
+    }
+    private isRightHeavy(node: CircleNode): boolean {
+        return this.balanceFactor(node) < -1;
+    }
+    private balanceFactor(node: CircleNode): number {
+        return (this.root == undefined) ? 0 : this.height(node.leftChild) - this.height(node.rightChild);
     }
     public moveTreeToArray() {
         return this.traversePreOrder(this.root, this.circleNodeArray)
