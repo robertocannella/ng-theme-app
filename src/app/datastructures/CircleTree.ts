@@ -1,3 +1,4 @@
+import { RouterTestingModule } from "@angular/router/testing";
 
 export class CircleTree {
 
@@ -8,6 +9,26 @@ export class CircleTree {
 
     private height(node: CircleNode | undefined): number {
         return (node == undefined) ? -1 : node.height;
+    }
+    private setDepths(node: CircleNode | undefined): number {
+
+        if (node == undefined)
+            return -1;
+
+        if (node.leftChild == undefined && node.radius == undefined) {
+            return 0;
+        }
+
+
+        if (node.rightChild)
+            node.depth = this.setDepths(node.rightChild) + 1;
+
+        if (node.leftChild)
+            node.depth = this.setDepths(node.leftChild) + 1;
+
+        return node.depth;
+
+
     }
     public preorderPrint(root: CircleNode | undefined) {
         if (root == null)
@@ -21,8 +42,7 @@ export class CircleTree {
             this.preorderPrint(root.leftChild);   // Print items in left subtree.
             this.preorderPrint(root.rightChild);  // Print items in right subtree.
         }
-    } // end preorderPrint()
-
+    }
     public countNodes(root: CircleNode | undefined): number {
         // Count the nodes in the binary tree to which
         // root points, and return the answer.
@@ -36,12 +56,10 @@ export class CircleTree {
             //    in the right subtree.
             return count;  // Return the total.
         }
-    } // end countNodes()
-
+    }
     public addNode(value: number, cx: number, cy: number): CircleNode {
         return this.insert(value, cx, cy, this.root);
     }
-
     private insert(value: number, cx: number, cy: number, node?: CircleNode,): CircleNode {
         if (node == undefined || node.value == value) {
             return new CircleNode(value, cx, cy)
@@ -76,15 +94,15 @@ export class CircleTree {
     public moveTreeToArray() {
         return this.traversePreOrder(this.root, this.circleNodeArray)
     }
-    private traversePreOrder(root: CircleNode | undefined, arr: CircleNode[]) {
+    public traversePreOrder(root: CircleNode | undefined, arr: CircleNode[]): CircleNode[] {
         if (!root)
-            return;
+            return arr;
 
         arr.push(root)
         this.traversePreOrder(root.leftChild, arr);
         this.traversePreOrder(root.rightChild, arr);
 
-        return;
+        return arr;
     }
     public sumOfLeafDepths(node: CircleNode | undefined, depth: number): number {
         // When called as sumOfLeafDepths(root,0), this will compute the
@@ -149,7 +167,7 @@ export class CircleNode {
     public height = 0;
     public depth: number = 0;
     public radius = 15;
-    private id: number;
+
 
 
     constructor(
@@ -158,8 +176,16 @@ export class CircleNode {
         public cx: number,
         public cy: number) {
 
-        this.id = value;
+        this._id = value;
 
     }
+
+
+    private _id: number;
+    public get id(): number {
+        return this._id;
+    }
+
+
 
 }

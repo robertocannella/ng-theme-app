@@ -50,7 +50,8 @@
                 nodes</button>
             <!-- <button type="button" (click)="convertToArray()">array</button> -->
 
-            <graphic [node-tree]="nodeTree" [circleNodeArray]="circleNodeArray"></graphic>
+            <graphic [node-tree]="nodeTree" [traversed-pre-order]="traversePreOrderArray"
+                [circleNodeArray]="circleNodeArray"></graphic>
 
             <div>
                 <svg width="250" height="250" style="cursor: pointer;">

@@ -11,23 +11,28 @@ export class DatastructuresComponent {
   initialCount: number = 10;
   nodeTree: CircleTree = new CircleTree();
   circleNodeArray: CircleNode[] = [];
+  traversePreOrderArray: CircleNode[] = [];
   constructor() {
 
   }
 
 
   addCircleNode(value: string, cx: string, cy: string) {
+    this.traversePreOrderArray = [];
     let i = parseInt(value)
     let x = parseInt(cx)
     let y = parseInt(cy)
+
     this.nodeTree.root = this.nodeTree.addNode(i, x, y);
-
-    // populate the nodes of the array 
-
     this.circleNodeArray.push(new CircleNode(i, x, y));
+
+    console.log("Initial Input Array");
     console.log(this.circleNodeArray);
-    console.log(this.nodeTree.root)
-    console.log(this.nodeTree.sumOfLeafDepths(this.nodeTree.root, 0));
+    console.log(this.nodeTree);
+    console.log("Traversed Array");
+    this.traversePreOrderArray = this.nodeTree.traversePreOrder(this.nodeTree.root, this.traversePreOrderArray);
+    console.log(this.traversePreOrderArray);
+
 
   }
   // convertToArray() {

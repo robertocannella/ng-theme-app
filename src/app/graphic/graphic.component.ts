@@ -7,14 +7,12 @@ import { CircleNode, CircleTree } from '../datastructures/CircleTree';
   templateUrl: './graphic.component.html',
   styleUrls: ['./graphic.component.sass']
 })
-export class GraphicComponent implements OnInit {
+export class GraphicComponent {
 
   constructor() { }
   @Input('node-tree') nodeTree?: CircleTree;
   @Input() circleNodeArray!: CircleNode[];
+  @Input('traversed-pre-order') traversePreOrderArray!: CircleNode[];
 
-  ngOnInit(): void {
-
-  }
 
 }
