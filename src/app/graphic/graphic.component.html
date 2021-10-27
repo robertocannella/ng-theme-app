@@ -1,0 +1,18 @@
+<svg width="280" hieght="250">
+
+
+
+
+    <g *ngFor="let n of circleNodeArray">
+        <circle id="n.id" [attr.r]="n.radius" [attr.cx]="n.cx" [attr.cy]="n.cy" stroke="midnightblue" fill="#FFFFFF"
+            stroke-width="3"> </circle>
+        <text id="n.id+text" fill="midnightblue" alignment-baseline="middle" text-anchor="middle" font-size="1rem"
+            font-weight="bold" [attr.x]="n.cx" [attr.y]="n.cy">{{n.value}}</text>
+    </g>
+
+
+
+
+
+</svg>
+{{nodeTree?.root?.value}}

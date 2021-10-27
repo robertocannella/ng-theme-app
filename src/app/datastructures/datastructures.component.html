@@ -41,21 +41,17 @@
 
             Currently implementing this section. Eventually will be able to portray an AVL tree structure dynamically.
             Open Dev Tools to view output.
-            <p>Value<input type="number" id="username" name="username" #username></p>
-            <p>Circle X<input type="number" id="circleX" name="circleX" #circleX></p>
-            <p>Circle Y<input type="number" id="circleY" name="circleY" #circleY></p>
+            <p>Value<input type="number" id="username" name="username" #username value="22"></p>
+            <p>Circle X<input type="number" id="circleX" name="circleX" #circleX value="122"></p>
+            <p>Circle Y<input type="number" id="circleY" name="circleY" #circleY value="122"></p>
 
-            <h1> {{username}} </h1>
 
-            <button type="button" (click)="addCircleNode(username.value,circleX.value, circleY.value)">add
+            <button type="button" (click)="addCircleNode(username.value, circleX.value, circleY.value)">add
                 nodes</button>
-            <button type="button" (click)="convertToArray()">array</button>
+            <!-- <button type="button" (click)="convertToArray()">array</button> -->
 
+            <graphic [node-tree]="nodeTree" [circleNodeArray]="circleNodeArray"></graphic>
 
-            <svg width="280" hieght="250" *ngFor="let n of circleNodeArray">
-                Thend{{n.cx}}
-                <circle [attr.r]="n.radius" [attr.cx]="n.cx" [attr.r]="n.cy" stroke="midnightblue" stroke-width="3" />
-            </svg>
             <div>
                 <svg width="250" height="250" style="cursor: pointer;">
                     <!--Edge 1-->

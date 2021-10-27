@@ -16,6 +16,7 @@ import { NewPostFormComponent } from './new-post-form/new-post-form.component';
 import { AlgorithmsComponent } from './algorithms/algorithms.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { DatastructuresComponent } from './datastructures/datastructures.component';
+import { GraphicComponent } from './graphic/graphic.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { DatastructuresComponent } from './datastructures/datastructures.compone
     NewPostFormComponent,
     AlgorithmsComponent,
     WelcomeComponent,
-    DatastructuresComponent
+    DatastructuresComponent,
+    GraphicComponent
   ],
   imports: [
     BrowserModule,
