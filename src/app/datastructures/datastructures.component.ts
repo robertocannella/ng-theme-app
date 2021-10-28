@@ -1,3 +1,4 @@
+import { unescapeIdentifier } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { CircleNode, CircleTree } from './CircleTree';
 
@@ -15,8 +16,32 @@ export class DatastructuresComponent {
   constructor() {
 
   }
+  isLeftHeavy(): boolean | undefined {
+    if (this.nodeTree.root != undefined) {
+      return this.nodeTree.isLeftHeavy(this.nodeTree.root);
+    }
+    return false;
+  }
+  isRightHeavy(): boolean | undefined {
+    if (this.nodeTree.root != undefined) {
+      return this.nodeTree.isRightHeavy(this.nodeTree.root);
+    }
+    return false;
+  }
 
-
+  setNodeXY() {
+    var shiftRight = 100;
+    var shiftLeft = 100;
+    for (let index = 0; index < this.traversePreOrderArray.length; index++) {
+      this.traversePreOrderArray[index].cx += shiftRight;
+      console.log(this.traversePreOrderArray[index].cx);
+    }
+  }
+  clearNodes() {
+    this.traversePreOrderArray = [];
+    this.circleNodeArray = [];
+    this.nodeTree.root = undefined;
+  }
   addCircleNode(value: string, cx: string, cy: string) {
     this.traversePreOrderArray = [];
     let i = parseInt(value)
@@ -26,12 +51,12 @@ export class DatastructuresComponent {
     this.nodeTree.root = this.nodeTree.addNode(i, x, y);
     this.circleNodeArray.push(new CircleNode(i, x, y));
 
-    console.log("Initial Input Array");
-    console.log(this.circleNodeArray);
-    console.log(this.nodeTree);
-    console.log("Traversed Array");
+    // console.log("Initial Input Array");
+    // console.log(this.circleNodeArray);
+    // console.log(this.nodeTree);
+    // console.log("Traversed Array");
     this.traversePreOrderArray = this.nodeTree.traversePreOrder(this.nodeTree.root, this.traversePreOrderArray);
-    console.log(this.traversePreOrderArray);
+    // console.log(this.traversePreOrderArray);
 
 
   }

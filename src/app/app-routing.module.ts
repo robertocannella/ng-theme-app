@@ -10,7 +10,7 @@ import { DatastructuresComponent } from './datastructures/datastructures.compone
 const routes: Routes = [
   {
     path: '',
-    component: WelcomeComponent
+    component: DatastructuresComponent
   },
   {
     path: 'datastructures',

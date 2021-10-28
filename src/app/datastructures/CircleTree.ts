@@ -3,12 +3,17 @@ import { RouterTestingModule } from "@angular/router/testing";
 export class CircleTree {
 
     circleNodeArray: CircleNode[] = [];
-    public root?: CircleNode;
+    public root: any;
 
+    constructor() {
+        this.root = null;
+    }
 
-
-    private height(node: CircleNode | undefined): number {
+    private height(node: CircleNode | null): number {
         return (node == undefined) ? -1 : node.height;
+    }
+    private setHeight(node: CircleNode | null) {
+        node!.height = Math.max(this.height(node!.leftChild), this.height(node!.rightChild)) + 1;
     }
     private setDepths(node: CircleNode | undefined): number {
 
@@ -30,7 +35,7 @@ export class CircleTree {
 
 
     }
-    public preorderPrint(root: CircleNode | undefined) {
+    public preorderPrint(root: CircleNode | null) {
         if (root == null)
             return;
         // Print all the items in the tree to which root points.
@@ -43,7 +48,7 @@ export class CircleTree {
             this.preorderPrint(root.rightChild);  // Print items in right subtree.
         }
     }
-    public countNodes(root: CircleNode | undefined): number {
+    public countNodes(root: CircleNode | null): number {
         // Count the nodes in the binary tree to which
         // root points, and return the answer.
         if (root == null)
@@ -57,11 +62,11 @@ export class CircleTree {
             return count;  // Return the total.
         }
     }
-    public addNode(value: number, cx: number, cy: number): CircleNode {
+    public addNode(value: number, cx: number, cy: number): CircleNode | null {
         return this.insert(value, cx, cy, this.root);
     }
-    private insert(value: number, cx: number, cy: number, node?: CircleNode,): CircleNode {
-        if (node == undefined || node.value == value) {
+    private insert(value: number, cx: number, cy: number, node: CircleNode | null,): CircleNode | null {
+        if (node == null || node.value == value) {
             return new CircleNode(value, cx, cy)
         }
 
@@ -77,24 +82,38 @@ export class CircleTree {
         if (this.isRightHeavy(node))
             console.log(node.value + " is right heavy")
 
+        this.setHeight(node);
+        return this.balance(node);
 
-
-        node.height = Math.max(this.height(node.leftChild), this.height(node.rightChild)) + 1;
-        return node;
+        // node.height = Math.max(this.height(node.leftChild), this.height(node.rightChild)) + 1;
+        // return node;
     }
-    private isLeftHeavy(node: CircleNode): boolean {
+    public isLeftHeavy(node: CircleNode | null): boolean {
         return this.balanceFactor(node) > 1;
     }
-    private isRightHeavy(node: CircleNode): boolean {
+    public isRightHeavy(node: CircleNode | null): boolean {
         return this.balanceFactor(node) < -1;
     }
-    private balanceFactor(node: CircleNode): number {
-        return (this.root == undefined) ? 0 : this.height(node.leftChild) - this.height(node.rightChild);
+    private balanceFactor(node: CircleNode | null): number {
+        return (this.root == undefined) ? 0 : this.height(node!.leftChild) - this.height(node!.rightChild);
+    }
+    private balance(node: CircleNode | null): CircleNode | null {
+        if (this.isLeftHeavy(node)) {
+            if (this.balanceFactor(node!.leftChild) < 0)
+                node!.leftChild = this.rotateLeft(node!.leftChild);
+            return this.rotateRight(node);
+        }
+        else if (this.isRightHeavy(node)) {
+            if (this.balanceFactor(node!.rightChild) > 0)
+                node!.rightChild = this.rotateRight(node!.rightChild);
+            return this.rotateLeft(node);
+        }
+        return node;
     }
     public moveTreeToArray() {
         return this.traversePreOrder(this.root, this.circleNodeArray)
     }
-    public traversePreOrder(root: CircleNode | undefined, arr: CircleNode[]): CircleNode[] {
+    public traversePreOrder(root: CircleNode | null, arr: CircleNode[]): CircleNode[] {
         if (!root)
             return arr;
 
@@ -104,7 +123,7 @@ export class CircleTree {
 
         return arr;
     }
-    public sumOfLeafDepths(node: CircleNode | undefined, depth: number): number {
+    public sumOfLeafDepths(node: CircleNode | null, depth: number): number {
         // When called as sumOfLeafDepths(root,0), this will compute the
         // sum of the depths of all the leaves in the tree to which root
         // points.  When called recursively, the depth parameter gives
@@ -158,12 +177,37 @@ export class CircleTree {
         // return true if a node is found
         return left || right;
     }
+    private rotateRight(node: CircleNode | null): CircleNode | null {
+        var newRoot = node!.leftChild;
+
+        node!.leftChild = newRoot!.rightChild;
+        newRoot!.rightChild = node;
+
+        this.setHeight(node);
+        this.setHeight(newRoot);
+
+        return newRoot;
+    }
+    private rotateLeft(node: CircleNode | null): CircleNode | null {
+        var newRoot = node!.rightChild;
+
+        node!.rightChild = newRoot!.leftChild;
+        newRoot!.leftChild = node;
+
+        newRoot!.leftChild!.height -= 2;
+        node = newRoot;
+
+        this.setHeight(node);
+        this.setHeight(newRoot);
+
+        return newRoot
+    }
 }
 
 
 export class CircleNode {
-    public leftChild?: CircleNode;
-    public rightChild?: CircleNode;
+    public leftChild: CircleNode | null = null;
+    public rightChild: CircleNode | null = null;
     public height = 0;
     public depth: number = 0;
     public radius = 15;

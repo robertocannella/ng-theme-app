@@ -45,8 +45,11 @@
             <p>Circle X<input type="number" id="circleX" name="circleX" #circleX value="122"></p>
             <p>Circle Y<input type="number" id="circleY" name="circleY" #circleY value="122"></p>
 
-
+            <span *ngIf="isLeftHeavy()">Tree is Left Heavy - Requires Rotation</span>
+            <span *ngIf="isRightHeavy()">Tree is Right Heavy - Requires Rotation</span>
             <button type="button" (click)="addCircleNode(username.value, circleX.value, circleY.value)">add
+                nodes</button>
+            <button type="button" (click)="clearNodes()">clear
                 nodes</button>
             <!-- <button type="button" (click)="convertToArray()">array</button> -->
 
