@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AlgorithmsComponent } from './algorithms/algorithms.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { DatastructuresComponent } from './datastructures/datastructures.component';
+import { MachineLearningComponent } from './machine-learning/machine-learning.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,10 @@ const routes: Routes = [
   {
     path: 'datastructures',
     component: DatastructuresComponent
+  },
+  {
+    path: 'machine-learning',
+    component: MachineLearningComponent
   },
   {
     path: 'journal',

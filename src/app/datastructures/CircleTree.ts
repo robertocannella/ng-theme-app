@@ -62,19 +62,19 @@ export class CircleTree {
             return count;  // Return the total.
         }
     }
-    public addNode(value: number, cx: number, cy: number): CircleNode | null {
-        return this.insert(value, cx, cy, this.root);
+    public addNode(value: number): CircleNode | null {
+        return this.insert(value, this.root);
     }
-    private insert(value: number, cx: number, cy: number, node: CircleNode | null,): CircleNode | null {
+    private insert(value: number, node: CircleNode | null,): CircleNode | null {
         if (node == null || node.value == value) {
-            return new CircleNode(value, cx, cy)
+            return new CircleNode(value)
         }
 
         if (value > node.value)
-            node.rightChild = this.insert(value, cx, cy, node.rightChild,);
+            node.rightChild = this.insert(value, node.rightChild,);
 
         if (value < node.value)
-            node.leftChild = this.insert(value, cx, cy, node.leftChild);
+            node.leftChild = this.insert(value, node.leftChild);
 
 
         if (this.isLeftHeavy(node))
@@ -216,9 +216,7 @@ export class CircleNode {
 
     constructor(
 
-        public value: number,
-        public cx: number,
-        public cy: number) {
+        public value: number) {
 
         this._id = value;
 

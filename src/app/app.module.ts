@@ -17,6 +17,7 @@ import { AlgorithmsComponent } from './algorithms/algorithms.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { DatastructuresComponent } from './datastructures/datastructures.component';
 import { GraphicComponent } from './graphic/graphic.component';
+import { MachineLearningComponent } from './machine-learning/machine-learning.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { GraphicComponent } from './graphic/graphic.component';
     AlgorithmsComponent,
     WelcomeComponent,
     DatastructuresComponent,
-    GraphicComponent
+    GraphicComponent,
+    MachineLearningComponent
   ],
   imports: [
     BrowserModule,

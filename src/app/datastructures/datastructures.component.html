@@ -42,12 +42,11 @@
             Currently implementing this section. Eventually will be able to portray an AVL tree structure dynamically.
             Open Dev Tools to view output.
             <p>Value<input type="number" id="username" name="username" #username value="22"></p>
-            <p>Circle X<input type="number" id="circleX" name="circleX" #circleX value="122"></p>
-            <p>Circle Y<input type="number" id="circleY" name="circleY" #circleY value="122"></p>
+
 
             <span *ngIf="isLeftHeavy()">Tree is Left Heavy - Requires Rotation</span>
             <span *ngIf="isRightHeavy()">Tree is Right Heavy - Requires Rotation</span>
-            <button type="button" (click)="addCircleNode(username.value, circleX.value, circleY.value)">add
+            <button type="button" (click)="addCircleNode(username.value)">add
                 nodes</button>
             <button type="button" (click)="clearNodes()">clear
                 nodes</button>
@@ -224,4 +223,16 @@
             <button mat-button>LIKE</button>
         </mat-card-actions>
     </mat-card>
+    <mat-card>
+        <mat-card-title>Graphs</mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+        <mat-card-content>
+
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <!-- <button mat-button>Like</button>
+            <button mat-button>SHARE</button> -->
+        </mat-card-actions>
+    </mat-card>
+    <br>
 </div>

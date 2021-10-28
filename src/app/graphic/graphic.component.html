@@ -1,43 +1,19 @@
 <div class="initial-input-array" *ngIf="circleNodeArray != null">
-    <table>
-        <thead>
-            <th>Id</th>
-            <th>Initial X</th>
-            <th>Initial Y</th>
-        </thead>
-        <tr *ngFor="let node of circleNodeArray">
-            <td>{{node.id}}</td>
-            <td>{{node.cx}}</td>
-            <td>{{node.cy}}</td>
-        </tr>
-    </table>
-    <table>
-        <thead>
-            <th>Id</th>
-            <th>Traversed X</th>
-            <th>Traversed Y</th>
-        </thead>
-        <tr *ngFor="let node of traversePreOrderArray">
-            <td>{{node.id}}</td>
-            <td>{{node.cx}}</td>
-            <td>{{node.cy}}</td>
-            <td>{{node.cy}}</td>
-        </tr>
-    </table>
+
 
 </div>
 
-<svg width="280" hieght="280">
+<svg class="graphic-box" width="280" hieght="380">
 
 
 
-    <g *ngFor="let n of circleNodeArray">
-        <circle [id]="n.id + 'background'" [attr.r]="n.radius + 5" [attr.cx]="n.cx" [attr.cy]="n.cy" fill="white"
+    <g *ngFor="let n of circleNodeArray; let i = index">
+        <circle [id]="n.id + 'background'" [attr.r]="n.radius + 5" [attr.cx]="20" [attr.cy]="20 + (i*40)" fill="white"
             stroke-width="3" />
-        <circle [id]="n.id" [attr.r]="n.radius" [attr.cx]="n.cx" [attr.cy]="n.cy" stroke="midnightblue" fill="#FFFFFF"
+        <circle [id]="n.id" [attr.r]="n.radius" cx="20" [attr.cy]="20 + (i*40)" stroke="midnightblue" fill="#FFFFFF"
             stroke-width="3"> </circle>
         <text id="n.id+text" fill="midnightblue" alignment-baseline="middle" text-anchor="middle" font-size="1rem"
-            font-weight="bold" [attr.x]="n.cx" [attr.y]="n.cy">{{n.value}}</text>
+            font-weight="bold" [attr.x]="20" [attr.y]="20+ (i*40)">{{n.value}}</text>
     </g>
 
 

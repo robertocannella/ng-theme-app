@@ -66,25 +66,28 @@
 
         <mat-sidenav #sidenav mode="side" [opened]="isOpen">
             <mat-nav-list>
-                <a mat-list-item routerLink="/algorithms" (click)="toggleSideNav()" routerLinkActive="active current">
-                    <fa-icon icon="project-diagram"></fa-icon>&nbsp;
-                    Algorthims
-                </a>
                 <a mat-list-item routerLink="/datastructures" (click)="toggleSideNav()"
                     routerLinkActive="active current">
                     <fa-icon icon="project-diagram"></fa-icon>&nbsp;
                     Data Structures
                 </a>
-                <!-- <h1>Sidenav</h1> -->
-                <a mat-list-item routerLink="/journal" (click)="toggleSideNav()" routerLinkActive="active current">
-                    <fa-icon icon="book"></fa-icon>&nbsp;
-                    Journal
+                <a mat-list-item routerLink="/algorithms" (click)="toggleSideNav()" routerLinkActive="active current">
+                    <fa-icon icon="project-diagram"></fa-icon>&nbsp;
+                    Algorthims
                 </a>
                 <a mat-list-item routerLink="/projects" (click)="toggleSideNav()" routerLinkActive="active current">
                     <fa-icon icon="project-diagram"></fa-icon>&nbsp;
                     Projects
                 </a>
-                <a mat-list-item href="#"></a>
+                <a mat-list-item routerLink="/machine-learning" (click)="toggleSideNav()"
+                    routerLinkActive="active current">
+                    <fa-icon icon="robot"></fa-icon>&nbsp;
+                    Machine Learning
+                </a>
+                <a mat-list-item routerLink="/journal" (click)="toggleSideNav()" routerLinkActive="active current">
+                    <fa-icon icon="book"></fa-icon>&nbsp;
+                    Journal
+                </a>
             </mat-nav-list>
         </mat-sidenav>
 
