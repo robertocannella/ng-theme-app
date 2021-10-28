@@ -6,6 +6,7 @@ import { AlgorithmsComponent } from './algorithms/algorithms.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { DatastructuresComponent } from './datastructures/datastructures.component';
 import { MachineLearningComponent } from './machine-learning/machine-learning.component';
+import { DataScienceComponent } from './data-science/data-science.component';
 
 
 const routes: Routes = [
@@ -20,6 +21,10 @@ const routes: Routes = [
   {
     path: 'machine-learning',
     component: MachineLearningComponent
+  },
+  {
+    path: 'data-science',
+    component: DataScienceComponent
   },
   {
     path: 'journal',

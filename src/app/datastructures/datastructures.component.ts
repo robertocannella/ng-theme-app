@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { SimpleOuterSubscriber } from 'rxjs/internal/innerSubscribe';
 import { CircleNode, CircleTree } from './CircleTree';
 
+interface SVGElement extends Element {
+  beginElement(): SVGElement;
+}
+
 @Component({
   selector: 'app-datastructures',
   templateUrl: './datastructures.component.html',
@@ -38,13 +42,13 @@ export class DatastructuresComponent {
     this.nodeTree.root = null;
   }
   addCircleNode(value: string) {
-    let i = parseInt(value)
-    if (this.nodeExists(i) || this.circleNodeArray.length > 6)
+    let valueAsInt = parseInt(value)
+    if (this.nodeExists(valueAsInt) || this.circleNodeArray.length > 6)
       return;
 
     this.traversePreOrderArray = [];
-    this.nodeTree.root = this.nodeTree.addNode(i);
-    this.circleNodeArray.push(new CircleNode(i));
+    this.nodeTree.root = this.nodeTree.addNode(valueAsInt);
+    this.circleNodeArray.push(new CircleNode(valueAsInt));
 
     console.log("Initial Input Array");
     console.log(this.circleNodeArray);
@@ -56,6 +60,11 @@ export class DatastructuresComponent {
     console.log(this.nodeTree);
 
     this.traversePreOrderArray = this.nodeTree.traversePreOrder(this.nodeTree.root, this.traversePreOrderArray);
+
+    // var elements = document.getElementsByTagName("animate");
+    // for (var i = 0; i < elements.length; i++) {
+    //   (<SVGAElement>elements[i]).beginElement();
+    // }
   }
   private nodeExists(i: number): boolean {
     var exists = false;

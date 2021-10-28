@@ -14,7 +14,7 @@ export class GraphicComponent {
   @Input('node-tree') nodeTree?: CircleTree;
   @Input() circleNodeArray!: CircleNode[];
   @Input('traversed-pre-order') traversePreOrderArray!: CircleNode[];
-
+  beginWhen: string = "indefinite";
 
 
 }

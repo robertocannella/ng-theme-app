@@ -12,8 +12,15 @@
             stroke-width="3" />
         <circle [id]="n.id" [attr.r]="n.radius" cx="20" [attr.cy]="20 + (i*40)" stroke="midnightblue" fill="#FFFFFF"
             stroke-width="3"> </circle>
-        <text id="n.id+text" fill="midnightblue" alignment-baseline="middle" text-anchor="middle" font-size="1rem"
+        <text [id]="n.id+'text'" fill="midnightblue" alignment-baseline="middle" text-anchor="middle" font-size="1rem"
             font-weight="bold" [attr.x]="20" [attr.y]="20+ (i*40)">{{n.value}}</text>
+
+        <animate [id]="n.id + '-anim'" [attr.xlink:href]="'#' + n.id + 'background'" attributeName="cx"
+            [attr.from]="20  + (i*40)" to="125" dur="1s" [attr.begin]="beginWhen" fill="freeze" />
+        <animate [id]="n.id + '-back-anim'" [attr.xlink:href]="'#' + n.id" attributeName="cx" [attr.from]="20 + (i*40)"
+            to="125" dur="1s" [attr.begin]="beginWhen" fill="freeze" />
+        <animate [attr.xlink:href]="'#'+n.id+ 'text'" attributeName="x" [attr.from]="20 + (i*40)" to="125" dur="1s"
+            [attr.begin]="beginWhen" fill="freeze" />
     </g>
 
 

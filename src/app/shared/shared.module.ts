@@ -7,7 +7,8 @@ import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontaweso
 import {
   faCoffee, faBook, faProjectDiagram, faLessThan,
   faGreaterThan, faPlus, faMinus,
-  faRobot
+  faRobot, faFilter, faPencilRuler,
+  faBezierCurve
 } from '@fortawesome/free-solid-svg-icons';
 import { faStackOverflow, faGithub, faMedium, faGit } from '@fortawesome/free-brands-svg-icons';
 import { TextPostComponent } from './components/text-post/text-post.component';
@@ -70,6 +71,7 @@ export class SharedModule {
       faStackOverflow, faMedium,
       faBook, faProjectDiagram,
       faLessThan, faGreaterThan,
-      faPlus, faMinus, faRobot)
+      faPlus, faMinus, faRobot,
+      faFilter, faPencilRuler, faBezierCurve)
   }
 }
