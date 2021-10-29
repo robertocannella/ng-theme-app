@@ -5,6 +5,7 @@ export class CircleTree {
     circleNodeArray: CircleNode[] = [];
     public root: any;
 
+
     constructor() {
         this.root = null;
     }
@@ -94,7 +95,7 @@ export class CircleTree {
     public isRightHeavy(node: CircleNode | null): boolean {
         return this.balanceFactor(node) < -1;
     }
-    private balanceFactor(node: CircleNode | null): number {
+    public balanceFactor(node: CircleNode | null): number {
         return (this.root == undefined) ? 0 : this.height(node!.leftChild) - this.height(node!.rightChild);
     }
     private balance(node: CircleNode | null): CircleNode | null {

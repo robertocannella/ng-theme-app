@@ -19,7 +19,7 @@
                 dur="1s" 
                 [attr.begin]="i + '-text-anim.begin +0s'"
                 fill="freeze"/>
-            <set *ngIf="i == 0" id="set" attributeName="cx" to="20"></set>
+            <set id="'#'i+'set-back" attributeName="cx" to="20"></set>
         </circle>
 
         <circle 
@@ -38,7 +38,7 @@
                     dur="1s"
                     [attr.begin]="i +'-text-anim.begin +0s'" 
                     fill="freeze"/>
-                <set *ngIf="i == 0" id="set" attributeName="cx" to="20"></set>
+                <set id="i+'set-main-anim" attributeName="cx" to="20"></set>
 
         </circle>
 
@@ -61,7 +61,7 @@
                     dur="1s"
                     [attr.begin]="(i == 0) ? i+'text.click' : (i-1)+'-text-anim.end +0s'"
                     fill="freeze"/>
-                 <set *ngIf="i == 0" id="set" attributeName="x" to="20"></set>
+                 <set id="i+'set-text-anim" attributeName="x" to="20"></set>
         </text>
         
     </g>

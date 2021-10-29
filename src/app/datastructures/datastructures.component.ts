@@ -17,39 +17,24 @@ export class DatastructuresComponent {
   nodeTree: CircleTree = new CircleTree();
   circleNodeArray: CircleNode[] = [];
   traversePreOrderArray: CircleNode[] = [];
-  initialNodeValue = 22;
-  constructor() {
-
-  }
-  isLeftHeavy(): boolean | undefined {
-    if (this.nodeTree.root != undefined) {
-      return this.nodeTree.isLeftHeavy(this.nodeTree.root);
-    }
-    return false;
-  }
-  isRightHeavy(): boolean | undefined {
-    if (this.nodeTree.root != undefined) {
-      return this.nodeTree.isRightHeavy(this.nodeTree.root);
-    }
-    return false;
-  }
+  initialNodeValue: number = 22;
+  balanceFactor: number = 0;
 
 
   clearNodes() {
     this.traversePreOrderArray = [];
     this.circleNodeArray = [];
     this.nodeTree.root = null;
-
   }
-
 
   addCircleNode(value: string) {
 
     let valueAsInt = parseInt(value)
     if (this.nodeExists(valueAsInt) || this.circleNodeArray.length > 6)
       return;
-    // generate next node
-    this.initialNodeValue = Math.floor(Math.random() * 99) + 1
+
+    this.initialNodeValue = this.getNextValue();
+
 
     this.traversePreOrderArray = [];
     this.nodeTree.root = this.nodeTree.addNode(valueAsInt);
@@ -58,14 +43,15 @@ export class DatastructuresComponent {
     console.log("Initial Input Array");
     console.log(this.circleNodeArray);
 
-    //console.log("Traversed Array");
-    //console.log(this.traversePreOrderArray);
+    this.traversePreOrderArray =
+      this.nodeTree.traversePreOrder(this.nodeTree.root, this.traversePreOrderArray);
+    console.log("Traversed Array");
+    console.log(this.traversePreOrderArray);
 
-    //console.log("Tree");
-    //console.log(this.nodeTree);
+    console.log("Tree");
+    console.log(this.nodeTree);
 
-    this.traversePreOrderArray = this.nodeTree.traversePreOrder(this.nodeTree.root, this.traversePreOrderArray);
-
+    this.balanceFactor = this.nodeTree.balanceFactor(this.nodeTree.root);;
   }
   private nodeExists(i: number): boolean {
     var exists = false;
@@ -88,5 +74,12 @@ export class DatastructuresComponent {
 
     return;
   }
-
+  private getNextValue(): number {
+    var newValue = Math.floor(Math.random() * 99) + 1;
+    while (newValue == this.initialNodeValue) {
+      newValue = Math.floor(Math.random() * 99) + 1;
+      console.log("Duplicate Node Value")
+    }
+    return newValue;
+  }
 }

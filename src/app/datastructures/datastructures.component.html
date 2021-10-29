@@ -43,9 +43,11 @@
             Open Dev Tools to view output.
             <p>Value<input type="number" id="nodeValue" name="nodeValue" #nodeValue [value]="initialNodeValue"></p>
 
+            <!-- <div ngIf="balanceFactor > 1 ? isLeftHeavy : isRightHeavy">
+                <span *ngIf="isLeftHeavy">Tree is Left Heavy - Requires Rotation</span>
+                <span *ngIf="isRightHeavy">Tree is Right Heavy - Requires Rotation</span>
+            </div> -->
 
-            <!-- <span *ngIf="isLeftHeavy()">Tree is Left Heavy - Requires Rotation</span>
-            <span *ngIf="isRightHeavy()">Tree is Right Heavy - Requires Rotation</span> -->
             <button type="button" (click)="addCircleNode(nodeValue.value)">add
                 nodes</button>
             <button type="button" (click)="clearNodes()">clear

@@ -12,7 +12,7 @@ import { DataScienceComponent } from './data-science/data-science.component';
 const routes: Routes = [
   {
     path: '',
-    component: DatastructuresComponent
+    component: WelcomeComponent
   },
   {
     path: 'datastructures',
