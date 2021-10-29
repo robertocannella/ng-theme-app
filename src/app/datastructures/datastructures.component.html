@@ -41,7 +41,7 @@
 
             Currently implementing this section. Eventually will be able to portray an AVL tree structure dynamically.
             Open Dev Tools to view output.
-            <p>Value<input type="number" id="nodeValue" name="nodeValue" #nodeValue value="22"></p>
+            <p>Value<input type="number" id="nodeValue" name="nodeValue" #nodeValue [value]="initialNodeValue"></p>
 
 
             <!-- <span *ngIf="isLeftHeavy()">Tree is Left Heavy - Requires Rotation</span>
@@ -50,7 +50,6 @@
                 nodes</button>
             <button type="button" (click)="clearNodes()">clear
                 nodes</button>
-            <!-- <button type="button" (click)="convertToArray()">array</button> -->
 
             <graphic [node-tree]="nodeTree" [traversed-pre-order]="traversePreOrderArray"
                 [circleNodeArray]="circleNodeArray"></graphic>

@@ -17,6 +17,7 @@ export class DatastructuresComponent {
   nodeTree: CircleTree = new CircleTree();
   circleNodeArray: CircleNode[] = [];
   traversePreOrderArray: CircleNode[] = [];
+  initialNodeValue = 22;
   constructor() {
 
   }
@@ -33,18 +34,22 @@ export class DatastructuresComponent {
     return false;
   }
 
-  setNodeXY() {
 
-  }
   clearNodes() {
     this.traversePreOrderArray = [];
     this.circleNodeArray = [];
     this.nodeTree.root = null;
+
   }
+
+
   addCircleNode(value: string) {
+
     let valueAsInt = parseInt(value)
     if (this.nodeExists(valueAsInt) || this.circleNodeArray.length > 6)
       return;
+    // generate next node
+    this.initialNodeValue = Math.floor(Math.random() * 99) + 1
 
     this.traversePreOrderArray = [];
     this.nodeTree.root = this.nodeTree.addNode(valueAsInt);
@@ -53,18 +58,14 @@ export class DatastructuresComponent {
     console.log("Initial Input Array");
     console.log(this.circleNodeArray);
 
-    console.log("Traversed Array");
-    console.log(this.traversePreOrderArray);
+    //console.log("Traversed Array");
+    //console.log(this.traversePreOrderArray);
 
-    console.log("Tree");
-    console.log(this.nodeTree);
+    //console.log("Tree");
+    //console.log(this.nodeTree);
 
     this.traversePreOrderArray = this.nodeTree.traversePreOrder(this.nodeTree.root, this.traversePreOrderArray);
 
-    // var elements = document.getElementsByTagName("animate");
-    // for (var i = 0; i < elements.length; i++) {
-    //   (<SVGAElement>elements[i]).beginElement();
-    // }
   }
   private nodeExists(i: number): boolean {
     var exists = false;

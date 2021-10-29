@@ -11,12 +11,12 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
     trigger('moveNode', [
       // ...
       state('start', style({
-        height: '200px',
+        cx: '20',
         opacity: 1,
         backgroundColor: 'yellow'
       })),
       state('end', style({
-        height: '100px',
+        cx: '60',
         opacity: 0.8,
         backgroundColor: 'blue'
       })),
@@ -31,15 +31,9 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 })
 export class GraphicComponent {
 
-  constructor() { }
   @Input('node-tree') nodeTree?: CircleTree;
   @Input() circleNodeArray!: CircleNode[];
   @Input('traversed-pre-order') traversePreOrderArray!: CircleNode[];
-  isLoaded = this?.loaded();
 
-  loaded(): boolean {
-
-    return this.circleNodeArray?.length > 0;
-  }
 
 }

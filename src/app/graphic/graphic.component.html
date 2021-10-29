@@ -1,50 +1,47 @@
 
-<svg class="graphic-box" width="280" hieght="380">
+<svg class="graphic-box" width="280" height="380">
     <g  *ngFor="let n of circleNodeArray; let i = index">
-        <animate    [id]="i + '-back-anim'" 
-                    [attr.xlink:href]="'#' + i + 'background'"
-                    attributeName="cx"
-                    from="20" 
-                    to="" 
-                    dur="1s" 
-                    [attr.begin]="i + '-text-anim.begin +0s'"
-                    fill="freeze"/>
+
+
+                    
         <circle 
         [id]="i + 'background'" 
-        r="20" cx="20" 
+        [attr.r]="n.radius"
+        [attr.cx]="i == 0 ? '20' : '20'"  
         [attr.cy]="20 + (i*40)"
         fill="white" stroke-width="3">
-
-         
+             <animate    
+                [id]="i + '-back-anim'" 
+                [attr.xlink:href]="'#' + i + 'background'"
+                attributeName="cx"
+                [attr.from]="i==0 ? '20' : '20'" 
+                [attr.to]="n.centerRoot" 
+                dur="1s" 
+                [attr.begin]="i + '-text-anim.begin +0s'"
+                fill="freeze"/>
+            <set *ngIf="i == 0" id="set" attributeName="cx" to="20"></set>
         </circle>
-        <animate    [id]="i + '-main-anim'" 
-                    [attr.xlink:href]="'#' + i + 'main'" 
-                    attributeName="cx"
-                    attributeType="XML" 
-                    from="20" 
-                    to="125" 
-                    dur="1s"
-                    [attr.begin]="i +'-text-anim.begin +0s'" 
-                    fill="freeze"
-                    />
+
         <circle 
             [id]="i + 'main'" 
-            r="15" cx="20" 
+            [attr.r]="n.radius"
+            [attr.cx]="i == 0 ? '20' : '20'"  
             [attr.cy]="20 + (i*40)" 
             stroke="midnightblue" 
             fill="white" stroke-width="3">
-
+                <animate    
+                    [id]="i + '-main-anim'" 
+                    [attr.xlink:href]="'#' + i + 'main'" 
+                    attributeName="cx"
+                    [attr.from]="i==0 ? '20' : '20'"  
+                    [attr.to]="n.centerRoot" 
+                    dur="1s"
+                    [attr.begin]="i +'-text-anim.begin +0s'" 
+                    fill="freeze"/>
+                <set *ngIf="i == 0" id="set" attributeName="cx" to="20"></set>
 
         </circle>
-        <animate    [id]="i+'-text-anim'" 
-                    [attr.xlink:href]="'#'+ i + 'text'" 
-                    attributeName="x"
-                    from="20" 
-                    to="125"
-                    dur="1s"
-                    [attr.begin]="(i == 0) ? i+'text.click' : (i-1)+'-text-anim.end +0s'"
-                    fill="freeze"
-                    />
+
         <text   
             [id]="i+'text'" 
             fill="midnightblue" 
@@ -52,14 +49,20 @@
             text-anchor="middle" 
             font-size="1rem"
             font-weight="bold" 
-            [attr.x]="20" 
+            [attr.x]="i == 0 ? '20' : '20'"  
             [attr.y]="20+ (i*40)"
             >{{n.value}}
+                <animate    
+                    [id]="i+'-text-anim'" 
+                    [attr.xlink:href]="'#'+ i + 'text'" 
+                    attributeName="x"
+                    [attr.from]="i==0 ? '20' : '20'" 
+                    [attr.to]="n.centerRoot"
+                    dur="1s"
+                    [attr.begin]="(i == 0) ? i+'text.click' : (i-1)+'-text-anim.end +0s'"
+                    fill="freeze"/>
+                 <set *ngIf="i == 0" id="set" attributeName="x" to="20"></set>
         </text>
+        
     </g>
 </svg>
-
-
-<div *ngIf="nodeTree?.root?.value != null">
-    Root: {{nodeTree?.root?.value}}
-</div>

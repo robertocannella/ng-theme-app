@@ -211,6 +211,8 @@ export class CircleNode {
     public height = 0;
     public depth: number = 0;
     public radius = 15;
+    public centerRoot = 140;
+    public offset = 0;
 
 
 
