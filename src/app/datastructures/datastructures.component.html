@@ -35,205 +35,288 @@
     </mat-card>
     <br>
     <mat-card>
-        <mat-card-title>Trees / AVL Trees</mat-card-title>
+        <mat-card-title>Trees and Graphs</mat-card-title>
         <mat-card-subtitle></mat-card-subtitle>
         <mat-card-content>
+            <mat-accordion>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
 
-            Currently implementing this section. Eventually will be able to portray an AVL tree structure dynamically.
-            Open Dev Tools to view output.
-            <p>Value<input type="number" id="nodeValue" name="nodeValue" #nodeValue [value]="initialNodeValue"></p>
+                            <h2>
+                                Binary Trees
+                            </h2>
 
-            <!-- <div ngIf="balanceFactor > 1 ? isLeftHeavy : isRightHeavy">
-                <span *ngIf="isLeftHeavy">Tree is Left Heavy - Requires Rotation</span>
-                <span *ngIf="isRightHeavy">Tree is Right Heavy - Requires Rotation</span>
-            </div> -->
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Currently I am {{panelOpenState ? 'open' : 'closed'}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <p>I'm visible because I am open</p>
+                </mat-expansion-panel>
 
-            <button type="button" (click)="addCircleNode(nodeValue.value)">add
-                nodes</button>
-            <button type="button" (click)="clearNodes()">clear
-                nodes</button>
-
-            <graphic [node-tree]="nodeTree" [traversed-pre-order]="traversePreOrderArray"
-                [circleNodeArray]="circleNodeArray"></graphic>
-
-            <div>
-                <svg width="250" height="250" style="cursor: pointer;">
-                    <!--Edge 1-->
-                    <!-- Use ending node coordinates for edge points-->
-                    <line id="edge-one" x1="125" y1="20" x2="175" y2="70" stroke="midnightblue" stroke-width="3"
-                        opacity="0" />
-                    <animate id="edge-one-anim" xlink:href="#edge-one" attributeName="opacity" from="0.0" to="1.0"
-                        dur="1s" begin="node-2-anim.end + 0s" fill="freeze" />
-
-                    <!-- For Cycle One -->
-                    <line id="edge-one-2" x1="125" y1="120" x2="175" y2="70" stroke="midnightblue" stroke-width="3"
-                        opacity="0" />
-
-                    <!-- Edge 2-->
-                    <line id="edge-two" x1="175" y1="70" x2="230" y2="125" stroke="midnightblue" stroke-width="3"
-                        opacity="0" />
-                    <animate id="edge-two-anim" xlink:href="#edge-two" attributeName="opacity" from="0.0" to="1.0"
-                        dur="1s" begin="node-3-anim.end + 0s" fill="freeze" />
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h2>
+                                AVL Trees
+                            </h2>
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Expand to veiw visual depiction...
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
 
 
 
-                    <!-- Node 1 -->
-                    <circle id="node-1-back" r="20" cx="20" cy="20" fill="white" stroke-width="3" />
-                    <circle id="node-1" r="15" cx="20" cy="20" fill="white" stroke="midnightblue" stroke-width="3" />
-                    <text id="text-node-1" fill="#000000" font-size="1rem" font-weight="bold" x="16" y="25">1</text>
-                    <animate id="node-1-anim" xlink:href="#node-1" attributeName="cx" from="20" to="125" dur="1s"
-                        begin="0s" fill="freeze" />
-                    <animate id="node-1-back-anim" xlink:href="#node-1-back" attributeName="cx" from="20" to="125"
-                        dur="1s" begin="0s" fill="freeze" />
-                    <animate xlink:href="#text-node-1" attributeName="x" from="16" to="121" dur="1s" begin="0s"
-                        fill="freeze" />
+                    Currently implementing this section. Eventually will be able to portray an AVL tree structure
+                    dynamically.
+                    Open Dev Tools to view output.
+                    <p>Value<input type="number" id="nodeValue" name="nodeValue" #nodeValue [value]="initialNodeValue">
+                    </p>
+
+                    <!-- <div ngIf="balanceFactor > 1 ? isLeftHeavy : isRightHeavy">
+                            <span *ngIf="isLeftHeavy">Tree is Left Heavy - Requires Rotation</span>
+                            <span *ngIf="isRightHeavy">Tree is Right Heavy - Requires Rotation</span>
+                        </div> -->
+
+                    <button type="button" (click)="addCircleNode(nodeValue.value)">add
+                        nodes</button>
+                    <button type="button" (click)="clearNodes()">clear
+                        nodes</button>
+
+                    <graphic [node-tree]="nodeTree" [traversed-pre-order]="traversePreOrderArray"
+                        [circleNodeArray]="circleNodeArray"></graphic>
+
+                    <div>
+                        <svg width="250" height="250" style="cursor: pointer;">
+                            <!--Edge 1-->
+                            <!-- Use ending node coordinates for edge points-->
+                            <line id="edge-one" x1="125" y1="20" x2="175" y2="70" stroke="midnightblue" stroke-width="3"
+                                opacity="0" />
+                            <animate id="edge-one-anim" xlink:href="#edge-one" attributeName="opacity" from="0.0"
+                                to="1.0" dur="1s" begin="node-2-anim.end + 0s" fill="freeze" />
+
+                            <!-- For Cycle One -->
+                            <line id="edge-one-2" x1="125" y1="120" x2="175" y2="70" stroke="midnightblue"
+                                stroke-width="3" opacity="0" />
+
+                            <!-- Edge 2-->
+                            <line id="edge-two" x1="175" y1="70" x2="230" y2="125" stroke="midnightblue"
+                                stroke-width="3" opacity="0" />
+                            <animate id="edge-two-anim" xlink:href="#edge-two" attributeName="opacity" from="0.0"
+                                to="1.0" dur="1s" begin="node-3-anim.end + 0s" fill="freeze" />
 
 
-                    <!-- Node 2-->
-                    <!-- add 50 to each y component-->
-                    <!-- ABS 40 to each x component at each Node Level-->
-                    <!-- ABS .25 seconds to animations moving farther away -->
 
-                    <circle id="node-2-back" r="20" cx="20" cy="70" fill="white" />
-                    <circle id="node-2" r="15" cx="20" cy="70" fill="none" stroke="midnightblue" stroke-width="3" />
-                    <text id="text-node-2" fill="#000000" font-size="1rem" font-weight="bold" x="16" y="75">2</text>
-
-                    <animate id="node-2-back-anim" xlink:href="#node-2-back" attributeName="cx" from="20" to="175"
-                        dur="1.25s" begin="node-1-anim.end + .5s" fill="freeze" />
-                    <animate id="node-2-anim" xlink:href="#node-2" attributeName="cx" from="20" to="175" dur="1.25s"
-                        begin="node-1-anim.end + .5s" fill="freeze" />
-                    <animate xlink:href="#text-node-2" attributeName="x" from="16" to="171" dur="1.25s"
-                        begin="node-1-anim.end + .5s" fill="freeze" />
+                            <!-- Node 1 -->
+                            <circle id="node-1-back" r="20" cx="20" cy="20" fill="white" stroke-width="3" />
+                            <circle id="node-1" r="15" cx="20" cy="20" fill="white" stroke="midnightblue"
+                                stroke-width="3" />
+                            <text id="text-node-1" fill="#000000" font-size="1rem" font-weight="bold" x="16"
+                                y="25">1</text>
+                            <animate id="node-1-anim" xlink:href="#node-1" attributeName="cx" from="20" to="125"
+                                dur="1s" begin="0s" fill="freeze" />
+                            <animate id="node-1-back-anim" xlink:href="#node-1-back" attributeName="cx" from="20"
+                                to="125" dur="1s" begin="0s" fill="freeze" />
+                            <animate id="start-animation" xlink:href="#text-node-1" attributeName="x" from="16" to="121"
+                                dur="1s" begin="0s" fill="freeze" />
 
 
+                            <!-- Node 2-->
+                            <!-- add 50 to each y component-->
+                            <!-- ABS 40 to each x component at each Node Level-->
+                            <!-- ABS .25 seconds to animations moving farther away -->
 
-                    <!-- Node 3-->
+                            <circle id="node-2-back" r="20" cx="20" cy="70" fill="white" />
+                            <circle id="node-2" r="15" cx="20" cy="70" fill="none" stroke="midnightblue"
+                                stroke-width="3" />
+                            <text id="text-node-2" fill="#000000" font-size="1rem" font-weight="bold" x="16"
+                                y="75">2</text>
 
-                    <!-- add 50 to each y component-->
-                    <!-- ABS 50 to each x component from Node one End at each Node Level-->
-
-                    <circle id="node-3-back" r="20" cx="20" cy="120" fill="white" />
-                    <circle id="node-3" r="15" cx="20" cy="120" fill="white" stroke="midnightblue" stroke-width="3" />
-                    <text id="text-node-3" fill="#000000" font-size="1rem" font-weight="bold" x="16" y="125">3</text>
-
-                    <animate id="node-3-back-anim" xlink:href="#node-3-back" attributeName="cx" from="20" to="226"
-                        dur="1.5s" begin="node-2-anim.end + .5s" fill="freeze" />
-                    <animate id="node-3-anim" xlink:href="#node-3" attributeName="cx" from="20" to="226" dur="1.5s"
-                        begin="node-2-anim.end + .5s" fill="freeze" />
-                    <animate xlink:href="#text-node-3" attributeName="x" from="16" to="222" dur="1.5s"
-                        begin="node-2-anim.end + .5s" fill="freeze" />
-
-                    <!-- AVL Cycle One -->
-                    <!-- Hide Edge One -->
-                    <animate id="cycle-1-hide-edge-1" xlink:href="#edge-one" attributeName="opacity" from="1" to="0"
-                        dur="1s" begin="node-3-anim.end + .5s" fill="freeze" />
-                    <!-- Shift Node 1 down -->
-
-                    <animate id="cycle-1-shift-node-1" xlink:href="#node-1" attributeName="cy" from="20" to="120"
-                        dur="1s" begin="cycle-1-hide-edge-1.end + 0s" fill="freeze" />
-                    <animate id="cycle-1-shift-node-1-back" xlink:href="#node-1-back" attributeName="cy" from="20"
-                        to="120" dur="1s" begin="cycle-1-hide-edge-1.end +0s" fill="freeze" />
-                    <animate id="cycle-1-shift-node-1-text" xlink:href="#text-node-1" attributeName="y" from="25"
-                        to="125" dur="1s" begin="cycle-1-hide-edge-1.end +0s" fill="freeze" />
-
-                    <!-- Show Edge One-->
-
-                    <animate id="cycle-1-show-edge-one-2" xlink:href="#edge-one-2" attributeName="opacity" from="0"
-                        to="1" dur="1s" begin="cycle-1-shift-node-1.end + .5s" fill="freeze" />
-
-                    <!-- Shift All Nodes Up -->
-
-                    <!-- Node 2 -->
-                    <!-- ----  Node -->
-                    <animate id="cycle-1-shift-node-2-x" xlink:href="#node-2" attributeName="cx" from="175" to="125"
-                        dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
-                    <animate id="cycle-1-shift-node-2-y" xlink:href="#node-2" attributeName="cy" from="70" to="20"
-                        dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
-                    <!-- ----  Node Background-->
-                    <animate id="cycle-1-shift-node-2-back-x" xlink:href="#node-2-back" attributeName="cx" from="175"
-                        to="125" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
-                    <animate id="cycle-1-shift-node-2-back-y" xlink:href="#node-2-back" attributeName="cy" from="70"
-                        to="20" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
-                    <!-- ----  Node Text -->
-                    <animate id="cycle-1-shift-node-2-text-x" xlink:href="#text-node-2" attributeName="x" from="171"
-                        to="121" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
-                    <animate id="cycle-1-shift-node-2-text-y" xlink:href="#text-node-2" attributeName="y" from="75"
-                        to="25" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <animate id="node-2-back-anim" xlink:href="#node-2-back" attributeName="cx" from="20"
+                                to="175" dur="1.25s" begin="node-1-anim.end + .5s" fill="freeze" />
+                            <animate id="node-2-anim" xlink:href="#node-2" attributeName="cx" from="20" to="175"
+                                dur="1.25s" begin="node-1-anim.end + .5s" fill="freeze" />
+                            <animate xlink:href="#text-node-2" attributeName="x" from="16" to="171" dur="1.25s"
+                                begin="node-1-anim.end + .5s" fill="freeze" />
 
 
-                    <!-- Node 3 -->
-                    <!-- --- Node -->
-                    <animate id="cycle-1-shift-node-3-x" xlink:href="#node-3" attributeName="cx" from="226" to="175"
-                        dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
-                    <animate id="cycle-1-shift-node-3-y" xlink:href="#node-3" attributeName="cy" from="120" to="70"
-                        dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
-                    <!-- --- Node Background-->
-                    <animate id="cycle-1-shift-node-3-back-x" xlink:href="#node-3-back" attributeName="cx" from="226"
-                        to="175" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
-                    <animate id="cycle-1-shift-node-3-back-y" xlink:href="#node-3-back" attributeName="cy" from="120"
-                        to="70" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
-                    <!-- --- Node Text-->
-                    <animate id="cycle-1-shift-node-3-text-x" xlink:href="#text-node-3" attributeName="x" from="222"
-                        to="171" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
-                    <animate id="cycle-1-shift-node-3-text-y" xlink:href="#text-node-3" attributeName="y" from="125"
-                        to="75" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
 
-                    <!-- Edge Two -->
-                    <animate id="cycle-1-shift-edge-2-x1" xlink:href="#edge-two" attributeName="x1" from="175" to="125"
-                        dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
-                    <animate id="cycle-1-shift-edge-2-y1" xlink:href="#edge-two" attributeName="y1" from="70" to="20"
-                        dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
-                    <animate id="cycle-1-shift-edge-2-x2" xlink:href="#edge-two" attributeName="x2" from="230" to="175"
-                        dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
-                    <animate id="cycle-1-shift-edge-2-y2" xlink:href="#edge-two" attributeName="y2" from="125" to="70"
-                        dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <!-- Node 3-->
+
+                            <!-- add 50 to each y component-->
+                            <!-- ABS 50 to each x component from Node one End at each Node Level-->
+
+                            <circle id="node-3-back" r="20" cx="20" cy="120" fill="white" />
+                            <circle id="node-3" r="15" cx="20" cy="120" fill="white" stroke="midnightblue"
+                                stroke-width="3" />
+                            <text id="text-node-3" fill="#000000" font-size="1rem" font-weight="bold" x="16"
+                                y="125">3</text>
+
+                            <animate id="node-3-back-anim" xlink:href="#node-3-back" attributeName="cx" from="20"
+                                to="226" dur="1.5s" begin="node-2-anim.end + .5s" fill="freeze" />
+                            <animate id="node-3-anim" xlink:href="#node-3" attributeName="cx" from="20" to="226"
+                                dur="1.5s" begin="node-2-anim.end + .5s" fill="freeze" />
+                            <animate xlink:href="#text-node-3" attributeName="x" from="16" to="222" dur="1.5s"
+                                begin="node-2-anim.end + .5s" fill="freeze" />
+
+                            <!-- AVL Cycle One -->
+                            <!-- Hide Edge One -->
+                            <animate id="cycle-1-hide-edge-1" xlink:href="#edge-one" attributeName="opacity" from="1"
+                                to="0" dur="1s" begin="node-3-anim.end + .5s" fill="freeze" />
+                            <!-- Shift Node 1 down -->
+
+                            <animate id="cycle-1-shift-node-1" xlink:href="#node-1" attributeName="cy" from="20"
+                                to="120" dur="1s" begin="cycle-1-hide-edge-1.end + 0s" fill="freeze" />
+                            <animate id="cycle-1-shift-node-1-back" xlink:href="#node-1-back" attributeName="cy"
+                                from="20" to="120" dur="1s" begin="cycle-1-hide-edge-1.end +0s" fill="freeze" />
+                            <animate id="cycle-1-shift-node-1-text" xlink:href="#text-node-1" attributeName="y"
+                                from="25" to="125" dur="1s" begin="cycle-1-hide-edge-1.end +0s" fill="freeze" />
+
+                            <!-- Show Edge One-->
+
+                            <animate id="cycle-1-show-edge-one-2" xlink:href="#edge-one-2" attributeName="opacity"
+                                from="0" to="1" dur="1s" begin="cycle-1-shift-node-1.end + .5s" fill="freeze" />
+
+                            <!-- Shift All Nodes Up -->
+
+                            <!-- Node 2 -->
+                            <!-- ----  Node -->
+                            <animate id="cycle-1-shift-node-2-x" xlink:href="#node-2" attributeName="cx" from="175"
+                                to="125" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <animate id="cycle-1-shift-node-2-y" xlink:href="#node-2" attributeName="cy" from="70"
+                                to="20" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <!-- ----  Node Background-->
+                            <animate id="cycle-1-shift-node-2-back-x" xlink:href="#node-2-back" attributeName="cx"
+                                from="175" to="125" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <animate id="cycle-1-shift-node-2-back-y" xlink:href="#node-2-back" attributeName="cy"
+                                from="70" to="20" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <!-- ----  Node Text -->
+                            <animate id="cycle-1-shift-node-2-text-x" xlink:href="#text-node-2" attributeName="x"
+                                from="171" to="121" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <animate id="cycle-1-shift-node-2-text-y" xlink:href="#text-node-2" attributeName="y"
+                                from="75" to="25" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
 
 
-                    <!-- Edge One -->
-                    <animate id="cycle-1-shift-edge-1-x1" xlink:href="#edge-one-2" attributeName="x1" from="125" to="75"
-                        dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
-                    <animate id="cycle-1-shift-edge-1-y1" xlink:href="#edge-one-2" attributeName="y1" from="120" to="70"
-                        dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
-                    <animate id="cycle-1-shift-edge-1-x2" xlink:href="#edge-one-2" attributeName="x2" from="175"
-                        to="125" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
-                    <animate id="cycle-1-shift-edge-1-y2" xlink:href="#edge-one-2" attributeName="y2" from="70" to="20"
-                        dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <!-- Node 3 -->
+                            <!-- --- Node -->
+                            <animate id="cycle-1-shift-node-3-x" xlink:href="#node-3" attributeName="cx" from="226"
+                                to="175" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <animate id="cycle-1-shift-node-3-y" xlink:href="#node-3" attributeName="cy" from="120"
+                                to="70" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <!-- --- Node Background-->
+                            <animate id="cycle-1-shift-node-3-back-x" xlink:href="#node-3-back" attributeName="cx"
+                                from="226" to="175" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <animate id="cycle-1-shift-node-3-back-y" xlink:href="#node-3-back" attributeName="cy"
+                                from="120" to="70" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <!-- --- Node Text-->
+                            <animate id="cycle-1-shift-node-3-text-x" xlink:href="#text-node-3" attributeName="x"
+                                from="222" to="171" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <animate id="cycle-1-shift-node-3-text-y" xlink:href="#text-node-3" attributeName="y"
+                                from="125" to="75" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+
+                            <!-- Edge Two -->
+                            <animate id="cycle-1-shift-edge-2-x1" xlink:href="#edge-two" attributeName="x1" from="175"
+                                to="125" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <animate id="cycle-1-shift-edge-2-y1" xlink:href="#edge-two" attributeName="y1" from="70"
+                                to="20" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <animate id="cycle-1-shift-edge-2-x2" xlink:href="#edge-two" attributeName="x2" from="230"
+                                to="175" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <animate id="cycle-1-shift-edge-2-y2" xlink:href="#edge-two" attributeName="y2" from="125"
+                                to="70" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
 
 
-                    <!-- Node One-->
-                    <!-- --- Node -->
-                    <animate id="cycle-1-shift-node-1-x" xlink:href="#node-1" attributeName="cx" from="125" to="75"
-                        dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
-                    <animate id="cycle-1-shift-node-1-y" xlink:href="#node-1" attributeName="cy" from="120" to="70"
-                        dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
-                    <!-- --- Node Background-->
-                    <animate id="cycle-1-shift-node-1-back-x" xlink:href="#node-1-back" attributeName="cx" from="125"
-                        to="75" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
-                    <animate id="cycle-1-shift-node-1-back-y" xlink:href="#node-1-back" attributeName="cy" from="120"
-                        to="70" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
-                    <!-- --- Node Text-->
-                    <animate id="cycle-1-shift-node-1-text-x" xlink:href="#text-node-1" attributeName="x" from="120"
-                        to="70" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
-                    <animate id="cycle-1-shift-node-1-text-y" xlink:href="#text-node-1" attributeName="y" from="125"
-                        to="75" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
-                </svg>
-            </div>
+                            <!-- Edge One -->
+                            <animate id="cycle-1-shift-edge-1-x1" xlink:href="#edge-one-2" attributeName="x1" from="125"
+                                to="75" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <animate id="cycle-1-shift-edge-1-y1" xlink:href="#edge-one-2" attributeName="y1" from="120"
+                                to="70" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <animate id="cycle-1-shift-edge-1-x2" xlink:href="#edge-one-2" attributeName="x2" from="175"
+                                to="125" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <animate id="cycle-1-shift-edge-1-y2" xlink:href="#edge-one-2" attributeName="y2" from="70"
+                                to="20" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+
+
+                            <!-- Node One-->
+                            <!-- --- Node -->
+                            <animate id="cycle-1-shift-node-1-x" xlink:href="#node-1" attributeName="cx" from="125"
+                                to="75" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <animate id="cycle-1-shift-node-1-y" xlink:href="#node-1" attributeName="cy" from="120"
+                                to="70" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <!-- --- Node Background-->
+                            <animate id="cycle-1-shift-node-1-back-x" xlink:href="#node-1-back" attributeName="cx"
+                                from="125" to="75" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <animate id="cycle-1-shift-node-1-back-y" xlink:href="#node-1-back" attributeName="cy"
+                                from="120" to="70" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <!-- --- Node Text-->
+                            <animate id="cycle-1-shift-node-1-text-x" xlink:href="#text-node-1" attributeName="x"
+                                from="120" to="70" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                            <animate id="cycle-1-shift-node-1-text-y" xlink:href="#text-node-1" attributeName="y"
+                                from="125" to="75" dur="1s" begin="cycle-1-show-edge-one-2.end +0s" fill="freeze" />
+                        </svg>
+                    </div>
+
+
+                </mat-expansion-panel>
+
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h2>Min Heaps</h2>
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Basic Configuration:
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <mat-list>
+                        <mat-list-item>Root Node is the least value</mat-list-item>
+                        <mat-list-item>Any children must be greater than the root</mat-list-item>
+                    </mat-list>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h2>Max Heaps</h2>
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Accessing node and thier children:
+                        </mat-panel-description>
+
+                    </mat-expansion-panel-header>
+                    <mat-list>
+                        <mat-list-item>[node] * 2 = parents's first child</mat-list-item>
+                        <mat-list-item>1 * 2 = parents's first child</mat-list-item>
+                        <mat-list-item>[node] * 2 + 1= parents's second child</mat-list-item>
+                        <mat-list-item>1 * 2 + 1 = parents's second child</mat-list-item>
+                        <mat-list-item>[node] / 2 = child's parent</mat-list-item>
+                        <mat-list-item>4 / 2 = child's parent</mat-list-item>
+                    </mat-list>
+                    <mat-list>
+                        <mat-list-item>Root Node is the largest value</mat-list-item>
+                        <mat-list-item>Any children must be smaller than the root</mat-list-item>
+                    </mat-list>
+                    <mat-list>
+                        <mat-list-item>
+
+                        </mat-list-item>
+                    </mat-list>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h2>Graphs</h2>
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Currently I am {{panelOpenState ? 'open' : 'closed'}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <p>I'm visible because I am open</p>
+                </mat-expansion-panel>
+            </mat-accordion>
         </mat-card-content>
-        <mat-card-actions align="end">
-            <button mat-button>View Code</button>
-            <button mat-button>LIKE</button>
-        </mat-card-actions>
     </mat-card>
-    <mat-card>
-        <mat-card-title>Graphs</mat-card-title>
-        <mat-card-subtitle></mat-card-subtitle>
-        <mat-card-content>
 
-        </mat-card-content>
-        <mat-card-actions align="end">
-            <!-- <button mat-button>Like</button>
-            <button mat-button>SHARE</button> -->
-        </mat-card-actions>
-    </mat-card>
-    <br>
 </div>

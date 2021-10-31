@@ -33,7 +33,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     TextPostComponent,
     CodePostComponent,
     ImagePostComponent,
-    CodeBlockComponent
+    CodeBlockComponent,
+
   ],
   exports: [
     SidenavComponent,
@@ -55,6 +56,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatProgressBarModule,
     YouTubePlayerModule,
     BrowserAnimationsModule
+
   ],
   imports: [
     CommonModule,

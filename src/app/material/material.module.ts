@@ -11,6 +11,7 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatMenuModule } from '@angular/material/menu'
 import { MatBadgeModule } from '@angular/material/badge'
 import { MatListModule } from '@angular/material/list'
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 
@@ -29,7 +30,8 @@ import { MatListModule } from '@angular/material/list'
     MatTooltipModule,
     MatMenuModule,
     MatBadgeModule,
-    MatListModule
+    MatListModule,
+    MatExpansionModule
   ],
   imports: [
     CommonModule

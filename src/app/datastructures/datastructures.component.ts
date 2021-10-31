@@ -19,7 +19,7 @@ export class DatastructuresComponent {
   traversePreOrderArray: CircleNode[] = [];
   initialNodeValue: number = 22;
   balanceFactor: number = 0;
-
+  panelOpenState = false;
 
   clearNodes() {
     this.traversePreOrderArray = [];

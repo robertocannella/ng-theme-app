@@ -3,7 +3,7 @@
 // Importing 'Work Sans' font for headings
 @include mat.core();
 @import url("https://fonts.google.com/css2?family=Work+Sans:wght@300;400;500&display=swap");
-
+@import "../node_modules/bootstrap/scss/bootstrap";
 $theming-material-components-primary: mat.deifine-palette(mat.$indigo-palette);
 $theming-material-components-accent: mat.define-palette(
   mat.$pink-palette,
