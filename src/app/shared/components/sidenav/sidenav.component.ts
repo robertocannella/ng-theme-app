@@ -27,4 +27,7 @@ export class SidenavComponent implements OnInit {
   toggleSideNav() {
     this.isOpen = !this.isOpen;
   }
+  closeSideNav() {
+    this.isOpen = false;
+  }
 }
