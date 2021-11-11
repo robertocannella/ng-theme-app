@@ -8,7 +8,7 @@
             <fa-icon [icon]="isOpen ? 'chevron-left' : 'chevron-right'"></fa-icon>
         </button>
 
-        <span class="example-spacer">{{brand}}</span>
+        <span class="example-spacer" routerLink="/">{{brand}}</span>
 
         <!-- ? below button will help us change the theme at run-time. -->
         <button mat-icon-button (click)="toggleTheme()" matTooltip="Toggle dark theme">
