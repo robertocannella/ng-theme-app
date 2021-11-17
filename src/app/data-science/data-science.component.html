@@ -10,7 +10,7 @@
                 Matplotlib Archictecture
             </mat-list-item>
         </a>
-        <mat-accordion>
+        <mat-accordion class="mat-elevation-z0">
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
@@ -27,7 +27,33 @@
                         Visualization Wheel
                     </mat-list-item>
                 </a>
+                <mat-accordion>
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                10 rules for better figures
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                <a
+                                    href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003833">article</a>
+                                <!-- Currently I am {{panelOpenState ? 'open' : 'closed'}} -->
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
 
+                        <mat-list-item>Know your audience</mat-list-item>
+                        <mat-list-item>Identify your message</mat-list-item>
+                        <mat-list-item></mat-list-item>
+                        <mat-list-item></mat-list-item>
+                        <mat-list-item></mat-list-item>
+                        <mat-list-item></mat-list-item>
+                        <mat-list-item></mat-list-item>
+                        <mat-list-item></mat-list-item>
+                        <mat-list-item></mat-list-item>
+                        <mat-list-item></mat-list-item>
+
+
+                    </mat-expansion-panel>
+                </mat-accordion>
             </mat-expansion-panel>
         </mat-accordion>
 
