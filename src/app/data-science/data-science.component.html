@@ -1,9 +1,36 @@
 <div class="container">
     <h1>
         <fa-icon icon="filter"></fa-icon>&nbsp;
-        Google Colab Data Science Notebooks
+        Data Science
     </h1>
     <mat-nav-list>
+        <a href="https://colab.research.google.com/drive/1K3L9RLtrw6QeQOVQRsP6GTSGzu5jbfhg?usp=sharing" target="_blank"
+            rel="noopener noreferrer">
+            <mat-list-item>
+                Matplotlib Archictecture
+            </mat-list-item>
+        </a>
+        <mat-accordion>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Data Visualization
+                    </mat-panel-title>
+                    <mat-panel-description>
+
+                        <!-- Currently I am {{panelOpenState ? 'open' : 'closed'}} -->
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <a href="https://mooctools.ai.umich.edu/multimeasure/424-visualization-wheel-practice/67-structure-of-a-supercell/99c9a9cd4950a24558deb7e89e76137c711cf0ef/"
+                    target="_blank" rel="noopener noreferrer">
+                    <mat-list-item>
+                        Visualization Wheel
+                    </mat-list-item>
+                </a>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+
         <a href="https://colab.research.google.com/drive/13CoavTVgi-Xp1JI3i8K12vBz4B0lDnsU?usp=sharing" target="_blank"
             rel="noopener noreferrer">
             <mat-list-item>

@@ -29,5 +29,7 @@ export class SidenavComponent implements OnInit {
   }
   closeSideNav() {
     this.isOpen = false;
+    if (this.isOpen)
+      this.isOpen = !this.isOpen;
   }
 }
