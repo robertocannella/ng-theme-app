@@ -3,15 +3,23 @@
         <fa-icon icon="filter"></fa-icon>&nbsp;
         Data Science
     </h1>
+
     <mat-nav-list>
+        <a href="https://colab.research.google.com/drive/1fzuRbR-bXqGspakjNO9rGFARtExTtcy0?usp=sharing" target="_blank"
+            rel="noopener noreferrer">
+            <mat-list-item>
+                Matplotlib Advanced Plotting
+            </mat-list-item>
+        </a>
         <a href="https://colab.research.google.com/drive/1K3L9RLtrw6QeQOVQRsP6GTSGzu5jbfhg?usp=sharing" target="_blank"
             rel="noopener noreferrer">
             <mat-list-item>
                 Matplotlib Archictecture
             </mat-list-item>
         </a>
-        <mat-accordion class="mat-elevation-z0">
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-accordion>
+            <mat-expansion-panel class="mat-elevation-z0" (opened)="panelOpenState = true"
+                (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         Data Visualization
@@ -40,16 +48,40 @@
                             </mat-panel-description>
                         </mat-expansion-panel-header>
 
-                        <mat-list-item>Know your audience</mat-list-item>
-                        <mat-list-item>Identify your message</mat-list-item>
-                        <mat-list-item></mat-list-item>
-                        <mat-list-item></mat-list-item>
-                        <mat-list-item></mat-list-item>
-                        <mat-list-item></mat-list-item>
-                        <mat-list-item></mat-list-item>
-                        <mat-list-item></mat-list-item>
-                        <mat-list-item></mat-list-item>
-                        <mat-list-item></mat-list-item>
+                        <mat-list-item style="height: 1.5rem;">-Know your audience</mat-list-item>
+                        <mat-list-item style="height: 1.5rem;">-Identify your message</mat-list-item>
+                        <mat-list-item style="height: 1.5rem;">-Adapt the figure to the support medium</mat-list-item>
+                        <mat-list-item style="height: 1.5rem;">-Captions are not optional</mat-list-item>
+                        <mat-list-item style="height: 1.5rem;">-Do not distrust the software defaults</mat-list-item>
+                        <mat-list-item style="height: 1.5rem;">-User colors effectively:</mat-list-item>
+                        <ul>
+                            <mat-list-item style="height: 1.5rem;">-Sequential: one variation of a unique
+                                color, used for quantitative data varying from low to high.</mat-list-item>
+                            <mat-list-item style="height: 1.5rem;">-Diverging: variation from one color to
+                                another, used to highlight deviation
+                                from a median value.</mat-list-item>
+                            <mat-list-item style="height: 1.5rem;">-Qualitative: rapid variation of colors,
+                                used mainly for discrete or categorical
+                                data
+                            </mat-list-item>
+                        </ul>
+                        <mat-list-item style="height: 1.5rem;">-Do not mislead the reader</mat-list-item>
+                        <mat-list-item style="height: 1.5rem;">-Avoid chart junk</mat-list-item>
+                        <mat-list-item style="height: 1.5rem;">-Message trumps beauty</mat-list-item>
+                        <mat-list-item style="height: 1.5rem;">-Get the right tool:</mat-list-item>
+                        <ul>
+                            <mat-list-item style="height: 1.5rem;">Matplotlib</mat-list-item>
+                            <mat-list-item style="height: 1.5rem;">R</mat-list-item>
+                            <mat-list-item style="height: 1.5rem;">InkScape</mat-list-item>
+                            <mat-list-item style="height: 1.5rem;">TikZ and PGF</mat-list-item>
+                            <mat-list-item style="height: 1.5rem;">GIMP</mat-list-item>
+                            <mat-list-item style="height: 1.5rem;">ImageMagick</mat-list-item>
+                            <mat-list-item style="height: 1.5rem;">D3</mat-list-item>
+                            <mat-list-item style="height: 1.5rem;">Cytoscape</mat-list-item>
+                            <mat-list-item style="height: 1.5rem;">Circos</mat-list-item>
+                        </ul>
+
+
 
 
                     </mat-expansion-panel>
