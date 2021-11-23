@@ -19,6 +19,7 @@ import { DatastructuresComponent } from './datastructures/datastructures.compone
 import { GraphicComponent } from './graphic/graphic.component';
 import { MachineLearningComponent } from './machine-learning/machine-learning.component';
 import { DataScienceComponent } from './data-science/data-science.component';
+import { StatisticsComponent } from './statistics/statistics.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { DataScienceComponent } from './data-science/data-science.component';
     DatastructuresComponent,
     GraphicComponent,
     MachineLearningComponent,
-    DataScienceComponent
+    DataScienceComponent,
+    StatisticsComponent
   ],
   imports: [
     BrowserModule,

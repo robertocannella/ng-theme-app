@@ -7,12 +7,17 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { DatastructuresComponent } from './datastructures/datastructures.component';
 import { MachineLearningComponent } from './machine-learning/machine-learning.component';
 import { DataScienceComponent } from './data-science/data-science.component';
+import { StatisticsComponent } from './statistics/statistics.component';
 
 
 const routes: Routes = [
   {
     path: '',
     component: WelcomeComponent
+  },
+  {
+    path: 'statistics',
+    component: StatisticsComponent
   },
   {
     path: 'datastructures',
