@@ -20,6 +20,7 @@ import { GraphicComponent } from './graphic/graphic.component';
 import { MachineLearningComponent } from './machine-learning/machine-learning.component';
 import { DataScienceComponent } from './data-science/data-science.component';
 import { StatisticsComponent } from './statistics/statistics.component';
+import { ToolsComponent } from './tools/tools.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { StatisticsComponent } from './statistics/statistics.component';
     GraphicComponent,
     MachineLearningComponent,
     DataScienceComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    ToolsComponent
   ],
   imports: [
     BrowserModule,

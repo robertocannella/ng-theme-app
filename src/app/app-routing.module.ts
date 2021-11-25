@@ -8,6 +8,7 @@ import { DatastructuresComponent } from './datastructures/datastructures.compone
 import { MachineLearningComponent } from './machine-learning/machine-learning.component';
 import { DataScienceComponent } from './data-science/data-science.component';
 import { StatisticsComponent } from './statistics/statistics.component';
+import { ToolsComponent } from './tools/tools.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path: 'statistics',
     component: StatisticsComponent
+  },
+  {
+    path: 'tools',
+    component: ToolsComponent
   },
   {
     path: 'datastructures',
