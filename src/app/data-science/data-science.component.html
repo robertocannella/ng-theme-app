@@ -1,136 +1,63 @@
 <div class="container">
-    <h1>
-        <fa-icon icon="filter"></fa-icon>&nbsp;
-        Data Science
-    </h1>
-
-    <mat-nav-list>
-        <a href="https://colab.research.google.com/drive/1U8iOlBeYL_MJQLONdBN_YF5OQV64aBxe?usp=sharing" target="_blank"
-            rel="noopener noreferrer">
-            <mat-list-item>
-                Pandas/Seaborn Visualization
-            </mat-list-item>
-        </a>
-        <a href="https://colab.research.google.com/drive/1fzuRbR-bXqGspakjNO9rGFARtExTtcy0?usp=sharing" target="_blank"
-            rel="noopener noreferrer">
-            <mat-list-item>
-                Matplotlib Advanced Plotting
-            </mat-list-item>
-        </a>
-        <a href="https://colab.research.google.com/drive/1K3L9RLtrw6QeQOVQRsP6GTSGzu5jbfhg?usp=sharing" target="_blank"
-            rel="noopener noreferrer">
-            <mat-list-item>
+    <span class="sub-header">
+        <div class="t2">Data Science Notebooks</div>
+    </span>
+    <div class="linebreak"></div>
+    <mat-list>
+        <mat-list-item class="content-list-item">
+            <a href="https://colab.research.google.com/drive/1U8iOlBeYL_MJQLONdBN_YF5OQV64aBxe?usp=sharing"
+                target="_blank" rel="noopener noreferrer">
+                Pandas/Seaborn Visualization</a>
+        </mat-list-item>
+        <mat-list-item class="content-list-item">
+            <a href="https://colab.research.google.com/drive/1fzuRbR-bXqGspakjNO9rGFARtExTtcy0?usp=sharing"
+                target="_blank" rel="noopener noreferrer">
+                Matplotlib Advanced Plotting</a>
+        </mat-list-item>
+        <mat-list-item class="content-list-item">
+            <a href="https://colab.research.google.com/drive/1K3L9RLtrw6QeQOVQRsP6GTSGzu5jbfhg?usp=sharing"
+                target="_blank" rel="noopener noreferrer">
                 Matplotlib Archictecture
-            </mat-list-item>
-        </a>
-        <mat-accordion>
-            <mat-expansion-panel class="mat-elevation-z0" (opened)="panelOpenState = true"
-                (closed)="panelOpenState = false">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Data Visualization
-                    </mat-panel-title>
-                    <mat-panel-description>
-
-                        <!-- Currently I am {{panelOpenState ? 'open' : 'closed'}} -->
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
-                <a href="https://mooctools.ai.umich.edu/multimeasure/424-visualization-wheel-practice/67-structure-of-a-supercell/99c9a9cd4950a24558deb7e89e76137c711cf0ef/"
-                    target="_blank" rel="noopener noreferrer">
-                    <mat-list-item>
-                        Visualization Wheel
-                    </mat-list-item>
-                </a>
-                <mat-accordion>
-                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                10 rules for better figures
-                            </mat-panel-title>
-                            <mat-panel-description>
-                                <a
-                                    href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003833">article</a>
-                                <!-- Currently I am {{panelOpenState ? 'open' : 'closed'}} -->
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-
-                        <mat-list-item style="height: 1.5rem;">-Know your audience</mat-list-item>
-                        <mat-list-item style="height: 1.5rem;">-Identify your message</mat-list-item>
-                        <mat-list-item style="height: 1.5rem;">-Adapt the figure to the support medium</mat-list-item>
-                        <mat-list-item style="height: 1.5rem;">-Captions are not optional</mat-list-item>
-                        <mat-list-item style="height: 1.5rem;">-Do not distrust the software defaults</mat-list-item>
-                        <mat-list-item style="height: 1.5rem;">-User colors effectively:</mat-list-item>
-                        <ul>
-                            <mat-list-item style="height: 1.5rem;">-Sequential: one variation of a unique
-                                color, used for quantitative data varying from low to high.</mat-list-item>
-                            <mat-list-item style="height: 1.5rem;">-Diverging: variation from one color to
-                                another, used to highlight deviation
-                                from a median value.</mat-list-item>
-                            <mat-list-item style="height: 1.5rem;">-Qualitative: rapid variation of colors,
-                                used mainly for discrete or categorical
-                                data
-                            </mat-list-item>
-                        </ul>
-                        <mat-list-item style="height: 1.5rem;">-Do not mislead the reader</mat-list-item>
-                        <mat-list-item style="height: 1.5rem;">-Avoid chart junk</mat-list-item>
-                        <mat-list-item style="height: 1.5rem;">-Message trumps beauty</mat-list-item>
-                        <mat-list-item style="height: 1.5rem;">-Get the right tool:</mat-list-item>
-                        <ul>
-                            <mat-list-item style="height: 1.5rem;">Matplotlib</mat-list-item>
-                            <mat-list-item style="height: 1.5rem;">R</mat-list-item>
-                            <mat-list-item style="height: 1.5rem;">InkScape</mat-list-item>
-                            <mat-list-item style="height: 1.5rem;">TikZ and PGF</mat-list-item>
-                            <mat-list-item style="height: 1.5rem;">GIMP</mat-list-item>
-                            <mat-list-item style="height: 1.5rem;">ImageMagick</mat-list-item>
-                            <mat-list-item style="height: 1.5rem;">D3</mat-list-item>
-                            <mat-list-item style="height: 1.5rem;">Cytoscape</mat-list-item>
-                            <mat-list-item style="height: 1.5rem;">Circos</mat-list-item>
-                        </ul>
-
-
-
-
-                    </mat-expansion-panel>
-                </mat-accordion>
-            </mat-expansion-panel>
-        </mat-accordion>
-
-        <a href="https://colab.research.google.com/drive/13CoavTVgi-Xp1JI3i8K12vBz4B0lDnsU?usp=sharing" target="_blank"
-            rel="noopener noreferrer">
-            <mat-list-item>
-                Statistical Testing
-            </mat-list-item>
-        </a>
-        <a href="https://colab.research.google.com/drive/1rJDxiqGn-qGt2jhB-TeRAhVDoJk9RXec?usp=sharing" target="_blank"
-            rel="noopener noreferrer">
-            <mat-list-item>
-                Pandas Data Processing
-            </mat-list-item>
-        </a>
-        <a href="https://colab.research.google.com/drive/1hw3R4zBpBmpMdnxy7w7JXz81t53MWAHF?usp=sharing" target="_blank"
-            rel="noopener noreferrer">
-            <mat-list-item>
-                Pandas DataFrames
-            </mat-list-item>
-        </a>
-        <a href="https://colab.research.google.com/drive/1EHI4RYEtqbiz0Bm9g3sa6hdYVEHwighX?usp=sharing" target="_blank"
-            rel="noopener noreferrer">
-            <mat-list-item>
+            </a>
+        </mat-list-item>
+        <mat-list-item class="content-list-item">
+            <a href="https://mooctools.ai.umich.edu/multimeasure/424-visualization-wheel-practice/67-structure-of-a-supercell/99c9a9cd4950a24558deb7e89e76137c711cf0ef/"
+                target="_blank" rel="noopener noreferrer">
+                Visualization Wheel </a>
+        </mat-list-item>
+        <mat-list-item class="content-list-item">
+            <a href="https://colab.research.google.com/drive/13CoavTVgi-Xp1JI3i8K12vBz4B0lDnsU?usp=sharing"
+                target="_blank" rel="noopener noreferrer">
+                Statistical Testing </a>
+        </mat-list-item>
+        <mat-list-item class="content-list-item">
+            <a href="https://colab.research.google.com/drive/1rJDxiqGn-qGt2jhB-TeRAhVDoJk9RXec?usp=sharing"
+                target="_blank" rel="noopener noreferrer">
+                Pandas Data Processing </a>
+        </mat-list-item>
+        <mat-list-item class='content-list-item'>
+            <a href="https://colab.research.google.com/drive/1hw3R4zBpBmpMdnxy7w7JXz81t53MWAHF?usp=sharing"
+                target="_blank" rel="noopener noreferrer">
+                Pandas DataFrames </a>
+        </mat-list-item>
+        <mat-list-item class="content-list-item">
+            <a href="https://colab.research.google.com/drive/1EHI4RYEtqbiz0Bm9g3sa6hdYVEHwighX?usp=sharing"
+                target="_blank" rel="noopener noreferrer">
                 Pandas Series
-            </mat-list-item>
-        </a>
-        <a href="https://colab.research.google.com/drive/1U5mmXg2Tj8vHoaa7nk_yBrWP8u1Z3MHD?usp=sharing" target="_blank"
-            rel="noopener noreferrer">
-            <mat-list-item>
+            </a>
+        </mat-list-item>
+        <mat-list-item class="content-list-item">
+            <a href="https://colab.research.google.com/drive/1U5mmXg2Tj8vHoaa7nk_yBrWP8u1Z3MHD?usp=sharing"
+                target="_blank" rel="noopener noreferrer">
                 NumPy
-            </mat-list-item>
-        </a>
-        <a href="https://colab.research.google.com/drive/1LabC8zrFDpIMGG8KeYKI6Hfif56hqVHM?usp=sharing" target="_blank"
-            rel="noopener noreferrer">
-            <mat-list-item>
+            </a>
+        </mat-list-item>
+        <mat-list-item class="content-list-item">
+            <a href="https://colab.research.google.com/drive/1LabC8zrFDpIMGG8KeYKI6Hfif56hqVHM?usp=sharing"
+                target="_blank" rel="noopener noreferrer">
                 python REGEX
-            </mat-list-item>
-        </a>
+            </a>
+        </mat-list-item>
+    </mat-list>
 
-    </mat-nav-list>
 </div>

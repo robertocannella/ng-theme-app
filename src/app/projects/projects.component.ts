@@ -6,10 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./projects.component.sass']
 })
 export class ProjectsComponent implements OnInit {
-
+  public innerWidth: number = 0;
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.innerWidth = window.innerWidth * .9;
   }
-
 }
