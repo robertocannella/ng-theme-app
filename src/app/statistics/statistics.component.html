@@ -4,17 +4,51 @@
     </span>
     <div class="linebreak"></div>
     <div class='summary'>
-        <mat-list>
-            <mat-list-item>
-                p-value
-            </mat-list-item>
-            <mat-list-item>
-                pearson corrilation
-            </mat-list-item>
-            <mat-list-item>
-
-            </mat-list-item>
-        </mat-list>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Formula</th>
+                    <th scope="col">Range</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">variance</th>
+                    <td>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">p-value</th>
+                    <td>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">covariance</th>
+                    <td></td>
+                    <td>
+                        <ng-katex class="math" [equation]='covarianceEquation'></ng-katex>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">pearson correlation</th>
+                    <td colspan="2"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">r<sup>2</sup></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div>
         <span class="sub-header">
@@ -29,8 +63,11 @@
             <a href="https://colab.research.google.com/drive/1yGf8L8mo1G-TRSkkHZJBCeWWt5vJC1fj?usp=sharing">NHANES Data
                 Analysis 1</a>&nbsp;&nbsp;&nbsp;
             <a href="https://colab.research.google.com/drive/1JV8UZWWGPSEKqBlbj8hamNvL0XxdvgW3?usp=sharing">NHANES Data
-                Analysis 2</a>
+                Analysis 2</a>&nbsp;&nbsp;&nbsp;
+            <a href="https://colab.research.google.com/drive/1Ckux3OUSyTVC3-q_ggtr9qEXOssyF6bZ?usp=sharing">NHANES Data
+                Analysis 3</a>&nbsp;&nbsp;&nbsp;
             <br>
+
         </div>
 
         <span class="sub-header">

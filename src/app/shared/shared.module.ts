@@ -26,7 +26,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { YouTubePlayerModule } from "@angular/youtube-player";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { KatexModule } from 'ng-katex';
 @NgModule({
   declarations: [
     SidenavComponent,
@@ -55,7 +55,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatGridListModule,
     MatProgressBarModule,
     YouTubePlayerModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    KatexModule
 
   ],
   imports: [
@@ -64,7 +65,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     FontAwesomeModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    KatexModule
   ]
 })
 export class SharedModule {
