@@ -1,16 +1,44 @@
-<div>
-    <mat-card>
-        <mat-card-title>LeetCode Odd Even Jump</mat-card-title>
-        <mat-card-subtitle>Google Interview Question</mat-card-subtitle>
-        <mat-card-content style="text-align: center;">
-            <youtube-player videoId="PyB4dI3ZxFM" suggestedQuality="highres" [width]="innerWidth" [startSeconds]="0">
-            </youtube-player>
+<div class=container>
+    <span class="sub-header">
+        <div class="t2">Machine Learning Algorithims</div>
+    </span>
+    <div class="linebreak"></div>
+    <div class='summary'>
+        <a href="https://colab.research.google.com/drive/10eWmQKcLOjBesBBsVtO-3AcfljTr2WCB?usp=sharing">
+            K-Nearest Neighbor (k-NN Classification Algorithim)</a>&nbsp;&nbsp;&nbsp;<br>
+        <ul>
+            <li>Classification and Regression</li>
+            <li>Instance based (Uses memorized data to identify new instances)</li>
+            <li>The 'k' refers to the number of neighbors it will use to make its prediction</li>
+            <li>Keeping 'k' an odd number will help elimated ties between an even number of instances</li>
+            <li>k-NN parameters</li>
+            <ul>
+                <li>A distance metric(Euclidian distance is default)</li>
+                <li>How many 'nearest' neighbors to look at</li>
+                <li>Weighting function on the neighbor points (Ignored by default)</li>
+                <li>Method for aggregating the classes of neighbor points(Simple majority vote is default)</li>
+            </ul>
 
-        </mat-card-content>
+        </ul>
+    </div>
 
-        <mat-card-actions>
-            <button mat-button>View Code</button>
-            <button mat-button>SHARE</button>
-        </mat-card-actions>
-    </mat-card>
+
+
+    <div>
+        <mat-card>
+            <mat-card-title>LeetCode Odd Even Jump</mat-card-title>
+            <mat-card-subtitle>Google Interview Question</mat-card-subtitle>
+            <mat-card-content style="text-align: center;">
+                <youtube-player videoId="PyB4dI3ZxFM" suggestedQuality="highres" [width]="innerWidth"
+                    [startSeconds]="0">
+                </youtube-player>
+
+            </mat-card-content>
+
+            <mat-card-actions>
+                <button mat-button>View Code</button>
+                <button mat-button>SHARE</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
 </div>
