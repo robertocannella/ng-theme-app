@@ -8,9 +8,9 @@
             <thead>
                 <tr>
                     <th scope="col"></th>
-                    <th scope="col">Type</th>
+
                     <th scope="col">Formula</th>
-                    <th scope="col">Range</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -18,34 +18,74 @@
                     <th scope="row">variance</th>
                     <td>
                     </td>
-                    <td></td>
-                    <td></td>
+
                 </tr>
                 <tr>
                     <th scope="row">p-value</th>
                     <td>
                     </td>
-                    <td></td>
-                    <td></td>
+
                 </tr>
                 <tr>
                     <th scope="row">covariance</th>
-                    <td></td>
+
                     <td>
                         <ng-katex class="math" [equation]='covarianceEquation'></ng-katex>
                     </td>
-                    <td></td>
+
                 </tr>
                 <tr>
                     <th scope="row">pearson correlation</th>
-                    <td colspan="2"></td>
                     <td></td>
+
                 </tr>
                 <tr>
-                    <th scope="row">r<sup>2</sup></th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <th scope="row">linear regression</th>
+                    <td>
+                        <ng-katex class="math" [equation]='linearRegression'></ng-katex>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <pre>
+Y = dependent variable
+b<sub>0</sub> = y-intercept
+b<sub>1</sub> = slope
+x = independent variable
+e = error (distance to line)
+</pre>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Logistic Regression</th>
+                    <td>
+                        <ng-katex class="math" [equation]='logisticRegression'></ng-katex>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        Logistic Regression is a method used to predict a dependent variable, given a set of
+                        independent variables, such that the dependent variable is categorical.
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="pre-tag">
+                            <pre>
+Y = The probability of an event happening
+b<sub>0</sub> = y-intercept
+b<sub>1</sub> = slope
+x = independent variable
+e = error (distance to line)
+                        </pre>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">R<sup>2</sup></th>
+                    <td>
+                        <ng-katex class="math" [equation]='rSquared'></ng-katex>
+                    </td>
                 </tr>
             </tbody>
         </table>
