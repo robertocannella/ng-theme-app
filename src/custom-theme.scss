@@ -80,7 +80,7 @@ $typography: mat.define-typography-config(
     mat.define-typography-level(24px, $font-family: $heading-font-family),
   $title: mat.define-typography-level(20px, $font-family: $heading-font-family),
 );
-
+// USE STYLES.CSS
 html,
 body {
   height: 100%;
@@ -92,15 +92,4 @@ body {
 pre{
   overflow: auto;
   background-color: #f1f1f1;
-}
-.definition{
-  font-weight: bold;
-}
-@media screen and (min-width: 720px) {
-
-}
-
-@media screen and (max-width: 375px) {
-
- 
 }

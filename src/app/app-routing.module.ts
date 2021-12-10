@@ -9,12 +9,17 @@ import { MachineLearningComponent } from './machine-learning/machine-learning.co
 import { DataScienceComponent } from './data-science/data-science.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { ToolsComponent } from './tools/tools.component';
+import { MathComponent } from './math/math.component';
 
 
 const routes: Routes = [
   {
     path: '',
     component: WelcomeComponent
+  },
+  {
+    path: 'math',
+    component: MathComponent
   },
   {
     path: 'statistics',

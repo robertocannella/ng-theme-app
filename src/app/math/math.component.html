@@ -1,0 +1,52 @@
+<div class=container>
+    <span class="sub-header">
+        <div class="t2">Mathematics</div>
+    </span>
+    <div class="linebreak"></div>
+    <div class='summary'>
+        <ng-katex class="math" [equation]='rSquared'></ng-katex>
+    </div>
+
+    <div class="linebreak-light"></div>
+
+    <div class='summary'>
+        <span class='definition'> Sets: </span><br><br>
+        <ng-katex class='math' [equation]='denoteSet'></ng-katex>
+        <ul>
+            <li>Denotes a set</li>
+            <li>Order is not important</li>
+            <li>Duplicates are not considered</li>
+        </ul>
+        By means of a Venn Diagram we can view sets<br><br>
+        <svg xmlns="http://www.w3.org/2000/svg">
+            <g>
+                <text x="20" y="70" class="heavy">A</text>
+                <circle cx="60" cy="60" r="60" fill-opacity=".2" />
+                <circle cx="140" cy="60" r="60" fill-opacity=".2" />
+                <text x="160" y="70" class="heavy">B</text>
+
+            </g>
+        </svg>
+        <br>
+        <ul>
+            <li>The intersection of these elements corrosponds to elements belonging to A and B:
+                A <ng-katex class='math' [equation]='cap'></ng-katex> B
+            </li>
+            <li>The union of these elements corrosponds to elements belonging to at least one of the sets:
+                A <ng-katex class='math' [equation]='cup'></ng-katex> B
+            </li>
+            <li>If every element of A is an element of be, then A is subset of B:
+                A <ng-katex class='math' [equation]='subsetEq'></ng-katex> B
+            </li>
+            <li>If an object <span class='small'>x</span> is an element of A:
+                <span class='small'>x </span>
+                <ng-katex class='math' [equation]='in'></ng-katex> A
+            </li>
+            <li>The number of elements in set A is denoted as: A |A|</li>
+            <li>
+                <ng-katex class='math' [equation]='emptySet'></ng-katex>&nbsp;&nbsp;Denotes an empty set.
+            </li>
+        </ul>
+
+    </div>
+</div>

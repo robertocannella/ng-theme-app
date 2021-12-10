@@ -8,7 +8,8 @@ import {
   faCoffee, faBook, faProjectDiagram, faLessThan,
   faGreaterThan, faPlus, faMinus,
   faRobot, faFilter, faPencilRuler,
-  faBezierCurve, faChevronRight, faChevronLeft, faBars
+  faBezierCurve, faChevronRight, faChevronLeft, faBars,
+  faCalculator
 } from '@fortawesome/free-solid-svg-icons';
 import { faStackOverflow, faGithub, faMedium, faGit } from '@fortawesome/free-brands-svg-icons';
 import { TextPostComponent } from './components/text-post/text-post.component';
@@ -79,6 +80,7 @@ export class SharedModule {
       faLessThan, faGreaterThan,
       faPlus, faMinus, faRobot,
       faFilter, faPencilRuler, faBezierCurve,
-      faChevronRight, faChevronLeft, faBars)
+      faChevronRight, faChevronLeft, faBars,
+      faCalculator)
   }
 }
