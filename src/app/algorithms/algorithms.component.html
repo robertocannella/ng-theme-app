@@ -4,44 +4,171 @@
     </span>
     <div class="linebreak"></div>
     <div class='summary'>
-        <a href="https://colab.research.google.com/drive/10eWmQKcLOjBesBBsVtO-3AcfljTr2WCB?usp=sharing">
-            k-Nearest Neighbor (k-NN)</a>&nbsp;&nbsp;&nbsp;<br>
-        <ul>
-            <li>Classification and Regression</li>
-            <li>Instance based (Uses memorized data to identify new instances)</li>
-            <li>The 'k' refers to the number of neighbors it will use to make its prediction</li>
-            <li>Keeping 'k' an odd number will help elimated ties between an even number of instances</li>
-            <li>k-NN parameters</li>
+        <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    k-Nearest Neighbor (k-NN)
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <a href="https://colab.research.google.com/drive/10eWmQKcLOjBesBBsVtO-3AcfljTr2WCB?usp=sharing">
+                Notebook</a>
+
             <ul>
-                <li>A distance metric(Euclidian distance is default)</li>
-                <li>How many 'nearest' neighbors to look at (5 is default)</li>
-                <li>Weighting function on the neighbor points (Ignored by default)</li>
-                <li>Method for aggregating the classes of neighbor points(Simple majority vote is default)</li>
+                <li>Classification and Regression</li>
+                <li>Instance based (Uses memorized data to identify new instances)</li>
+                <li>The 'k' refers to the number of neighbors it will use to make its prediction</li>
+                <li>Keeping 'k' an odd number will help elimated ties between an even number of instances</li>
+                <li>k-NN parameters</li>
+                <ul>
+                    <li>A distance metric(Euclidian distance is default)</li>
+                    <li>How many 'nearest' neighbors to look at (5 is default)</li>
+                    <li>Weighting function on the neighbor points (Ignored by default)</li>
+                    <li>Method for aggregating the classes of neighbor points(Simple majority vote is default)</li>
+                </ul>
             </ul>
-
-        </ul>
+        </mat-expansion-panel>
     </div>
+
+    <span class="sub-header">
+        <div class="t3">Linear Models for Regression</div>
+
+    </span>
     <div class="linebreak"></div>
     <div class='summary'>
-        <a href="#">
-            Linear Regression</a>&nbsp;&nbsp;&nbsp;<br>
-        <ul>
-            <li>Dependent Variable is Continuous</li>
 
-        </ul>
+        <ng-katex class='katex' [equation]='linearRegression'></ng-katex><br>
+        &nbsp;&nbsp;Linear models for regression can be characterized as regression models for which the prediction
+        is a line for
+        a
+        single feature, a plane when using two features, or a hyperplane in higher demensions(more features). The
+        difference between the following linear models lies in how the model parameters w and b are learned from the
+        training data.
+        <div class="linebreak-light">
+
+        </div>
+
+        <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Linear Regression (Ordinary Least Squares)
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ul>
+                <li>Dependent Variable is Continuous</li>
+                <li>For datasets with mulitple features, linear models can be very powerful. </li>
+            </ul>
+        </mat-expansion-panel>
     </div>
+    <div class='linebreak-light'></div>
+    <div class="summary">
+        <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Ridge Regression
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ul>
+                <li>The coefficients (w) are chosen not only so that they predict well on the training data,
+                    but also to fit an additional constraint.
+                </li>
+                <li>
+                    Regularization. All entries of (w) should be close to zero (each feature should have little effect
+                    on the outcome as possible [this translates to a small slope])
+                </li>
+                <li>
+                    Regularization means explicitly restricting a model to avoid overfiiting. In ridge regression this
+                    is know as L2 Regularization.
+                </li>
+                <li>
+                    The
+                    <mark>Ridge</mark> model makes a trade-off between the simplicity of the model (near-zero
+                    coefficients) and its performance on the training set. How much
+                    importance the model places on simplicity versus training set performance can be specified by the
+                    user, using the
+                    <mark>alpha</mark> parameter.
+                </li>
+                <li>
+                    <mark>1.0</mark> is the default <mark>alpha</mark> setting
+                </li>
+                <li>
+                    Increasing <mark>alpha</mark> forces coefficients to move more toward zero, which decreases training
+                    set performance but might help generalization.
+                </li>
+            </ul>
+        </mat-expansion-panel>
+    </div>
+    <div class='linebreak-light'></div>
+    <div class="summary">
+        <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Lasso Regression
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ul>
+                <li>
+                    Lasso Regression
+                </li>
+            </ul>
+        </mat-expansion-panel>
+    </div>
+    <div class='linebreak-light'></div>
+    <div class="summary">
+        <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Polynomial Regression
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ul>
+                <li>
+                    Polynomial Regression
+                </li>
+            </ul>
+        </mat-expansion-panel>
+    </div>
+
+
+    <span class="sub-header">
+        <div class="t3">Linear Models for Classification</div>
+
+    </span>
     <div class="linebreak"></div>
     <div class='summary'>
-        <a href="#">
-            Logistic Regression</a>&nbsp;&nbsp;&nbsp;<br>
-        <ul>
-            <li>Dependent Variable is Categorical (Yes/No, 1/0, binary)</li>
 
-        </ul>
+        <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Logistic Regression
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ul>
+                <li>Dependent Variable is Categorical (Yes/No, 1/0, binary)</li>
+                <li>Despite its name, Logistic Regression is a classification algorithm and not a regression algorithm
+                </li>
+
+            </ul>
+        </mat-expansion-panel>
     </div>
+    <div class="linebreak-light"></div>
+    <div class='summary'>
 
+        <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Linear Support Vector Machines (LSVM)
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ul>
+                <li>The trade of parameter that determines the strength of regularization is called 'C'</li>
+                <li>A high 'C' parameter may lead to overfitting and a narrow margin</li>
+                <li>A low value for 'C' leads to an algorithm with larger margin of error (more tolerant of errors)
+                </li>
 
-    <div>
+            </ul>
+        </mat-expansion-panel>
+    </div>
+    <!-- <div>
         <mat-card>
             <mat-card-title>LeetCode Odd Even Jump</mat-card-title>
             <mat-card-subtitle>Google Interview Question</mat-card-subtitle>
@@ -57,5 +184,5 @@
                 <button mat-button>SHARE</button>
             </mat-card-actions>
         </mat-card>
-    </div>
+    </div> -->
 </div>

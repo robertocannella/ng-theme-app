@@ -30,7 +30,7 @@
                     <th scope="row">covariance</th>
 
                     <td>
-                        <ng-katex class="math" [equation]='covarianceEquation'></ng-katex>
+                        <ng-katex class="math katex" [equation]='covarianceEquation'></ng-katex>
                     </td>
 
                 </tr>
@@ -42,17 +42,16 @@
                 <tr>
                     <th scope="row">linear regression</th>
                     <td>
-                        <ng-katex class="math" [equation]='linearRegression'></ng-katex>
+                        <ng-katex class="math katex" [equation]='linearRegression'></ng-katex>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
                         <pre>
-Y = dependent variable
-b<sub>0</sub> = y-intercept
-b<sub>1</sub> = slope
+y = The probability of an event happening
+b = y-intercept
+w = weight of 
 x = independent variable
-e = error (distance to line)
 </pre>
                     </td>
                 </tr>
@@ -72,11 +71,7 @@ e = error (distance to line)
                     <td colspan="2">
                         <div class="pre-tag">
                             <pre>
-Y = The probability of an event happening
-b<sub>0</sub> = y-intercept
-b<sub>1</sub> = slope
-x = independent variable
-e = error (distance to line)
+
                         </pre>
                         </div>
                     </td>

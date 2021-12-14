@@ -14,6 +14,7 @@ export class MathComponent implements OnInit {
   cap: string = '\\cap';
   cup: string = '\\cup';
   subsetEq: string = '\\subseteq';
+  ruleOfSum: string = '|A\\cup B| = |A| + |B| - |A\\cap B|';
   constructor() { }
 
   ngOnInit(): void {
