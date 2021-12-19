@@ -6,7 +6,7 @@ import { KatexOptions } from 'ng-katex';
   styleUrls: ['./math.component.sass']
 })
 export class MathComponent implements OnInit {
-
+  aUnionB: string = '|A\\cup B| = n + k';
   rSquared: string = '\\sum_{i=1}^nx_i';
   denoteSet: string = 'S=\\{1,2,3,4\\}';
   emptySet: string = '\\varnothing';

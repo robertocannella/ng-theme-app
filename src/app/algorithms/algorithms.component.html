@@ -53,6 +53,7 @@
                     Linear Regression (Ordinary Least Squares)
                 </mat-panel-title>
             </mat-expansion-panel-header>
+            <img src='../../assets/images/sample_regression.svg'>
             <ul>
                 <li>Dependent Variable is Continuous</li>
                 <li>For datasets with mulitple features, linear models can be very powerful. </li>
@@ -134,41 +135,91 @@
 
     </span>
     <div class="linebreak"></div>
-    <div class='summary'>
+    <div class='linebreak-light'>
+        <div class='summary'>
 
-        <mat-expansion-panel hideToggle>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Logistic Regression
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <ul>
-                <li>Dependent Variable is Categorical (Yes/No, 1/0, binary)</li>
-                <li>Despite its name, Logistic Regression is a classification algorithm and not a regression algorithm
-                </li>
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Logistic Regression
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ul>
+                    <li>Dependent Variable is Categorical (Yes/No, 1/0, binary)</li>
+                    <li>Despite its name, Logistic Regression is a classification algorithm and not a regression
+                        algorithm
+                    </li>
 
-            </ul>
-        </mat-expansion-panel>
-    </div>
-    <div class="linebreak-light"></div>
-    <div class='summary'>
+                </ul>
+            </mat-expansion-panel>
+        </div>
+        <div class="linebreak-light">
+            <div class='summary'>
 
-        <mat-expansion-panel hideToggle>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Linear Support Vector Machines (LSVM)
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <ul>
-                <li>The trade of parameter that determines the strength of regularization is called 'C'</li>
-                <li>A high 'C' parameter may lead to overfitting and a narrow margin</li>
-                <li>A low value for 'C' leads to an algorithm with larger margin of error (more tolerant of errors)
-                </li>
+                <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Linear Support Vector Machines (LSVM)
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ul>
+                        <li>The trade of parameter that determines the strength of regularization is called 'C'</li>
+                        <li>A high 'C' parameter may lead to overfitting and a narrow margin</li>
+                        <li>A low value for 'C' leads to an algorithm with larger margin of error (more tolerant of
+                            errors)
+                        </li>
 
-            </ul>
-        </mat-expansion-panel>
-    </div>
-    <!-- <div>
+                    </ul>
+                </mat-expansion-panel>
+            </div>
+
+            <div class='linebreak-light'>
+                <div class="summary">
+                    <mat-expansion-panel hideToggle>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Naive Bayes Classifiers
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class='note'>Notes taken for University of Michigan 'Applied Machine Learning'</div>
+                        <ul>
+                            <li>
+                                Naive Bayes Classifiers are called naive because informally, they make the simplifying
+                                assumption that each feature of an instance is independent of all the others, given the
+                                class. This makes learning a Naive Bayes Classifer very fast. The penalty for this
+                                efficiency is that the generalization performance of Naive Bayes Classifiers can often
+                                be a bit worse than other more sophisticated methods, or even linear models for
+                                classification.
+                            </li>
+                            <li>
+                                3 subsets of Naive Bayes Classifiers
+                                <ul>
+                                    <li><mark>The Bernoulli Naive Bayes</mark>Bayes model uses a set of binary
+                                        occurrence features. When
+                                        classifying texts document for example, the Bernoulli Naive Bayes model is quite
+                                        handy because we could represent the presence or the absence of the given word
+                                        in the text with the binary feature. This doesn't take into account how
+                                        often the word occurs in the text.</li>
+                                    <li>
+                                        <mark>The Multinomial Naive Bayes</mark> model uses a set of count base features
+                                        each of
+                                        which does account for how many times a particular feature such as a word is
+                                        observed in training example like a document.
+                                    </li>
+                                    <li>
+                                        <mark>Gaussian Naive Bayes </mark>classifiers assume features that are
+                                        continuous or
+                                        real-valued. During training, the Gaussian Naive Bayes Classifier estimates for
+                                        each feature the mean and standard deviation of the feature value for each
+                                        class.
+                                    </li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </mat-expansion-panel>
+                </div>
+                <!-- <div>
         <mat-card>
             <mat-card-title>LeetCode Odd Even Jump</mat-card-title>
             <mat-card-subtitle>Google Interview Question</mat-card-subtitle>
@@ -185,4 +236,4 @@
             </mat-card-actions>
         </mat-card>
     </div> -->
-</div>
+            </div>
