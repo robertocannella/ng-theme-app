@@ -1,132 +1,185 @@
 <div class=container>
     <span class="sub-header">
-        <div class="t2">Statistical Methodology</div>
+        <div class="t2">Statistics</div>
     </span>
     <div class="linebreak"></div>
-    <div class='summary'>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col"></th>
+    <div class="summary">
+        <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <span class='t2'>Statistical Methodology</span>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
 
-                    <th scope="col">Formula</th>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
 
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">variance</th>
-                    <td>
-                    </td>
+                        <th scope="col">Formula</th>
 
-                </tr>
-                <tr>
-                    <th scope="row">p-value</th>
-                    <td>
-                    </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">variance</th>
+                        <td>
+                        </td>
 
-                </tr>
-                <tr>
-                    <th scope="row">covariance</th>
+                    </tr>
+                    <tr>
+                        <th scope="row">p-value</th>
+                        <td>in tandem with alpha, can be used in determining probability. A p-value higher than
+                            a
+                            preset
+                            alpha would indicate not to reject the H<sub>0</sub>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope='row'>
 
-                    <td>
-                        <ng-katex class="math katex" [equation]='covarianceEquation'></ng-katex>
-                    </td>
+                        </th>
+                        <td>
 
-                </tr>
-                <tr>
-                    <th scope="row">pearson correlation</th>
-                    <td></td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">covariance</th>
 
-                </tr>
-                <tr>
-                    <th scope="row">linear regression</th>
-                    <td>
-                        <ng-katex class="math katex" [equation]='linearRegression'></ng-katex>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <pre>
+                        <td>
+                            <ng-katex class="math katex" [equation]='covarianceEquation'></ng-katex>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">pearson correlation</th>
+                        <td></td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">linear regression</th>
+                        <td>
+                            <ng-katex class="math katex" [equation]='linearRegression'></ng-katex>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <pre>
 y = The probability of an event happening
 b = y-intercept
 w = weight of 
 x = independent variable
 </pre>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">Logistic Regression</th>
-                    <td>
-                        <ng-katex class="math" [equation]='logisticRegression'></ng-katex>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        Logistic Regression is a method used to predict a dependent variable, given a set of
-                        independent variables, such that the dependent variable is categorical.
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <div class="pre-tag">
-                            <pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Logistic Regression</th>
+                        <td>
+                            <ng-katex class="math" [equation]='logisticRegression'></ng-katex>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            Logistic Regression is a method used to predict a dependent variable, given a set of
+                            independent variables, such that the dependent variable is categorical.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="pre-tag">
+                                <pre>
 
                         </pre>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">R<sup>2</sup></th>
-                    <td>
-                        <ng-katex class="math" [equation]='rSquared'></ng-katex>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">R<sup>2</sup></th>
+                        <td>
+                            <ng-katex class="math" [equation]='rSquared'></ng-katex>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </mat-expansion-panel>
     </div>
-    <div>
-        <span class="sub-header">
-            <div class="t2">Analysis</div>
-        </span>
-        <div class="linebreak"></div>
-        <div class='summary'>
-            Ann Arbor Michigan Record Temp Comparsion:<br>
-            <img class="image-padding" src="../../assets/images/AnnArbor.png" width=100%>
+    <div class='linebreak-light'>
+        <div class="summary">
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <span class='t2'>Baysean Vs Frequentists Statistics</span>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div>
+                    <q>
+                        Frequentist arguments are more counter-factual in nature, and resemble the type of logic that
+                        lawyers use in court. Most of us learn frequentist statistics in entry-level statistics courses.
+                        A
+                        t-test, where we ask, “Is this variation different from the control?” is a basic building block
+                        of
+                        this approach.</q>&nbsp;&nbsp; <a
+                        href="https://www.optimizely.com/insights/blog/bayesian-vs-frequentist-statistics/">Leonid
+                        Pekelis</a>
+
+                </div>
+                <br>
+                <br>
+                <div>
+                    <q>
+                        Bayesian statistics take a more bottom-up approach to data analysis. This means that past
+                        knowledge
+                        of similar experiments is encoded into a statistical device known as a prior, and this prior is
+                        combined with current experiment data to make a conclusion on the test at hand.
+                    </q>&nbsp;&nbsp;
+                    <a href="https://www.optimizely.com/insights/blog/bayesian-vs-frequentist-statistics/">Leonid
+                        Pekelis</a>
+
+                </div>
+            </mat-expansion-panel>
         </div>
         <div>
             <span class="sub-header">
-                <div class="t2">Python Notebooks:
-                </div>
+                <div class="t2">Analysis</div>
             </span>
             <div class="linebreak"></div>
             <div class='summary'>
-                <a href="https://colab.research.google.com/drive/1yGf8L8mo1G-TRSkkHZJBCeWWt5vJC1fj?usp=sharing">
-                    NHANES Data Analysis 1</a>&nbsp;&nbsp;&nbsp;<br>
-                <a href="https://colab.research.google.com/drive/1JV8UZWWGPSEKqBlbj8hamNvL0XxdvgW3?usp=sharing">
-                    NHANES Data Analysis 2</a>&nbsp;&nbsp;&nbsp;<br>
-                <a href="https://colab.research.google.com/drive/1Ckux3OUSyTVC3-q_ggtr9qEXOssyF6bZ?usp=sharing">
-                    NHANES Data Analysis 3</a>&nbsp;&nbsp;&nbsp;<br>
-                <a href="https://colab.research.google.com/drive/1-wsPoa-314TiZV0Txq9SwPraXGWs1TVy?usp=sharing">
-                    Sampling from a baised population</a>&nbsp;&nbsp;&nbsp;<br>
-                <a href="https://colab.research.google.com/drive/1nKjjtjRFiShI54EvkSFuVf9TbpaQUsAI?usp=sharing">
-                    The Emperical Rule and Distribution</a>&nbsp;&nbsp;&nbsp;<br>
+                Ann Arbor Michigan Record Temp Comparsion:<br>
+                <img class="image-padding" src="../../assets/images/AnnArbor.png" width=100%>
             </div>
-        </div>
-
-
-        <span class="sub-header">
-            <div class="t2">Public Data</div>
-        </span>
-        <div class="linebreak"></div>
-        <div>
-
-            <div class='summary'>
-                <a href="https://www.ncdc.noaa.gov/">NOAA</a><br>
-                <a href="https://data.oecd.org/">OECD</a><br>
-                <a href="https://www.cdc.gov/nchs/nhanes/index.htm">CDC</a><br>
+            <div>
+                <span class="sub-header">
+                    <div class="t2">Python Notebooks:
+                    </div>
+                </span>
+                <div class="linebreak"></div>
+                <div class='summary'>
+                    <a href="https://colab.research.google.com/drive/1yGf8L8mo1G-TRSkkHZJBCeWWt5vJC1fj?usp=sharing">
+                        NHANES Data Analysis 1</a>&nbsp;&nbsp;&nbsp;<br>
+                    <a href="https://colab.research.google.com/drive/1JV8UZWWGPSEKqBlbj8hamNvL0XxdvgW3?usp=sharing">
+                        NHANES Data Analysis 2</a>&nbsp;&nbsp;&nbsp;<br>
+                    <a href="https://colab.research.google.com/drive/1Ckux3OUSyTVC3-q_ggtr9qEXOssyF6bZ?usp=sharing">
+                        NHANES Data Analysis 3</a>&nbsp;&nbsp;&nbsp;<br>
+                    <a href="https://colab.research.google.com/drive/1-wsPoa-314TiZV0Txq9SwPraXGWs1TVy?usp=sharing">
+                        Sampling from a baised population</a>&nbsp;&nbsp;&nbsp;<br>
+                    <a href="https://colab.research.google.com/drive/1nKjjtjRFiShI54EvkSFuVf9TbpaQUsAI?usp=sharing">
+                        The Emperical Rule and Distribution</a>&nbsp;&nbsp;&nbsp;<br>
+                </div>
             </div>
 
+
+            <span class="sub-header">
+                <div class="t2">Public Data</div>
+            </span>
+            <div class="linebreak"></div>
+            <div>
+
+                <div class='summary'>
+                    <a href="https://www.ncdc.noaa.gov/">NOAA</a><br>
+                    <a href="https://data.oecd.org/">OECD</a><br>
+                    <a href="https://www.cdc.gov/nchs/nhanes/index.htm">CDC</a><br>
+                </div>
+
+            </div>
         </div>
     </div>
-</div>

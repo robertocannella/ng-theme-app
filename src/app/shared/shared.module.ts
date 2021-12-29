@@ -25,6 +25,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTabsModule } from '@angular/material/tabs';
 import { YouTubePlayerModule } from "@angular/youtube-player";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { KatexModule } from 'ng-katex';
@@ -57,7 +58,8 @@ import { KatexModule } from 'ng-katex';
     MatProgressBarModule,
     YouTubePlayerModule,
     BrowserAnimationsModule,
-    KatexModule
+    KatexModule,
+    MatTabsModule
 
   ],
   imports: [

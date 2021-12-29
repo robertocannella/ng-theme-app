@@ -1,92 +1,90 @@
 <div class=container>
+
     <span class="sub-header">
         <div class="t2">Mathematics</div>
     </span>
     <div class="linebreak"></div>
-    <div class='summary'>
-        <ng-katex class="math" [equation]='rSquared'></ng-katex>
-    </div>
-
-    <div class="linebreak-light">
-        <div class='summary'>
-            <mat-expansion-panel hideToggle>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Set Theory
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <span class='definition'> Sets: </span><br><br>
-                <ng-katex class='math' [equation]='denoteSet'></ng-katex>
-                <ul>
-                    <li>Denotes a set</li>
-                    <li>Order is not important</li>
-                    <li>Duplicates are not considered</li>
-                </ul>
+    <mat-tab-group>
+        <mat-tab label="Combinatorics" class='summary'>
+            <div class='summary'>
+                <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Set Theory
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <span class='definition'> Sets: </span><br><br>
+                    <ng-katex class='math' [equation]='denoteSet'></ng-katex>
+                    <ul>
+                        <li>Denotes a set</li>
+                        <li>Order is not important</li>
+                        <li>Duplicates are not considered</li>
+                    </ul>
 
 
-                <span class='definition'> Sets: Rule of Sums </span><br><br>
-                A set A with k elements, a set B with n elements, guaranteed that these sets do not have common
-                elements. Then, the rule of sum states that A union B contains n plus k elements.
-                By means of a Venn Diagram we can view sets<br><br>
+                    <span class='definition'> Sets: Rule of Sums </span><br><br>
+                    A set A with k elements, a set B with n elements, guaranteed that these sets do not have common
+                    elements. Then, the rule of sum states that A union B contains n plus k elements.
+                    By means of a Venn Diagram we can view sets. Important: in the rule of sum, no object
+                    should belong to both classes!<br><br>
 
-                <svg xmlns="http://www.w3.org/2000/svg">
-                    <g>
-                        <text x="50" y="70" class="heavy">A</text>
-                        <circle cx="60" cy="60" r="60" fill-opacity=".2" fill="purple" />
-                        <circle cx="190" cy="60" r="60" fill-opacity=".2" fill="purple" />
-                        <text x="180" y="70" class="heavy">B</text>
+                    <svg xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <text x="50" y="70" class="heavy">A</text>
+                            <circle cx="60" cy="60" r="60" fill-opacity=".2" fill="purple" />
+                            <circle cx="190" cy="60" r="60" fill-opacity=".2" fill="purple" />
+                            <text x="180" y="70" class="heavy">B</text>
 
-                    </g>
+                        </g>
 
-                </svg>
-                <ng-katex class='math' [equation]='aUnionB'></ng-katex>
-                <br>
+                    </svg>
+                    <ng-katex class='math' [equation]='aUnionB'></ng-katex>
+                    <br>
 
-                <br>
-                <br>
-                <svg xmlns="http://www.w3.org/2000/svg">
-                    <g>
-                        <text x="40" y="70" class="heavy">A</text>
-                        <circle cx="60" cy="60" r="60" fill-opacity=".2" fill="purple" />
-                        <circle cx="140" cy="60" r="60" fill-opacity=".2" fill="purple" />
-                        <text x="140" y="70" class="heavy">B</text>
+                    <br>
+                    <br>
+                    <svg xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <text x="40" y="70" class="heavy">A</text>
+                            <circle cx="60" cy="60" r="60" fill-opacity=".2" fill="purple" />
+                            <circle cx="140" cy="60" r="60" fill-opacity=".2" fill="purple" />
+                            <text x="140" y="70" class="heavy">B</text>
 
-                    </g>
-                </svg>
-                <br>
+                        </g>
+                    </svg>
+                    <br>
 
-                <br>
-                <ul>
-                    <li>The intersection of these elements corrosponds to elements belonging to A and B:
-                        A <ng-katex class='math' [equation]='cap'></ng-katex> B
-                    </li>
-                    <li>The union of these elements corrosponds to elements belonging to at least one of the sets:
-                        A <ng-katex class='math' [equation]='cup'></ng-katex> B
-                    </li>
-                    <li>If every element of A is an element of B, then A is subset of B:
-                        A <ng-katex class='math' [equation]='subsetEq'></ng-katex> B
-                    </li>
-                    <li>If an object <span class='small'>x</span> is an element of A:
-                        <span class='small'>x </span>
-                        <ng-katex class='math' [equation]='in'></ng-katex> A
-                    </li>
-                    <li>The number of elements in set A is denoted as: A |A|</li>
-                    <li>
-                        <ng-katex class='math' [equation]='emptySet'></ng-katex>&nbsp;&nbsp;Denotes an empty set.
-                    </li>
-                    <li>If there are finite sets A and B, then:
-                        <ng-katex class='math' [equation]='ruleOfSum'></ng-katex>
-                    </li>
-                </ul>
-                <span class='definition'> Sets: Rule of Products </span><br><br>
-                <ul>
-                    <li>
-                        Item 1
-                    </li>
-                </ul>
-            </mat-expansion-panel>
-        </div>
-        <div class='linebreak-light'>
+                    <br>
+                    <ul>
+                        <li>The intersection of these elements corrosponds to elements belonging to A and B:
+                            A <ng-katex class='math' [equation]='cap'></ng-katex> B
+                        </li>
+                        <li>The union of these elements corrosponds to elements belonging to at least one of the sets:
+                            A <ng-katex class='math' [equation]='cup'></ng-katex> B
+                        </li>
+                        <li>If every element of A is an element of B, then A is subset of B:
+                            A <ng-katex class='math' [equation]='subsetEq'></ng-katex> B
+                        </li>
+                        <li>If an object <span class='small'>x</span> is an element of A:
+                            <span class='small'>x </span>
+                            <ng-katex class='math' [equation]='in'></ng-katex> A
+                        </li>
+                        <li>The number of elements in set A is denoted as: A |A|</li>
+                        <li>
+                            <ng-katex class='math' [equation]='emptySet'></ng-katex>&nbsp;&nbsp;Denotes an empty set.
+                        </li>
+                        <li>If there are finite sets A and B, then:
+                            <ng-katex class='math' [equation]='ruleOfSum'></ng-katex>
+                        </li>
+                    </ul>
+                    <span class='definition'> Sets: Rule of Products </span><br><br>
+                    <ul>
+                        <li>
+                            Item 1
+                        </li>
+                    </ul>
+                </mat-expansion-panel>
+            </div>
             <div class="summary">
                 <mat-expansion-panel hideToggle>
                     <mat-expansion-panel-header>
@@ -94,6 +92,7 @@
                             Tuples and Permutations
                         </mat-panel-title>
                     </mat-expansion-panel-header>
+
                     <ul>
                         <li></li>
                         <li></li>
@@ -101,70 +100,78 @@
                     </ul>
                 </mat-expansion-panel>
             </div>
-            <div class='linebreak-light'>
-                <div class="summary">
-                    <mat-expansion-panel hideToggle>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                Combinations and Repetitions
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        Consider a selections of k items out of n possible options<br>
-                        k = 2, n = 3 | options a,b,c
-                        <table>
-                            <th></th>
-                            <th>With Repetitions</th>
-                            <th>Without Repetitions</th>
-                            <tr>
-                                <td>Ordered</td>
-                                <td>(a,a)(a,b)(a,c)<br>(b,a)(b,b)(b,c)<br>(c,a)(c,b)(c,c)<br><br>(Tuples n^k)</td>
-                                <td>(a,b)(a,c)<br>(b,a)(b,c)<br>(c,a)(c,b)<br><br>n!/(n-k)! <br> Permutations)</td>
-                            </tr>
-                            <tr>
-                                <td>Unordered</td>
-                                <td>(a,b)(a,c)(b,c) <br>(a,a)(b,b)(c,c) <br><br>Combination<br>(k+n-1 Choose n-1)</td>
-                                <td>(a,b)(a,c)(b,c) <br><br> Combinations<br>n choose k</td>
-                            </tr>
-                        </table>
-                        Python Tools:
-                        <ul>
-                            <li>Unordered with Repetitions (Combinations w/ Repetitions<br>
-                                <code>
+            <div class="summary">
+                <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Combinations and Repetitions
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    Consider a selections of k items out of n possible options<br>
+                    k = 2, n = 3 | options a,b,c
+                    <table>
+                        <th></th>
+                        <th>With Repetitions</th>
+                        <th>Without Repetitions</th>
+                        <tr>
+                            <td>Ordered</td>
+                            <td>(a,a)(a,b)(a,c)<br>(b,a)(b,b)(b,c)<br>(c,a)(c,b)(c,c)<br><br>(Tuples n^k)</td>
+                            <td>(a,b)(a,c)<br>(b,a)(b,c)<br>(c,a)(c,b)<br><br>n!/(n-k)! <br> Permutations)</td>
+                        </tr>
+                        <tr>
+                            <td>Unordered</td>
+                            <td>(a,b)(a,c)(b,c) <br>(a,a)(b,b)(c,c) <br><br>Combination<br>(k+n-1 Choose n-1)</td>
+                            <td>(a,b)(a,c)(b,c) <br><br> Combinations<br>n choose k</td>
+                        </tr>
+                    </table>
+                    Python Tools:
+                    <ul>
+                        <li>Unordered with Repetitions (Combinations w/ Repetitions<br>
+                            <code>
 
-from itertools import combinations_with_replacement<br>
-count = 0 <br>
-for c in combinations_with_replacement(['a ','b ','c '], 4):<br>
-  print("".join(c))<br>
-  count +=1<br>
-print(count)<br>
-                            </code>
-                            </li>
-                            <li>Unordered without Repetitions (Combinations w/o Repetitions)
-                                <code><br>
-from itertools import combinations <br>
-for c in combinations("abc", 2):<br>
-  print("".join(c))<br>
-                                </code>
-                            </li>
+        from itertools import combinations_with_replacement<br>
+        count = 0 <br>
+        for c in combinations_with_replacement(['a ','b ','c '], 4):<br>
+          print("".join(c))<br>
+          count +=1<br>
+        print(count)<br>
+                                    </code>
+                        </li>
+                        <li>Unordered without Repetitions (Combinations w/o Repetitions)
+                            <code><br>
+        from itertools import combinations <br>
+        for c in combinations("abc", 2):<br>
+          print("".join(c))<br>
+                                        </code>
+                        </li>
 
-                            <li>Permutations
-                                <code>
-                                    <br>
-from itertools import permutations<br>
-for c in permutations("abc", 2):<br>
-  print("".join(c))<br>
-                                </code>
-                            </li>
-                            <li>Tuples
-                                <code>
-                                    <br>
-from itertools import product<br>
-for c in product("abc", repeat=2):<br>
-  print("".join(c))<br>
-                                </code>
-                            </li>
-                        </ul>
-                    </mat-expansion-panel>
-                </div>
+                        <li>Permutations
+                            <code>
+                                            <br>
+        from itertools import permutations<br>
+        for c in permutations("abc", 2):<br>
+          print("".join(c))<br>
+                                        </code>
+                        </li>
+                        <li>Tuples
+                            <code>
+                                            <br>
+        from itertools import product<br>
+        for c in product("abc", repeat=2):<br>
+          print("".join(c))<br>
+                                        </code>
+                        </li>
+                    </ul>
+                </mat-expansion-panel>
             </div>
-        </div>
+        </mat-tab>
+        <mat-tab label="Probability Theory">
+
+        </mat-tab>
+        <mat-tab label="Third"></mat-tab>
+    </mat-tab-group>
+
+
+
+
+</div>
