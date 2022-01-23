@@ -1,4 +1,3 @@
-import { RouterTestingModule } from "@angular/router/testing";
 
 export class CircleTree {
 
@@ -215,22 +214,13 @@ export class CircleNode {
     public centerRoot = 140;
     public offset = 0;
 
-
-
-    constructor(
-
-        public value: number) {
-
+    constructor(public value: number) {
         this._id = value;
-
     }
-
 
     private _id: number;
     public get id(): number {
         return this._id;
     }
-
-
 
 }

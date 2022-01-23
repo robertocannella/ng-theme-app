@@ -20,6 +20,9 @@ import { DataScienceComponent } from './data-science/data-science.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { ToolsComponent } from './tools/tools.component';
 import { MathComponent } from './math/math.component';
+import { AVLTreeSVGComponent } from "./datastructures/avl_tree_svg.component";
+import { AVLTreeComponent } from "./datastructures/avltree/avltree.component";
+
 
 @NgModule({
   declarations: [
@@ -37,7 +40,9 @@ import { MathComponent } from './math/math.component';
     DataScienceComponent,
     StatisticsComponent,
     ToolsComponent,
-    MathComponent
+    MathComponent,
+    AVLTreeSVGComponent,
+    AVLTreeComponent
   ],
   imports: [
     BrowserModule,

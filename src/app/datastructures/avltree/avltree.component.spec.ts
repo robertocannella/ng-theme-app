@@ -1,19 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DatastructuresComponent } from './datastructures.component';
 
-describe('DatastructuresComponent', () => {
-  let component: DatastructuresComponent;
-  let fixture: ComponentFixture<DatastructuresComponent>;
+import { AVLTreeComponent } from './avltree.component';
+
+describe('AvltreeComponent', () => {
+  type NewType = AVLTreeComponent;
+
+  let component: NewType;
+  let fixture: ComponentFixture<AVLTreeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DatastructuresComponent]
+      declarations: [AVLTreeComponent]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DatastructuresComponent);
+    fixture = TestBed.createComponent(AVLTreeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

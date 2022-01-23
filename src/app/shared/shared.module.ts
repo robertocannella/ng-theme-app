@@ -29,14 +29,14 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { YouTubePlayerModule } from "@angular/youtube-player";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { KatexModule } from 'ng-katex';
+
 @NgModule({
   declarations: [
     SidenavComponent,
     TextPostComponent,
     CodePostComponent,
     ImagePostComponent,
-    CodeBlockComponent,
-
+    CodeBlockComponent
   ],
   exports: [
     SidenavComponent,
@@ -60,6 +60,7 @@ import { KatexModule } from 'ng-katex';
     BrowserAnimationsModule,
     KatexModule,
     MatTabsModule
+
 
   ],
   imports: [

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { SimpleOuterSubscriber } from 'rxjs/internal/innerSubscribe';
 import { CircleNode, CircleTree } from './CircleTree';
 
 interface SVGElement extends Element {
