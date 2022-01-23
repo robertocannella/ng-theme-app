@@ -12,11 +12,12 @@ export class AVLTree {
             return;
         }
 
-        this.root = this._insert(this.root, value, this.width / 2, this.radius, this.root.parentX, this.root.parentY, 25, 1)
+        this.root = this._insert({ node: this.root, value, xOffset: this.width / 2, yOffset: this.radius, parentX: this.root.parentX, parentY: this.root.parentY, xShift: 25, depth: 1 })
 
     }
 
-    _insert(node: AVLNode | null, value: number, xOffset: number, yOffset: number, parentX: number, parentY: number, xShift: number, depth: number) {
+    private _insert({ node, value, xOffset, yOffset, parentX, parentY, xShift, depth }:
+        { node: AVLNode | null; value: number; xOffset: number; yOffset: number; parentX: number; parentY: number; xShift: number; depth: number; }): AVLNode {
 
         if (node === null)
             return new AVLNode(value, xOffset, yOffset, this.radius, parentX, parentY, depth);
@@ -30,7 +31,7 @@ export class AVLTree {
                 xOffset = parentX - (this.totalShift / depth) - xShift
                 xShift -= 15
 
-                node.leftChild = this._insert(node.leftChild, value, xOffset, yOffset, parentX, parentY, xShift, depth + 1);
+                node.leftChild = this._insert({ node: node.leftChild, value, xOffset, yOffset, parentX, parentY, xShift, depth: depth + 1 });
             }
             else {
 
@@ -41,7 +42,7 @@ export class AVLTree {
 
                 xShift -= 15
 
-                this._insert(node.leftChild, value, xOffset, yOffset, parentX, parentY, xShift, depth + 1);
+                this._insert({ node: node.leftChild, value, xOffset, yOffset, parentX, parentY, xShift, depth: depth + 1 });
             }
         }
         if (value > node.value) {
@@ -54,7 +55,7 @@ export class AVLTree {
 
                 xShift -= 15
 
-                node.rightChild = this._insert(node.rightChild, value, xOffset, yOffset, parentX, parentY, xShift, depth + 1);
+                node.rightChild = this._insert({ node: node.rightChild, value, xOffset, yOffset, parentX, parentY, xShift, depth: depth + 1 });
             }
             else {
 
@@ -65,7 +66,7 @@ export class AVLTree {
 
                 xShift -= 15
 
-                this._insert(node.rightChild, value, xOffset, yOffset, parentX, parentY, xShift, depth + 1);
+                this._insert({ node: node.rightChild, value, xOffset, yOffset, parentX, parentY, xShift, depth: depth + 1 });
             }
         }
 
@@ -87,53 +88,53 @@ export class AVLTree {
     }
 
     findNode(value: number) {
-        return this._findNode(this.root, value)
+        return this._findNode({ node: this.root, value })
     }
-    _findNode(node: AVLNode | null, value: number): AVLNode | undefined {
+    private _findNode({ node, value }: { node: AVLNode | null; value: number; }): AVLNode | undefined {
         if (node === null)
             return;
 
         if (node.value == value)
             return node;
 
-        return this._findNode(node.leftChild, value) ||
-            this._findNode(node.rightChild, value);
+        return this._findNode({ node: node.leftChild, value }) ||
+            this._findNode({ node: node.rightChild, value });
 
     }
     preOrderArray(node: AVLNode) {
         let arr: AVLNode[] = []
-        return this._preOrderArray(this.root, arr)
+        return this._preOrderArray({ node: this.root, arr })
     }
-    _preOrderArray(node: AVLNode | null, arr: AVLNode[]) {
+    private _preOrderArray({ node, arr }: { node: AVLNode | null; arr: AVLNode[]; }) {
         if (node === null)
             return;
 
         arr.push(node)
 
-        this._preOrderArray(node.leftChild, arr);
-        this._preOrderArray(node.rightChild, arr);
+        this._preOrderArray({ node: node.leftChild, arr });
+        this._preOrderArray({ node: node.rightChild, arr });
 
         return arr;
     }
     preOrderValues(node: AVLNode | null) {
         let arr: number[] = []
-        return this._preOrderValues(this.root, arr)
+        return this._preOrderValues({ node: this.root, arr })
     }
-    _preOrderValues(node: AVLNode | null, arr: number[]) {
+    private _preOrderValues({ node, arr }: { node: AVLNode | null; arr: number[]; }) {
         if (node === null || node.value === null)
             return;
 
         arr.push(node.value)
 
-        this._preOrderValues(node.leftChild, arr);
-        this._preOrderValues(node.rightChild, arr);
+        this._preOrderValues({ node: node.leftChild, arr });
+        this._preOrderValues({ node: node.rightChild, arr });
 
         return arr;
     }
     traversePreOrder() {
         this._traversePreOrder(this.root);
     }
-    _traversePreOrder(node: AVLNode | null) {
+    private _traversePreOrder(node: AVLNode | null): void {
         if (node === null)
             return;
 
@@ -142,16 +143,16 @@ export class AVLTree {
         this._traversePreOrder(node.rightChild);
     }
 
-    _isLeftHeavy(node: AVLNode) {
+    private _isLeftHeavy(node: AVLNode): boolean {
         return this._balanceFactor(node) > 1;
     }
-    _isRightHeavy(node: AVLNode) {
+    private _isRightHeavy(node: AVLNode): boolean {
         return this._balanceFactor(node) < -1;
     }
-    _balanceFactor(node: AVLNode | null) {
+    private _balanceFactor(node: AVLNode | null): number {
         return (node === null) ? 0 : (this.height(node.leftChild) - this.height(node.rightChild));
     }
-    balance(node: AVLNode) {
+    public balance(node: AVLNode): AVLNode | null {
 
         if (this._isLeftHeavy(node)) {
             if (this._balanceFactor(node.leftChild) < 0)
@@ -167,7 +168,7 @@ export class AVLTree {
         }
         return node;
     }
-    _rotateLeft(node: AVLNode | null) {
+    private _rotateLeft(node: AVLNode | null): AVLNode | null {
 
         let newRoot: AVLNode | null = node!.rightChild;
 
@@ -179,7 +180,7 @@ export class AVLTree {
 
         return newRoot;
     }
-    _rotateRight(node: AVLNode | null) {
+    private _rotateRight(node: AVLNode | null): AVLNode | null {
 
         let newRoot = node!.leftChild;
 
@@ -193,14 +194,14 @@ export class AVLTree {
     }
     changeRadius(newRadius: number) {
         this.radius = newRadius;
-        this._changeRadius(this.root, newRadius);
+        this._changeRadius({ node: this.root, newRadius });
     }
-    _changeRadius(node: AVLNode | null, newRadius: number) {
+    private _changeRadius({ node, newRadius }: { node: AVLNode | null; newRadius: number; }): void {
         if (node === null)
             return;
 
-        this._changeRadius(node.leftChild, newRadius);
-        this._changeRadius(node.rightChild, newRadius);
+        this._changeRadius({ node: node.leftChild, newRadius });
+        this._changeRadius({ node: node.rightChild, newRadius });
         node.radius = newRadius
     }
 
