@@ -7,6 +7,7 @@ import * as d3Axis from 'd3';
 import { AVLTree } from '../AVLTree';
 import { AVLNode } from '../AVLNode';
 import { FormGroup, FormControl } from '@angular/forms';
+import { MatSlider, MatSliderChange } from '@angular/material/slider';
 
 
 
@@ -25,7 +26,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
   private height = 400;
   private vbWidth = 600;
   private vbHeight = 250;
-  private radius = 14;
+  private radius = 12;
   private totalShift = 75;
 
   private xmlns = 'http://www.w3.org/2000/svg';
@@ -44,16 +45,29 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
   private edges = true;
   public svg: any;
 
-  // slider 
+  // Sliders
+  // Wingspan
+  wingspanMax = 300;
+  wingspanMin = 0;
+  wingspanValue = 150;
+
+  // Zoom
+  zoomMax = 1500;
+  zoomMin = 300;
+  zoomValue = 800;
+
+  // Y-axis
+  yAxisMax = 400;
+  yAxisMin = 200;
+  yAxisValue = 250;
+
+
   autoTicks = false;
   disabled = false;
   invert = false;
-  max = 1200;
-  min = 300;
   showTicks = false;
   step = 1;
   thumbLabel = false;
-  value = 800;
   vertical = false;
   tickInterval = 1;
 
@@ -64,7 +78,23 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
 
   });
   public ngAfterViewInit() {
+
+
+
     let x: any = document.getElementById('mainsvg')
+    // Get the input field
+    var input: any = document.getElementById("node-input");
+
+    // Execute a function when the user releases a key on the keyboard
+    input.addEventListener("keyup", function (event: any) {
+      // Number 13 is the "Enter" key on the keyboard
+      if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.getElementById("addNode")!.click();
+      }
+    });
 
     console.log(this.vbWidth)
     x.scrollTo({
@@ -147,7 +177,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
           .attr("r", () => d.radius)
           .attr('fill', 'white')
           .attr('stroke', 'black')
-          .attr('stroke-width', '1px')
+          .attr('stroke-width', '2px')
           .attr('cy', () => d.currentY)
           .attr('cx', () => d.currentX)
           .attr('id', () => 'node' + d.value)
@@ -216,13 +246,36 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
       svgElement!.setAttribute("viewBox", `0 0 ${originalWidth} ${originalHeight}`);
     });
   }
+  changeTotalShift(newTotalShift: number | null) {
+    // WingSpan
+
+    this.totalShift = newTotalShift!;
+    let cn = this.avlTree.preOrderArray();
+
+    this.avlTree = new AVLTree(this.vbWidth, this.radius, newTotalShift!);
+    d3.selectAll('svg g').remove();
+
+    cn!.forEach((node) => {
+      this.avlTree.insert(node.value)
+    });
+    // currentNodes.clear();
+    this.showTree();
+
+  }
+  changeViewBoxHeight(slider: MatSliderChange) {
+    // Y-axis
+    this.vbHeight = slider.value!;
+    let vb = document.getElementById(`${this.svgId}`)
+
+    vb!.setAttribute('viewBox', `0 0 ${this.vbWidth} ${this.vbHeight}`)
+    this.showTree();
+  }
+
   changeViewBoxWidth(value: number | null): void {
     // Zoom
 
     let viewBox = document.getElementById(`${this.svgId}`)
     this.vbWidth = value!;
-
-    console.log(this.vbWidth)
     let cn = this.avlTree.preOrderArray();
 
     this.avlTree = new AVLTree(this.vbWidth, this.radius, this.totalShift);
@@ -232,7 +285,6 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
       this.avlTree.insert(node.value)
     });
     //currentNodes.clear();
-    console.log(viewBox)
     viewBox!.setAttribute('viewBox', `0 0 ${this.vbWidth} ${this.vbHeight}`)
     this.showTree();
   }
