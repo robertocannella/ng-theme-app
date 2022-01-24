@@ -26,10 +26,12 @@ import { FormsModule } from '@angular/forms';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatSliderModule } from '@angular/material/slider';
 import { YouTubePlayerModule } from "@angular/youtube-player";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { KatexModule } from 'ng-katex';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MAT_CHECKBOX_DEFAULT_OPTIONS_FACTORY } from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -62,7 +64,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     KatexModule,
     MatTabsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSliderModule
 
 
 
@@ -74,6 +77,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     FontAwesomeModule,
     MatInputModule,
     MatCardModule,
+    MatSliderModule,
     KatexModule
   ]
 })

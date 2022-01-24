@@ -9,10 +9,18 @@
         <mat-label>Radius</mat-label>
         <input matInput id="change-radius" type="number" formControlName="changeRadius">
     </mat-form-field>
+
+
     <button mat-icon-button type="submit" [disabled]="!control.valid" color="primary" aria-label="Submit Button">
         <fa-icon icon="check-circle"></fa-icon>
     </button>
 </form>
+<mat-label for='zoom-slider'>Zoom</mat-label>
+<mat-slider id="zoom-slider" (input)="changeViewBoxWidth($event.value)" [disabled]="disabled" [invert]="invert"
+    [max]="max" [min]="min" [step]="step" [thumbLabel]="thumbLabel" [tickInterval]="getSliderTickInterval()"
+    [(ngModel)]="value" [vertical]="vertical" aria-labelledby="example-name-label">
+</mat-slider>
+
 <div id='mainsvg' style="border:1px solid grey;overflow:scroll;text-align:center">
 
 </div>

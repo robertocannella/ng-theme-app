@@ -1,4 +1,4 @@
-import { Component, NgModule, OnInit } from '@angular/core';
+import { AfterViewInit, Component, NgModule, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 import * as d3Scale from 'd3';
 import * as d3Shape from 'd3';
@@ -16,22 +16,24 @@ import { FormGroup, FormControl } from '@angular/forms';
   templateUrl: './avltree.component.html',
   styleUrls: ['./avltree.component.sass']
 })
-export class AVLTreeComponent implements OnInit {
+export class AVLTreeComponent implements OnInit, AfterViewInit {
 
 
 
   public title = 'AVL Tree';
   private width = 800;
-  private height = 200;
+  private height = 400;
   private vbWidth = 600;
   private vbHeight = 250;
-  private radius = 15;
+  private radius = 14;
   private totalShift = 75;
 
   private xmlns = 'http://www.w3.org/2000/svg';
   private svgId = 'avlnodes';
   private balanceOffsetXY = 18;
   private heightOffsetXY = 18; // x,y offset for label
+
+
 
   private showHeight = false;
   private _showBalance = false;
@@ -42,19 +44,43 @@ export class AVLTreeComponent implements OnInit {
   private edges = true;
   public svg: any;
 
+  // slider 
+  autoTicks = false;
+  disabled = false;
+  invert = false;
+  max = 1200;
+  min = 300;
+  showTicks = false;
+  step = 1;
+  thumbLabel = false;
+  value = 800;
+  vertical = false;
+  tickInterval = 1;
 
 
   control = new FormGroup({
     addNode: new FormControl(''),
     changeRadius: new FormControl(''),
-  });
 
+  });
+  public ngAfterViewInit() {
+    let x: any = document.getElementById('mainsvg')
+
+    console.log(this.vbWidth)
+    x.scrollTo({
+      top: 0,
+      left: (this.vbWidth / 2) - 70,
+      behavior: 'smooth'
+    })
+  }
   public ngOnInit(): void {
     this.svg = d3.select('div#mainsvg')
     console.log(this.avlTree)
     this.avlTree.insert(33);
     this.avlTree.insert(32);
     this.buildSvg();
+    this.showTree();
+    //this.addZoom();
   }
 
   public onSubmit() {
@@ -66,11 +92,17 @@ export class AVLTreeComponent implements OnInit {
       .append("svg")
       .attr('viewBox', `0 0 ${this.vbWidth} ${this.vbHeight}`)
       .attr('width', `${this.width}`)
-      .attr('height', 400)
+      .attr('height', this.height)
       .attr('id', this.svgId)
       .attr('xmlns', this.xmlns)
   }
+  getSliderTickInterval(): number | 'auto' {
+    if (this.showTicks) {
+      return this.autoTicks ? 'auto' : this.tickInterval;
+    }
 
+    return 0;
+  }
   showTree() {
     let cn = this.avlTree.preOrderArray();
     console.log(cn);
@@ -89,36 +121,39 @@ export class AVLTreeComponent implements OnInit {
       .data(cn!)
       .join(function (enter: any) {
         return enter.append("g").each(function (d: any, i: any, n: any) {
-          //d3.select(this).append("line")
           d3.select(n[i]).append("circle");
           d3.select(n[i]).append("text");
         });
       })
+
+    display.selectAll('g')
+      .data(cn!)
       .attr("class", 'node-array')
       .style('cursor', 'pointer')
-      .on('click', (d: any) => {
-
-        this.currentSelection = d.value
-        //this.sliderY.value = d.currentY;
-        //sliderX.value = d.currentX;
-        //this.addNode.value = d.value;
-
-        console.log('X: ', d.currentX, 'Y: ', d.currentY, 'Node: ', d.value)
+      .each((d: AVLNode, i: any, n: any) => {
+        const node = d3.select(n[i])
+        node
+          .on('click', () => {
+            //this.sliderY.value = d.currentY;
+            //sliderX.value = d.currentX;
+            //this.addNode.value = d.value;
+            console.log('X: ', d.currentX, 'Y: ', d.currentY, 'Node: ', d.value)
+          })
       })
       .each((d: AVLNode, i: any, nodes: any) => {
         const node = d3.select(nodes[i]);
         let n: any = nodes[i]
         node.select("circle")
-          .attr("r", (d: any) => d.radius)
+          .attr("r", () => d.radius)
           .attr('fill', 'white')
           .attr('stroke', 'black')
           .attr('stroke-width', '1px')
-          .attr('cy', (d: any) => d.currentY)
-          .attr('cx', (d: any) => d.currentX)
-          .attr('id', (d: any) => 'node' + d.value)
-          .text((d: any) => d.value)
-          .each((d) => {
-            console.log(n.radius)
+          .attr('cy', () => d.currentY)
+          .attr('cx', () => d.currentX)
+          .attr('id', () => 'node' + d.value)
+          .text(() => d.value)
+          .on('click', () => {
+            console.log(d)
           })
         node.select("text")
           .call(() => { console.log('text') })
@@ -162,6 +197,47 @@ export class AVLTreeComponent implements OnInit {
     //this.checkBalance();
 
   }
+  addZoom() {
+    const svgElement = document.querySelector('svg#avlnodes')
+    if (svgElement?.getAttribute('viewBox') == null)
+      alert('object null')
+    else {
+      var [, , originalWidth, originalHeight] = svgElement.getAttribute("viewBox")!.split(" ").map(Number);
+    }
+    svgElement!.addEventListener("mousemove", (event: any) => {
+      const { top, left, width, height } = svgElement!.getBoundingClientRect();
+
+      const eventTop = event.clientY - top;
+      const eventLeft = event.clientX - left;
+
+      svgElement!.setAttribute("viewBox", `${eventLeft / width * originalWidth - originalWidth / 4} ${eventTop / height * originalHeight - originalHeight / 4} ${originalWidth / 2} ${originalHeight / 2}`)
+    });
+    svgElement!.addEventListener("mouseout", () => {
+      svgElement!.setAttribute("viewBox", `0 0 ${originalWidth} ${originalHeight}`);
+    });
+  }
+  changeViewBoxWidth(value: number | null): void {
+    // Zoom
+
+    let viewBox = document.getElementById(`${this.svgId}`)
+    this.vbWidth = value!;
+
+    console.log(this.vbWidth)
+    let cn = this.avlTree.preOrderArray();
+
+    this.avlTree = new AVLTree(this.vbWidth, this.radius, this.totalShift);
+    d3.selectAll('svg g').remove();
+
+    cn!.forEach((node) => {
+      this.avlTree.insert(node.value)
+    });
+    //currentNodes.clear();
+    console.log(viewBox)
+    viewBox!.setAttribute('viewBox', `0 0 ${this.vbWidth} ${this.vbHeight}`)
+    this.showTree();
+  }
+
+
 }
 
 
