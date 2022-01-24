@@ -1,4 +1,4 @@
-class AVLNode {
+export class AVLNode {
     public height: number;
     rightChild: AVLNode | null = null;
     leftChild: AVLNode | null = null;

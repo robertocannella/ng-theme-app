@@ -1,5 +1,7 @@
+import { AVLNode } from "./AVLNode";
+
 export class AVLTree {
-    root: AVLNode | null = null;
+    public root: AVLNode | null = null;
 
     constructor(
         public width: number,
@@ -101,7 +103,7 @@ export class AVLTree {
             this._findNode({ node: node.rightChild, value });
 
     }
-    preOrderArray(node: AVLNode) {
+    preOrderArray(): AVLNode[] | undefined {
         let arr: AVLNode[] = []
         return this._preOrderArray({ node: this.root, arr })
     }

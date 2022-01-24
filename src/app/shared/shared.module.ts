@@ -9,7 +9,7 @@ import {
   faGreaterThan, faPlus, faMinus,
   faRobot, faFilter, faPencilRuler,
   faBezierCurve, faChevronRight, faChevronLeft, faBars,
-  faCalculator
+  faCalculator, faCheckCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { faStackOverflow, faGithub, faMedium, faGit } from '@fortawesome/free-brands-svg-icons';
 import { TextPostComponent } from './components/text-post/text-post.component';
@@ -29,6 +29,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { YouTubePlayerModule } from "@angular/youtube-player";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { KatexModule } from 'ng-katex';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -59,7 +61,9 @@ import { KatexModule } from 'ng-katex';
     YouTubePlayerModule,
     BrowserAnimationsModule,
     KatexModule,
-    MatTabsModule
+    MatTabsModule,
+    ReactiveFormsModule
+
 
 
   ],
@@ -84,6 +88,6 @@ export class SharedModule {
       faPlus, faMinus, faRobot,
       faFilter, faPencilRuler, faBezierCurve,
       faChevronRight, faChevronLeft, faBars,
-      faCalculator)
+      faCalculator, faCheckCircle)
   }
 }

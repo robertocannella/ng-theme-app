@@ -1,2 +1,49 @@
 <h2>{{ title }}</h2>
-<svg id='tool' width="900" height="500"></svg>
+
+<form [formGroup]="control" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="legacy">
+        <mat-label>Add a node:</mat-label>
+        <input matInput id="addNode" type="number" formControlName="addNode">
+    </mat-form-field>
+    <mat-form-field appearance="legacy">
+        <mat-label>Radius</mat-label>
+        <input matInput id="change-radius" type="number" formControlName="changeRadius">
+    </mat-form-field>
+    <button mat-icon-button type="submit" [disabled]="!control.valid" color="primary" aria-label="Submit Button">
+        <fa-icon icon="check-circle"></fa-icon>
+    </button>
+</form>
+<div id='mainsvg' style="border:1px solid grey;overflow:scroll;text-align:center">
+
+</div>
+
+
+
+
+<input id='node-input' type="number" min='0' max='999' />
+<button type="button" class="rc-btn rc-btn-outline-primary" id='add-node'
+    onclick="addNode(document.getElementById('node-input').value)">Add Node</button>
+<br>
+
+
+
+X <input id='sliderX' type="range" min="20" max=530 value=0 oninput="moveSlider(this, 'x', currentSelection)" />
+Y <input id='sliderY' type="range" min="20" max=330 value=0 oninput="moveSlider(this, 'y', currentSelection)" />
+<br>
+
+Radius <input id='sliderRadius' type="range" min="0" max=30 value=15 oninput="changeRadius(this)" />
+<br>
+Wingspan <input id='sliderTotalShift' type="range" min="0" max=300 value=150 oninput="changeTotalShift(this.value)" />
+<br>
+Zoom <input id='sliderZoom' type="range" min="300" max=1200 value=800 oninput="changeViewBoxWidth(this.value)" />
+<br>
+Y-Axis <input id='sliderYAxis' type="range" min="200" max=400 value=250 oninput="changeViewBoxHeight(this)" />
+<br>
+
+<button type="button" class="rc-btn rc-btn-outline-primary" id='obliterate' onclick="obliterate()">Obliterate</button>
+<button type="button" class="rc-btn rc-btn-outline-primary" id='reset-display' onclick="resetDisplay()">Reset
+    Display</button>
+<br>
+<button type="button" class="rc-btn rc-btn-outline-primary" id='traverse' onclick="traverse()">Traverse</button>
+<button type="button" class="rc-btn rc-btn-outline-primary" id='show-balance-text' onclick="toggleShowBalance()">Display
+    Balance Factor</button>
