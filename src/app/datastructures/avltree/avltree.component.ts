@@ -8,6 +8,7 @@ import { AVLTree } from '../AVLTree';
 import { AVLNode } from '../AVLNode';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatSlider, MatSliderChange } from '@angular/material/slider';
+import { ThrowStmt } from '@angular/compiler';
 
 
 
@@ -31,19 +32,19 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
 
   private xmlns = 'http://www.w3.org/2000/svg';
   private svgId = 'avlnodes';
-  private balanceOffsetXY = 18;
+  private detailOffsetXY = 18;
   private heightOffsetXY = 18; // x,y offset for label
 
 
 
-  private showHeight = false;
-  private _showBalance = false;
   private currentImbalance = null;
   public avlTree = new AVLTree(this.vbWidth, this.radius, this.totalShift);
   private currentSelection: any;
   private currentNodes = new Set<number>();
   private edges = true;
   public svg: any;
+  _showHeight = false;
+  _showBalance = false;
 
   // Sliders
   // Wingspan
@@ -135,7 +136,8 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
   }
   showTree() {
     let cn = this.avlTree.preOrderArray();
-    console.log(cn);
+
+
 
     //if (cn!.length > 1)
     //  d3.selectAll('.node-array').remove();
@@ -186,7 +188,6 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
             console.log(d)
           })
         node.select("text")
-          .call(() => { console.log('text') })
           .text((d: any) => d.value)
           .attr('alignment-baseline', 'central')
           .attr('text-anchor', 'middle')
@@ -197,7 +198,8 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
         //toggleEdges()
       })
 
-    //this.showBalance();
+    this.showHeight();
+    this.showBalance();
   }
   randomIntFromInterval(min: number, max: number) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min)
@@ -288,7 +290,65 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
     viewBox!.setAttribute('viewBox', `0 0 ${this.vbWidth} ${this.vbHeight}`)
     this.showTree();
   }
+  toggleToFalse() {
+    d3.selectAll('.balance').remove();
+    d3.selectAll('.node-height').remove();
+    this._showBalance = false;
+    this._showHeight = false;
+    this.showTree();
+  }
+  toggleShowBalance() {
+    this._showBalance = true;
+    this._showHeight = false;
+    this.showTree();
+  }
+  toggleShowHeight() {
+    this._showHeight = true;
+    this._showBalance = false;
+    this.showTree();
+  }
+  showHeight() {
 
+
+    if (this._showHeight) {
+      d3.selectAll('.balance').remove();
+      d3.selectAll('.node-height').remove();
+      let cn = this.avlTree.preOrderArray();
+
+      this.svg.selectAll('g')
+        .data(cn)
+        .append('text')
+        .attr('class', 'node-height')
+        .text((d: any, i: any) => d.height)
+        .attr('id', (d: any) => 'node' + d.value + 'node-height')
+        .attr('text-anchor', 'middle')
+        .attr('opacity', '1')
+        .attr('alignment-baseline', 'central')
+        .attr("x", (d: any) => d.currentX + this.detailOffsetXY)
+        .attr("y", (d: any) => d.currentY + this.detailOffsetXY)
+    }
+
+  }
+  showBalance() {
+
+    if (this._showBalance) {
+      d3.selectAll('.balance').remove();
+      d3.selectAll('.node-height').remove();
+      let cn = this.avlTree.preOrderArray();
+
+      this.svg.selectAll('g')
+        .data(cn)
+        .append('text')
+        .attr('class', 'balance')
+        .text((d: any, i: any) => this.avlTree._balanceFactor(d))
+        .attr('id', (d: any) => 'node' + d.value + 'balance-factor')
+        .attr('text-anchor', 'middle')
+        .attr('opacity', '1')
+        .attr('alignment-baseline', 'central')
+        .attr("x", (d: any) => d.currentX + this.detailOffsetXY)
+        .attr("y", (d: any) => d.currentY + this.detailOffsetXY)
+    }
+  }
 
 }
 

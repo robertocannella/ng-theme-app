@@ -151,7 +151,7 @@ export class AVLTree {
     private _isRightHeavy(node: AVLNode): boolean {
         return this._balanceFactor(node) < -1;
     }
-    private _balanceFactor(node: AVLNode | null): number {
+    public _balanceFactor(node: AVLNode | null): number {
         return (node === null) ? 0 : (this.height(node.leftChild) - this.height(node.rightChild));
     }
     public balance(node: AVLNode): AVLNode | null {

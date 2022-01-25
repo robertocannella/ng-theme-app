@@ -32,6 +32,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { KatexModule } from 'ng-katex';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MAT_CHECKBOX_DEFAULT_OPTIONS_FACTORY } from '@angular/material/checkbox';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { MAT_CHECKBOX_DEFAULT_OPTIONS_FACTORY } from '@angular/material/checkbox
     KatexModule,
     MatTabsModule,
     ReactiveFormsModule,
-    MatSliderModule
+    MatSliderModule,
+    MatButtonToggleModule
 
 
 
@@ -78,6 +80,7 @@ import { MAT_CHECKBOX_DEFAULT_OPTIONS_FACTORY } from '@angular/material/checkbox
     MatInputModule,
     MatCardModule,
     MatSliderModule,
+    MatButtonToggleModule,
     KatexModule
   ]
 })
