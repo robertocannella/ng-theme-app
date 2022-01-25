@@ -1,30 +1,28 @@
 <h2>{{ title }}</h2>
 Named after inventors Adelson-Velsky and Landis, the AVL tree is a self-balancing binary search tree. The tool below
-helps portray the inner workings of an AVL tree. This AVL tree will keep the heights of each subtree from differing more
-than one by preforming a rotation.
+portrays the inner workings of an AVL tree. This AVL tree will keep the heights of each subtree from differing more
+than one by preforming the required number of rotations.
 <div class='linebreak-light'></div>
 <form [formGroup]="control" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="legacy">
         <mat-label>Add a node:</mat-label>
         <input matInput id="addNode" type="number" formControlName="addNode">
     </mat-form-field>
-
-
-
     <button mat-icon-button type="submit" [disabled]="!control.valid" color="primary" aria-label="Submit Button">
         <fa-icon icon="check-circle"></fa-icon>
     </button>
-
-
 </form>
-<mat-label>Traverse</mat-label>
-<button mat-icon-button color="primary" (click)="traverse()" aria-label="Traverse Button">
-    <fa-icon icon="check-circle"></fa-icon>
+
+<button mat-button color="primary" (click)="traverse()" aria-label="Traverse Button">
+    Traverse
+</button>
+<button mat-button color="primary" (click)="obliterate()" aria-label="Traverse Button">
+    Obliterate
 </button>
 <mat-expansion-panel>
     <mat-expansion-panel-header>
         <mat-panel-title>
-            Customize
+            Options
         </mat-panel-title>
     </mat-expansion-panel-header>
     <mat-card>

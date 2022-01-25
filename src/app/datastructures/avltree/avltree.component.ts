@@ -9,6 +9,7 @@ import { AVLNode } from '../AVLNode';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatSlider, MatSliderChange } from '@angular/material/slider';
 import { ThrowStmt } from '@angular/compiler';
+import { faDiceD20 } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -110,6 +111,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
     this.svg = d3.select('div#mainsvg')
     this.avlTree.insert(33);
     this.avlTree.insert(32);
+    this.avlTree.insert(34);
     this.buildSvg();
     this.showTree();
     //this.addZoom();
@@ -203,8 +205,10 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
   }
   traverse() {
     let cn = this.avlTree.preOrderArray()
-    console.log('in')
-    cn!.forEach((element, index) => {
+    if (cn == null || undefined)
+      return;
+
+    cn.forEach((element, index) => {
 
       d3.select('#node' + element.value)
         .transition()
@@ -215,6 +219,13 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
         .attr('fill', 'pink')
     });
 
+  }
+  obliterate() {
+
+    this.avlTree = new AVLTree(this.vbWidth, this.radius, this.totalShift);
+    d3.selectAll('svg g').remove();
+    d3.selectAll('svg line').remove();
+    this.currentNodes.clear()
   }
   randomIntFromInterval(min: number, max: number) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min)
