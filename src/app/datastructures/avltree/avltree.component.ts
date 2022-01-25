@@ -25,7 +25,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
   public title = 'AVL Tree';
   private width = 800;
   private height = 400;
-  private vbWidth = 600;
+  private vbWidth = 900;
   private vbHeight = 250;
   private radius = 12;
   private totalShift = 75;
@@ -33,7 +33,6 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
   private xmlns = 'http://www.w3.org/2000/svg';
   private svgId = 'avlnodes';
   private detailOffsetXY = 18;
-  private heightOffsetXY = 18; // x,y offset for label
 
 
 
@@ -41,8 +40,8 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
   public avlTree = new AVLTree(this.vbWidth, this.radius, this.totalShift);
   private currentSelection: any;
   private currentNodes = new Set<number>();
-  private edges = true;
-  public svg: any;
+  svg: any;
+  edges = true;
   _showHeight = false;
   _showBalance = false;
 
@@ -54,15 +53,15 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
   // Wingspan
   wingspanMax = 300;
   wingspanMin = 0;
-  wingspanValue = 150;
+  wingspanValue = this.totalShift;
 
   // Zoom
-  zoomMax = 1500;
+  zoomMax = 1900;
   zoomMin = 300;
-  zoomValue = 800;
+  zoomValue = this.vbWidth;
 
   // Y-axis
-  yAxisMax = 400;
+  yAxisMax = 600;
   yAxisMin = 200;
   yAxisValue = 250;
 
@@ -85,7 +84,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
 
     // Get the input field
     var input: any = document.getElementById("addNode");
-    console.log(input)
+
     // Execute a function when the user releases a key on the keyboard
     input.addEventListener("keyup", function (event: any) {
       // Number 13 is the "Enter" key on the keyboard
@@ -94,7 +93,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
         event.preventDefault();
         // Trigger the button element with a click
 
-        x = document.getElementById("addNode")?.click()
+        document.getElementById("addNode")?.click()
 
       }
     });
@@ -103,13 +102,12 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
 
     x.scrollTo({
       top: 0,
-      left: (this.vbWidth / 2) - 70,
+      left: (this.vbWidth / 5.5),
       behavior: 'smooth'
     })
   }
   public ngOnInit(): void {
     this.svg = d3.select('div#mainsvg')
-    console.log(this.avlTree)
     this.avlTree.insert(33);
     this.avlTree.insert(32);
     this.buildSvg();
@@ -122,7 +120,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
     this.addNode(this.control.value.addNode)
   }
   private buildSvg() {
-    console.log(this.svg)
+
     this.svg
       .append("svg")
       .attr('viewBox', `0 0 ${this.vbWidth} ${this.vbHeight}`)
@@ -141,13 +139,11 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
   showTree() {
     let cn = this.avlTree.preOrderArray();
 
-
-
-    //if (cn!.length > 1)
-    //  d3.selectAll('.node-array').remove();
+    if (cn!.length > 1)
+      d3.selectAll('.node-array').remove();
 
     // paint all edges first so Z-indexing is correct
-    //this.showEdges()
+    this.showEdges()
 
 
     // paint nodes and labels 
@@ -172,7 +168,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
           .on('click', () => {
             //this.sliderY.value = d.currentY;
             //sliderX.value = d.currentX;
-            //this.addNode.value = d.value;
+            this.control.setValue({ addNode: d.value })
             console.log('X: ', d.currentX, 'Y: ', d.currentY, 'Node: ', d.value)
           })
       })
@@ -205,6 +201,21 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
     this.showHeight();
     this.showBalance();
   }
+  traverse() {
+    let cn = this.avlTree.preOrderArray()
+    console.log('in')
+    cn!.forEach((element, index) => {
+
+      d3.select('#node' + element.value)
+        .transition()
+        .duration(500)
+        .delay(500 * index)
+        .attr('r', element.radius * 1.1)
+        .attr('stroke', 'purple')
+        .attr('fill', 'pink')
+    });
+
+  }
   randomIntFromInterval(min: number, max: number) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
@@ -215,6 +226,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
     while (this.currentNodes.has(value))
       value = this.randomIntFromInterval(1, 99)
 
+    this.control.setValue({ 'addNode': value })
     //nodeInput.value = value;
     this.avlTree.insert(value);
 
@@ -251,6 +263,58 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
     svgElement!.addEventListener("mouseout", () => {
       svgElement!.setAttribute("viewBox", `0 0 ${originalWidth} ${originalHeight}`);
     });
+  }
+
+  toggleEdges() {
+    this.edges = !this.edges;
+    let edges = this.edges;
+
+    let cn = this.avlTree.preOrderArray();
+
+    d3.selectAll('line')
+      .data(cn!)
+      .each(function (d, i) {
+        const edge = d3.select(this);
+        edge
+          .attr('x1', (d: any) => d.parentX)
+          .attr('y1', (d: any) => d.parentY)
+          .each((d) => {
+            if (edges) {
+              edge
+                .transition()
+                .duration(1000)
+                .attr('x2', (d: any) => d.currentX)
+                .attr('y2', (d: any) => d.currentY)
+            }
+            else {
+              edge
+                .transition()
+                .duration(1000)
+                .attr('x2', (d: any) => d.parentX)
+                .attr('y2', (d: any) => d.parentY)
+            }
+          })
+
+      })
+  }
+  showEdges() {
+    let cn = this.avlTree.preOrderArray();
+    let display = d3.select('svg#avlnodes')
+
+
+    display.selectAll('g')
+      .data(cn!)
+      .enter()
+      .append('line')
+      .attr('x1', (d: any) => d.parentX)
+      .attr('y1', (d: any) => d.parentY)
+      .attr('x2', (d: any) => d.currentX)
+      .attr('y2', (d: any) => d.currentY)
+      .attr('class', 'node-array')
+      .attr('stroke', 'black')
+      .attr('stroke-width', 2)
+      .attr('id', (d: any) => 'node' + d.value + 'edge')
+
   }
   changeTotalShift(newTotalShift: number | null) {
     // WingSpan
@@ -296,7 +360,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
   }
   changeRadius(value: any) {
     var newRadius = parseInt(value);
-    console.log(newRadius);
+
     this.radius = newRadius;
     this.avlTree.changeRadius(newRadius);
     this.showTree();
