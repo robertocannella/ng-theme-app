@@ -8,89 +8,78 @@ than one by preforming a rotation.
         <mat-label>Add a node:</mat-label>
         <input matInput id="addNode" type="number" formControlName="addNode">
     </mat-form-field>
-    <mat-form-field appearance="legacy">
-        <mat-label>Radius</mat-label>
-        <input matInput id="change-radius" type="number" formControlName="changeRadius">
-    </mat-form-field>
+
 
 
     <button mat-icon-button type="submit" [disabled]="!control.valid" color="primary" aria-label="Submit Button">
         <fa-icon icon="check-circle"></fa-icon>
     </button>
 </form>
-<mat-card>
-    <mat-card-content>
-        <span>
-            <mat-button-toggle-group name="ingredients" aria-label="Ingredients">
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Customize
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-card>
+        <mat-card-content>
+
+            <mat-button-toggle-group name="details" aria-label="Details">
+
+
                 <mat-button-toggle value="show-balance" (change)="toggleShowBalance()"
                     matTooltip="Display Balance Factor">Balance
                     Factor</mat-button-toggle>
+
+
                 <mat-button-toggle value="show-height" (change)="toggleShowHeight()" matTooltip="Dispaly Node Heights">
                     Height</mat-button-toggle>
+
+
                 <mat-button-toggle value="show-off" (change)="toggleToFalse()" matTooltip="Turn off details">None
                 </mat-button-toggle>
+
             </mat-button-toggle-group>
-        </span>
-        <div>
+            <div>
 
-            <mat-label for='zoom-slider'>Zoom</mat-label>
-            <mat-slider id="zoom-slider" (input)="changeViewBoxWidth($event.value)" [disabled]="disabled"
-                [invert]="invert" [max]="zoomMax" [min]="zoomMin" [(ngModel)]="zoomValue" [step]="step"
-                [thumbLabel]="thumbLabel" [tickInterval]="getSliderTickInterval()" [vertical]="vertical"
-                aria-labelledby="example-name-label">
-            </mat-slider>
-        </div>
-        <div>
-            <mat-label for='y-axis-slider'>Y-Axis</mat-label>
-            <mat-slider id="y-axis-slider" (input)="changeViewBoxHeight($event)" [disabled]="disabled" [invert]="invert"
-                [max]="yAxisMax" [min]="yAxisMin" [(ngModel)]="yAxisValue" [step]="step" [thumbLabel]="thumbLabel"
-                [tickInterval]="getSliderTickInterval()" [vertical]="vertical" aria-labelledby="example-name-label">
-            </mat-slider>
-        </div>
-        <div>
+                <mat-label for="radius-slider">Raidus</mat-label>
 
-            <mat-label for="wing-span-slider">Wingspan</mat-label>
+                <mat-slider id="radius-slider" (input)="changeRadius($event.value)" [disabled]="disabled"
+                    [invert]="invert" [max]="radiusMax" [min]="radiusMin" [(ngModel)]="radiusValue" [step]="step"
+                    [thumbLabel]="thumbLabel" [tickInterval]="getSliderTickInterval()" [vertical]="vertical"
+                    aria-labelledby="example-name-label">
+                </mat-slider>
+            </div>
+            <div>
 
-            <mat-slider id="wing-span-slider" (input)="changeTotalShift($event.value)" [disabled]="disabled"
-                [invert]="invert" [max]="wingspanMax" [min]="wingspanMin" [(ngModel)]="wingspanValue" [step]="step"
-                [thumbLabel]="thumbLabel" [tickInterval]="getSliderTickInterval()" [vertical]="vertical"
-                aria-labelledby="example-name-label">
-            </mat-slider>
-        </div>
-    </mat-card-content>
-</mat-card>
+                <mat-label for='zoom-slider'>Zoom</mat-label>
+                <mat-slider id="zoom-slider" (input)="changeViewBoxWidth($event.value)" [disabled]="disabled"
+                    [invert]="invert" [max]="zoomMax" [min]="zoomMin" [(ngModel)]="zoomValue" [step]="step"
+                    [thumbLabel]="thumbLabel" [tickInterval]="getSliderTickInterval()" [vertical]="vertical"
+                    aria-labelledby="example-name-label">
+                </mat-slider>
+            </div>
+            <div>
+                <mat-label for='y-axis-slider'>Y-Axis</mat-label>
+                <mat-slider id="y-axis-slider" (input)="changeViewBoxHeight($event)" [disabled]="disabled"
+                    [invert]="invert" [max]="yAxisMax" [min]="yAxisMin" [(ngModel)]="yAxisValue" [step]="step"
+                    [thumbLabel]="thumbLabel" [tickInterval]="getSliderTickInterval()" [vertical]="vertical"
+                    aria-labelledby="example-name-label">
+                </mat-slider>
+            </div>
+            <div>
 
+                <mat-label for="wing-span-slider">Wingspan</mat-label>
+
+                <mat-slider id="wing-span-slider" (input)="changeTotalShift($event.value)" [disabled]="disabled"
+                    [invert]="invert" [max]="wingspanMax" [min]="wingspanMin" [(ngModel)]="wingspanValue" [step]="step"
+                    [thumbLabel]="thumbLabel" [tickInterval]="getSliderTickInterval()" [vertical]="vertical"
+                    aria-labelledby="example-name-label">
+                </mat-slider>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</mat-expansion-panel>
 <div id='mainsvg' style="border:1px solid grey;overflow:scroll;text-align:center">
 
 </div>
-
-
-
-
-<input id='node-input' type="number" min='0' max='999' />
-<button type="button" class="rc-btn rc-btn-outline-primary" id='add-node'
-    onclick="addNode(document.getElementById('node-input').value)">Add Node</button>
-<br>
-
-
-
-X <input id='sliderX' type="range" min="20" max=530 value=0 oninput="moveSlider(this, 'x', currentSelection)" />
-Y <input id='sliderY' type="range" min="20" max=330 value=0 oninput="moveSlider(this, 'y', currentSelection)" />
-<br>
-
-Radius <input id='sliderRadius' type="range" min="0" max=30 value=15 oninput="changeRadius(this)" />
-<br>
-Wingspan <input id='sliderTotalShift' type="range" min="0" max=300 value=150 oninput="changeTotalShift(this.value)" />
-<br>
-Zoom <input id='sliderZoom' type="range" min="300" max=1200 value=800 oninput="changeViewBoxWidth(this.value)" />
-<br>
-Y-Axis <input id='sliderYAxis' type="range" min="200" max=400 value=250 oninput="changeViewBoxHeight(this)" />
-<br>
-
-<button type="button" class="rc-btn rc-btn-outline-primary" id='obliterate' onclick="obliterate()">Obliterate</button>
-<button type="button" class="rc-btn rc-btn-outline-primary" id='reset-display' onclick="resetDisplay()">Reset
-    Display</button>
-<br>
-<button type="button" class="rc-btn rc-btn-outline-primary" id='traverse' onclick="traverse()">Traverse</button>
-<button type="button" class="rc-btn rc-btn-outline-primary" id='show-balance-text' onclick="toggleShowBalance()">Display
-    Balance Factor</button>

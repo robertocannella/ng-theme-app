@@ -47,6 +47,10 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
   _showBalance = false;
 
   // Sliders
+  // Radisu
+  radiusMax = 20;
+  radiusMin = 1;
+  radiusValue = this.radius;
   // Wingspan
   wingspanMax = 300;
   wingspanMin = 0;
@@ -63,6 +67,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
   yAxisValue = 250;
 
 
+
   autoTicks = false;
   disabled = false;
   invert = false;
@@ -74,18 +79,13 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
 
 
   control = new FormGroup({
-    addNode: new FormControl(''),
-    changeRadius: new FormControl(''),
-
+    addNode: new FormControl([this.randomIntFromInterval(1, 99), '']),
   });
   public ngAfterViewInit() {
 
-
-
-    let x: any = document.getElementById('mainsvg')
     // Get the input field
-    var input: any = document.getElementById("node-input");
-
+    var input: any = document.getElementById("addNode");
+    console.log(input)
     // Execute a function when the user releases a key on the keyboard
     input.addEventListener("keyup", function (event: any) {
       // Number 13 is the "Enter" key on the keyboard
@@ -93,11 +93,14 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
         // Cancel the default action, if needed
         event.preventDefault();
         // Trigger the button element with a click
-        document.getElementById("addNode")!.click();
+
+        x = document.getElementById("addNode")?.click()
+
       }
     });
 
-    console.log(this.vbWidth)
+    let x: any = document.getElementById('mainsvg')
+
     x.scrollTo({
       top: 0,
       left: (this.vbWidth / 2) - 70,
@@ -112,6 +115,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
     this.buildSvg();
     this.showTree();
     //this.addZoom();
+
   }
 
   public onSubmit() {
@@ -290,6 +294,14 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
     viewBox!.setAttribute('viewBox', `0 0 ${this.vbWidth} ${this.vbHeight}`)
     this.showTree();
   }
+  changeRadius(value: any) {
+    var newRadius = parseInt(value);
+    console.log(newRadius);
+    this.radius = newRadius;
+    this.avlTree.changeRadius(newRadius);
+    this.showTree();
+  }
+
   toggleToFalse() {
     d3.selectAll('.balance').remove();
     d3.selectAll('.node-height').remove();
