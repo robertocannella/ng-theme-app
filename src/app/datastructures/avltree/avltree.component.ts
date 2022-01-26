@@ -8,8 +8,6 @@ import { AVLTree } from '../AVLTree';
 import { AVLNode } from '../AVLNode';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatSlider, MatSliderChange } from '@angular/material/slider';
-import { ThrowStmt } from '@angular/compiler';
-import { faDiceD20 } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -37,7 +35,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
 
 
 
-  private currentImbalance = null;
+  currentImbalance: any;
   public avlTree = new AVLTree(this.vbWidth, this.radius, this.totalShift);
   private currentSelection: any;
   private currentNodes = new Set<number>();
@@ -253,7 +251,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
 
     this.showTree();
     //this.showBalance();
-    //this.checkBalance();
+    this.checkBalance();
 
   }
   addZoom() {
@@ -436,7 +434,207 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
         .attr("y", (d: any) => d.currentY + this.detailOffsetXY)
     }
   }
+  // balancing here
+  balance(node: AVLNode) {
 
+    let buttons = document.querySelectorAll('button'); // Disable all the buttons
+    buttons.forEach((button) => {
+      button.disabled = true;
+    })
+    // if (this._showBalance)
+    //     this.toggleShowBalance();
+
+
+    if (this.avlTree._isRightHeavy(node)) {
+      //console.log(node.value + ' is right heavy, perform a LEFT rotation')
+
+      let oldTreeValues = this.avlTree.preOrderValues(this.avlTree.root)
+
+
+
+      let oldAVLTree = new AVLTree(this.vbWidth, this.radius, this.totalShift);
+      oldTreeValues!.forEach((value) => {
+        oldAVLTree.insert(value)
+      })
+
+      let newRoot = this.avlTree.balance(this.avlTree.findNode(node.value)!)
+      let newTreeValues = this.avlTree.preOrderValues(newRoot)
+
+      let newTree = this.rotateLeft(node.value, oldAVLTree, oldTreeValues)
+      this.avlTree = new AVLTree(this.vbWidth, this.radius, this.totalShift);
+
+      newTree.forEach((value: any) => {
+        this.avlTree.insert(value)
+      })
+      newTree = this.avlTree.preOrderArray();
+      newTree.forEach((element: any) => {
+
+        let node = d3.select('#node' + element.value)
+        node
+          .transition()
+          .duration(1000)
+          .delay(500)
+          .attr('cy', element.currentY)
+          .attr('cx', element.currentX)
+          .each((d: any) => {
+            if (this.currentImbalance === null)
+              throw null;;
+
+            if (d.value == this.currentImbalance.value)
+              node.transition()
+                .duration(1000)
+                .delay(500)
+                .attr('fill', 'pink')
+                .attr('cy', element.currentY)
+                .attr('cx', element.currentX)
+                .transition()
+                .duration(500)
+                .attr('fill', 'white')
+          })
+        let label = d3.select('#node' + element.value + 'text')
+        label
+          .transition()
+          .duration(1000)
+          .delay(500)
+          .attr('y', element.currentY)
+          .attr('x', element.currentX)
+          .on('end', () => {
+            this.currentImbalance = null;
+            this.checkBalance()
+            buttons.forEach((button) => {
+              button.disabled = false;
+            })
+          })
+        let edge = d3.select('#node' + element.value + 'edge')
+        edge
+          .transition()
+          .duration(1000)
+          .delay(500)
+          .attr('x1', element.parentX)
+          .attr('y1', element.parentY)
+          .attr('x2', element.currentX)
+          .attr('y2', element.currentY)
+          .on('end', () => {
+            buttons.forEach((button) => {
+              button.disabled = false;
+            })
+          })
+      })
+
+    }
+
+    if (this.avlTree._isLeftHeavy(node)) {
+      //console.log(node.value + ' is left heavy, perform a RIGHT rotation')
+      let oldTree = this.avlTree.preOrderArray()
+
+      this.avlTree._rotateRight(node)
+
+
+      let rootIndex = oldTree!.indexOf(node);
+
+      let newTree = this.rotateRight(rootIndex, oldTree)
+      this.avlTree = new AVLTree(this.vbWidth, this.radius, this.totalShift);
+
+      newTree.forEach((node: AVLNode) => {
+        this.avlTree.insert(node.value)
+      })
+      newTree = this.avlTree.preOrderArray();
+      newTree.forEach((element: AVLNode) => {
+
+
+        let node = d3.select('#node' + element.value)
+        node
+          .transition()
+          .duration(1000)
+          .delay(500)
+          .attr('cy', element.currentY)
+          .attr('cx', element.currentX)
+          .each((d: any) => {
+            if (d.value == this.currentImbalance.value)
+              node.transition()
+                .duration(1000)
+                .delay(500)
+                .attr('fill', 'lightblue')
+                .attr('cy', element.currentY)
+                .attr('cx', element.currentX)
+                .transition()
+                .duration(500)
+                .attr('fill', 'white')
+          })
+        let label = d3.select('#node' + element.value + 'text')
+        label
+          .transition()
+          .duration(1000)
+          .delay(500)
+          .attr('y', element.currentY)
+          .attr('x', element.currentX)
+          .on('end', () => {
+            this.currentImbalance = null;
+            this.checkBalance()
+            buttons.forEach((button) => {
+              button.disabled = false;
+            })
+          })
+        let edge = d3.select('#node' + element.value + 'edge')
+        edge
+          .transition()
+          .duration(1000)
+          .delay(500)
+          .attr('x1', element.parentX)
+          .attr('y1', element.parentY)
+          .attr('x2', element.currentX)
+          .attr('y2', element.currentY)
+          .on('end', () => {
+            buttons.forEach((button) => {
+              button.disabled = false;
+
+            })
+          })
+      })
+    }
+  }
+  rotateRight(index: any, arr: any) {
+    let oldRoot = arr[index]
+    let newRoot = arr[index + 1]
+    let sibling = arr[index + 2]
+
+    arr[index] = newRoot
+    arr[index + 1] = sibling
+    arr[index + 2] = oldRoot
+
+    return arr;
+  }
+  rotateLeft(nodeValue: any, oldTree: AVLTree, oldTreeValues: any) {
+    let root = oldTree.findNode(nodeValue)
+    let newRoot = root!.rightChild
+    let rootRightChild = newRoot!.leftChild;
+    let newRootLeftChild = root;
+
+    let rootIndex = oldTreeValues.indexOf(nodeValue);
+    let newRootIndex = oldTreeValues.indexOf(root!.rightChild!.value)
+    let rootRightChildIndex = (newRoot!.leftChild) ? oldTreeValues.indexOf(newRoot!.leftChild.value) : -1
+    let newRootLeftChildIndex = oldTreeValues.indexOf(root!.value)
+
+    let temp = oldTreeValues[rootIndex]
+    oldTreeValues[rootIndex] = oldTreeValues[newRootIndex]
+    oldTreeValues[newRootIndex] = temp
+
+
+    return oldTreeValues;
+  }
+  checkBalance() {
+    let cn = this.avlTree.preOrderArray()
+
+    cn!.forEach((element, index) => {
+      if (this.avlTree._isLeftHeavy(element) || this.avlTree._isRightHeavy(element))
+        this.currentImbalance = element;
+    });
+
+    if (this.currentImbalance) {
+      this.balance(this.currentImbalance)
+      //console.log('Node: ', currentImbalance.value, ' is imbalanced.')
+    }
+  }
 }
 
 

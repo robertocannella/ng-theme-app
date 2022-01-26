@@ -122,7 +122,7 @@ export class AVLTree {
         let arr: number[] = []
         return this._preOrderValues({ node: this.root, arr })
     }
-    private _preOrderValues({ node, arr }: { node: AVLNode | null; arr: number[]; }) {
+    _preOrderValues({ node, arr }: { node: AVLNode | null; arr: number[]; }): number[] | undefined {
         if (node === null || node.value === null)
             return;
 
@@ -145,10 +145,10 @@ export class AVLTree {
         this._traversePreOrder(node.rightChild);
     }
 
-    private _isLeftHeavy(node: AVLNode): boolean {
+    _isLeftHeavy(node: AVLNode): boolean {
         return this._balanceFactor(node) > 1;
     }
-    private _isRightHeavy(node: AVLNode): boolean {
+    _isRightHeavy(node: AVLNode): boolean {
         return this._balanceFactor(node) < -1;
     }
     public _balanceFactor(node: AVLNode | null): number {
@@ -170,7 +170,7 @@ export class AVLTree {
         }
         return node;
     }
-    private _rotateLeft(node: AVLNode | null): AVLNode | null {
+    _rotateLeft(node: AVLNode | null): AVLNode | null {
 
         let newRoot: AVLNode | null = node!.rightChild;
 
@@ -182,7 +182,7 @@ export class AVLTree {
 
         return newRoot;
     }
-    private _rotateRight(node: AVLNode | null): AVLNode | null {
+    _rotateRight(node: AVLNode | null): AVLNode | null {
 
         let newRoot = node!.leftChild;
 
