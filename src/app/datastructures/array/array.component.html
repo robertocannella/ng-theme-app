@@ -1,13 +1,26 @@
-<p>array works!</p>
-<!-- <button mat-button id='addSVGNode' color="primary" (click)="addSVGNode()" aria-label="Add Random SVG Node Button">
+<h2>{{ title }}</h2>
+Arrays are the most fundamental data structure. In computer science, an array data structure, or simply an array, is a
+data structure consisting of a collection of elements, each identified by at least one array index or key. An array is
+stored such that the position of each element can be computed from its index tuple by a mathematical formula.[1][2][3]
+The simplest type of data structure is a linear array, also called one-dimensional array. Below is a one-dimensional
+array visual representation.
+<div class='linebreak-light'></div>
+<!-- <button mat-button id='addSVGNode' color="primary" (click)="addElement()" aria-label="Add Random SVG Node Button">
     Add SVG2 Node
 </button> -->
 
+<button mat-button color="primary" (click)="traverse()" aria-label="Traverse Button">
+    Traverse
+</button>
+<button mat-button color="primary" (click)="obliterate()" aria-label="Obliterate Button">
+    Obliterate
+</button>
+<button mat-button color="primary" (click)="addRandomElement()" aria-label="Add Random Element Button">
+    Add Random Element
+</button>
 
-
-<div id='secondary-svg' style='border:1px solid grey'>
+<div id='svg-array' style="border:1px solid grey;overflow:scroll;text-align:center">
     <div id='vec-scale-val-span'></div>
     <div id='vec-scale-x-span'></div>
     <div id='vec-scale-y-span'></div>
-
 </div>

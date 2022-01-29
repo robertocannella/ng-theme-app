@@ -32,7 +32,7 @@ than one by preforming the required number of rotations.
     <mat-card>
         <mat-card-content>
 
-            <mat-button-toggle-group name="details" aria-label="Details">
+            <mat-button-toggle-group name="details" [(value)]='toggleGroupSelectedVal' aria-label="Details">
 
 
                 <mat-button-toggle value="show-balance" (change)="toggleShowBalance()"

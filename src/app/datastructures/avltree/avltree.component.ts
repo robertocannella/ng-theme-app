@@ -9,6 +9,7 @@ import { AVLNode } from '../AVLNode';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatSlider, MatSliderChange } from '@angular/material/slider';
 import { ThrowStmt } from '@angular/compiler';
+import { transformAll } from '@angular/compiler/src/render3/r3_ast';
 
 
 
@@ -46,6 +47,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
   edges = true;
   _showHeight = false;
   _showBalance = false;
+  toggleGroupSelectedVal: string = 'show-off'
   d3zoom = d3.zoom();
   panVector: any;
   panX: any = 0;
@@ -483,9 +485,28 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
     buttons.forEach((button) => {
       button.disabled = true;
     })
-    // if (this._showBalance)
-    //     this.toggleShowBalance();
+    if (this._showHeight) {
+      this._showHeight = !this._showHeight;
+      this.toggleGroupSelectedVal = 'show-off'
+      let height = d3.selectAll('.node-height')
 
+      height
+        .transition()
+        .duration(500)
+        .attr('opacity', 0).remove()
+    }
+    if (this._showBalance) {
+
+      this.toggleGroupSelectedVal = 'show-off'
+      console.log(this.toggleGroupSelectedVal)
+      this._showBalance = !this._showBalance;
+      let balance = d3.selectAll('.balance')
+
+      balance
+        .transition()
+        .duration(500)
+        .attr('opacity', 0).remove()
+    }
 
     if (this.avlTree._isRightHeavy(node)) {
       //console.log(node.value + ' is right heavy, perform a LEFT rotation')
@@ -560,6 +581,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
             buttons.forEach((button) => {
               button.disabled = false;
             })
+
           })
       })
 
