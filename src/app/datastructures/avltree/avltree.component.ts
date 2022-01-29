@@ -8,6 +8,7 @@ import { AVLTree } from '../AVLTree';
 import { AVLNode } from '../AVLNode';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatSlider, MatSliderChange } from '@angular/material/slider';
+import { ThrowStmt } from '@angular/compiler';
 
 
 
@@ -40,9 +41,17 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
   private currentSelection: any;
   private currentNodes = new Set<number>();
   svg: any;
+  svg2: any;
+  cn: any;
   edges = true;
   _showHeight = false;
   _showBalance = false;
+  d3zoom = d3.zoom();
+  panVector: any;
+  panX: any = 0;
+  panY: any = 0;
+  scale: any = 1;
+  svg2Array: any = [];
 
   // Sliders
   // Radisu
@@ -104,6 +113,8 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
       left: (this.vbWidth / 5.5),
       behavior: 'smooth'
     })
+    // below was for zoom debugging
+    //this.buildSVG2();
   }
   public ngOnInit(): void {
     this.svg = d3.select('div#mainsvg')
@@ -128,7 +139,32 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
       .attr('height', this.height)
       .attr('id', this.svgId)
       .attr('xmlns', this.xmlns)
+    // zoom disabled  
+    //.call(d3.zoom()
+    // .on("zoom", (event: any) => this.zoomed(event))
+    // .on('end', function (event: any) {
+    //   event.target.transform, d3.zoomIdentity
+    // })
+    //)
+
+
+    //.on("wheel.zoom", (event: any) => this.wheeled(event));
   }
+
+  zoomed(event: any) {
+    let svgLine = d3.selectAll('svg#avlnodes line')
+    let svgNode = d3.selectAll('svg#avlnodes g')
+
+    svgLine.attr('transform', event.transform)
+    svgNode.attr('transform', event.transform)
+  }
+  // wheeled(event: any) {
+  //   if (event.ctrlKey) {
+  //     d3.select('svg#avlnodes').attr('transform', event.transform)
+  //     console.log(event.transform.toString())
+  //   }
+  // }
+
   getSliderTickInterval(): number | 'auto' {
     if (this.showTicks) {
       return this.autoTicks ? 'auto' : this.tickInterval;
@@ -209,12 +245,14 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
     cn.forEach((element, index) => {
 
       d3.select('#node' + element.value)
+
         .transition()
         .duration(500)
         .delay(500 * index)
         .attr('r', element.radius * 1.1)
         .attr('stroke', 'purple')
         .attr('fill', 'pink')
+
     });
 
   }
@@ -228,7 +266,9 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
   randomIntFromInterval(min: number, max: number) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
-  public addNode(valueString: string) {
+  public addNode(valueString?: string) {
+    if (valueString === undefined)
+      valueString = this.randomIntFromInterval(1, 99).toLocaleString();
 
     let value = parseInt(valueString)
 
@@ -312,6 +352,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
 
 
     display.selectAll('g')
+
       .data(cn!)
       .enter()
       .append('line')
@@ -322,6 +363,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
       .attr('class', 'node-array')
       .attr('stroke', 'black')
       .attr('stroke-width', 2)
+
       .attr('id', (d: any) => 'node' + d.value + 'edge')
 
   }
@@ -635,6 +677,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
       //console.log('Node: ', currentImbalance.value, ' is imbalanced.')
     }
   }
+
 }
 
 

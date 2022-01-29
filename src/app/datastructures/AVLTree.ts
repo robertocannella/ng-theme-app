@@ -85,7 +85,7 @@ export class AVLTree {
         node!.height = Math.max(this.height(node!.leftChild), this.height(node!.rightChild)) + 1;
 
     }
-    height(node: AVLNode | null) {
+    height(node: AVLNode | null): number {
         return (node === null) ? -1 : node.height;
     }
 

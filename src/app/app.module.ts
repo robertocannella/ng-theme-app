@@ -22,6 +22,7 @@ import { ToolsComponent } from './tools/tools.component';
 import { MathComponent } from './math/math.component';
 import { AVLTreeSVGComponent } from "./datastructures/avl_tree_svg.component";
 import { AVLTreeComponent } from "./datastructures/avltree/avltree.component";
+import { ArrayComponent } from './datastructures/array/array.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { AVLTreeComponent } from "./datastructures/avltree/avltree.component";
     ToolsComponent,
     MathComponent,
     AVLTreeSVGComponent,
-    AVLTreeComponent
+    AVLTreeComponent,
+    ArrayComponent
   ],
   imports: [
     BrowserModule,
