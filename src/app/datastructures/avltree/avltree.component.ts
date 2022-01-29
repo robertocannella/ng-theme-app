@@ -8,8 +8,6 @@ import { AVLTree } from '../AVLTree';
 import { AVLNode } from '../AVLNode';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatSlider, MatSliderChange } from '@angular/material/slider';
-import { ThrowStmt } from '@angular/compiler';
-import { transformAll } from '@angular/compiler/src/render3/r3_ast';
 
 
 
@@ -52,7 +50,9 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
   panVector: any;
   panX: any = 0;
   panY: any = 0;
-  scale: any = 1;
+  panScale: any = 1;
+
+
   svg2Array: any = [];
 
   // Sliders
@@ -141,24 +141,33 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
       .attr('height', this.height)
       .attr('id', this.svgId)
       .attr('xmlns', this.xmlns)
-    // zoom disabled  
-    //.call(d3.zoom()
-    // .on("zoom", (event: any) => this.zoomed(event))
-    // .on('end', function (event: any) {
-    //   event.target.transform, d3.zoomIdentity
-    // })
-    //)
+      .call(this.d3zoom
+        .on("zoom", (event: any) => this.zoomed(event))
+        .on('end', (event: any) => {
+          //console.log('zoom.end', event.transform, d3.zoomIdentity)
+          if (event.transform !== d3.zoomIdentity) {
+            console.log(event.transform)
+            // ALLOWS TO RESET ZOOM PROGRAMATICALLY
+            // remove anonymous function
+            //d3.select(this).transition().delay(500).call(event.target.transform, d3.zoomIdentity)
+            let vectorPan = event.transform
+            this.panX = vectorPan.x;
+            this.panY = vectorPan.y;
+            this.panScale = vectorPan.k;
+            console.log(this.panX, this.panY, this.panScale)
+
+          }
+        })
+      )
 
 
     //.on("wheel.zoom", (event: any) => this.wheeled(event));
   }
 
   zoomed(event: any) {
-    let svgLine = d3.selectAll('svg#avlnodes line')
-    let svgNode = d3.selectAll('svg#avlnodes g')
+    let svgElements = d3.selectAll('svg#avlnodes line, g')
 
-    svgLine.attr('transform', event.transform)
-    svgNode.attr('transform', event.transform)
+    svgElements.attr('transform', event.transform)
   }
   // wheeled(event: any) {
   //   if (event.ctrlKey) {
@@ -195,11 +204,21 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
           d3.select(n[i]).append("text");
         });
       })
+    display.selectAll('g')
+      .data(cn!)
+      .enter()
+      .append('circle')
+      .attr('r', (d) => d.radius + (d.radius * .2))
+      .attr('fill', 'white')
+      .attr('cx', (d) => d.currentX)
+      .attr('cy', (d) => d.currentY)
+      .attr('id', (d) => 'node-background' + d.value)
 
     display.selectAll('g')
       .data(cn!)
       .attr("class", 'node-array')
       .style('cursor', 'pointer')
+      .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
       .each((d: AVLNode, i: any, n: any) => {
         const node = d3.select(n[i])
         node
@@ -213,9 +232,12 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
       .each((d: AVLNode, i: any, nodes: any) => {
         const node = d3.select(nodes[i]);
         let n: any = nodes[i]
-        node.select("circle")
+
+
+        node.selectAll("circle")
           .attr("r", () => d.radius)
-          .attr('fill', 'white')
+          .attr('fill', 'purple')
+          .attr('fill-opacity', 0.3)
           .attr('stroke', 'black')
           .attr('stroke-width', '2px')
           .attr('cy', () => d.currentY)
@@ -246,14 +268,19 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
 
     cn.forEach((element, index) => {
 
-      d3.select('#node' + element.value)
-
+      let node = d3.select('#node' + element.value)
+      node
         .transition()
         .duration(500)
         .delay(500 * index)
         .attr('r', element.radius * 1.1)
-        .attr('stroke', 'purple')
-        .attr('fill', 'pink')
+        .attr('fill-opacity', .7)
+        .on('end', () => {
+          node
+            .transition()
+            .duration(300)
+            .attr('fill-opacity', .3)
+        })
 
     });
 
@@ -365,7 +392,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
       .attr('class', 'node-array')
       .attr('stroke', 'black')
       .attr('stroke-width', 2)
-
+      .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
       .attr('id', (d: any) => 'node' + d.value + 'edge')
 
   }
@@ -385,32 +412,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
     this.showTree();
 
   }
-  changeViewBoxHeight(slider: MatSliderChange) {
-    // Y-axis
-    this.vbHeight = slider.value!;
-    let vb = document.getElementById(`${this.svgId}`)
 
-    vb!.setAttribute('viewBox', `0 0 ${this.vbWidth} ${this.vbHeight}`)
-    this.showTree();
-  }
-
-  changeViewBoxWidth(value: number | null): void {
-    // Zoom
-
-    let viewBox = document.getElementById(`${this.svgId}`)
-    this.vbWidth = value!;
-    let cn = this.avlTree.preOrderArray();
-
-    this.avlTree = new AVLTree(this.vbWidth, this.radius, this.totalShift);
-    d3.selectAll('svg g').remove();
-
-    cn!.forEach((node) => {
-      this.avlTree.insert(node.value)
-    });
-    //currentNodes.clear();
-    viewBox!.setAttribute('viewBox', `0 0 ${this.vbWidth} ${this.vbHeight}`)
-    this.showTree();
-  }
   changeRadius(value: any) {
     var newRadius = parseInt(value);
 

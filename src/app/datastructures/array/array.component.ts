@@ -38,7 +38,7 @@ export class ArrayComponent implements OnInit {
   panX: number = 0;
   panY: number = 0;
   panScale: number = 1;
-  _zoomed: boolean = false;
+
 
 
   constructor() { }
@@ -150,8 +150,6 @@ export class ArrayComponent implements OnInit {
               .attr('fill-opacity', .3)
           })
       })
-
-
 
   }
   obliterate() {

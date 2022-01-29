@@ -58,23 +58,7 @@ than one by preforming the required number of rotations.
                     aria-labelledby="example-name-label">
                 </mat-slider>
             </div>
-            <div>
 
-                <mat-label for='zoom-slider'>Zoom</mat-label>
-                <mat-slider id="zoom-slider" (input)="changeViewBoxWidth($event.value)" [disabled]="disabled"
-                    [invert]="invert" [max]="zoomMax" [min]="zoomMin" [(ngModel)]="zoomValue" [step]="step"
-                    [thumbLabel]="thumbLabel" [tickInterval]="getSliderTickInterval()" [vertical]="vertical"
-                    aria-labelledby="example-name-label">
-                </mat-slider>
-            </div>
-            <div>
-                <mat-label for='y-axis-slider'>Y-Axis</mat-label>
-                <mat-slider id="y-axis-slider" (input)="changeViewBoxHeight($event)" [disabled]="disabled"
-                    [invert]="invert" [max]="yAxisMax" [min]="yAxisMin" [(ngModel)]="yAxisValue" [step]="step"
-                    [thumbLabel]="thumbLabel" [tickInterval]="getSliderTickInterval()" [vertical]="vertical"
-                    aria-labelledby="example-name-label">
-                </mat-slider>
-            </div>
             <div>
 
                 <mat-label for="wing-span-slider">Wingspan</mat-label>
