@@ -1,15 +1,11 @@
-import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
-import { validateEventsArray } from '@angular/fire/compat/firestore';
-import { faDiceD20 } from '@fortawesome/free-solid-svg-icons';
+import { SortingAlgorithms } from './SortingAlgorithms';
 import * as d3 from 'd3';
 import * as d3Scale from 'd3';
 import * as d3Shape from 'd3';
 import * as d3Array from 'd3';
 import * as d3Axis from 'd3';
-import { schemeGnBu } from 'd3';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
-import { AnonymousSubject } from 'rxjs/internal/Subject';
+import * as d3Transform from 'd3';
 
 
 @Component({
@@ -86,15 +82,25 @@ export class ArrayComponent implements OnInit {
 
   }
   update() {
+
     let xScale = d3.scaleLinear()
       .domain([0, 10])
       .range([-100, 550])
-    let svg = this.svg.select('svg')
 
-    svg
-      .selectAll('rect')
-      .data(this.ce)
+    let groups = this.svg.select('svg#array-elements').selectAll('g')
+      .data(this.ce, (data: any, index: any, nodes: any) => data)
       .enter()
+      .append('g')
+      .attr('id', (d: any, i: any) => 'group' + i + '-' + d)
+      .each((data: any, i: any, nodes: any) => {
+        let node = d3.select(nodes[i])
+        node
+          .on('click', () => {
+            console.log(data) //, this.d3zoom)
+          })
+      })
+
+    groups
       .append('rect')
       .attr('width', 50)
       .attr('height', 50)
@@ -107,23 +113,16 @@ export class ArrayComponent implements OnInit {
       .attr('fill', 'purple')
       .attr('fill-opacity', .3)
       .attr('class', 'element')
+      .attr('id', (d: any) => 'rect' + d)
       .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
-      .each((data: any, i: any, nodes: any) => {
-        let node = d3.select(nodes[i])
-        node
-          .on('click', () => {
-            console.log(data) //, this.d3zoom)
-          })
-      })
 
-    svg.selectAll('g#array-elements rect')
-      .data(this.ce)
-      .enter()
+    groups
       .append('text')
       .text((d: any) => d)
       .attr('alignment-baseline', 'central')
       .attr('text-anchor', 'middle')
-      .attr('id', (d: any) => 'element' + d + 'text')
+      .attr('class', 'element-value')
+      .attr('id', (d: any) => 'text' + d)
       .attr('x', (d: any, i: any) => xScale(i.toString()) + 25)
       .attr('y', 75)
       .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
@@ -135,15 +134,12 @@ export class ArrayComponent implements OnInit {
       .domain([0, 10])
       .range([-100, 550])
 
-    let svg = this.svg.select('svg')
-
+    let groups = this.svg.select('svg#array-elements').selectAll('g')
     if (this._showIndex) {
       d3.selectAll('.index').remove();
 
 
-      svg.selectAll('g#array-elements rect')
-        .data(this.ce)
-        .enter()
+      groups
         .append('text')
         .attr('class', 'element-index')
         .text((d: any, i: any) => i)
@@ -186,13 +182,87 @@ export class ArrayComponent implements OnInit {
 
   }
   obliterate() {
-    d3.select('div#svg-array').selectAll('rect,text').remove();
+    this.svg.select('svg#array-elements').selectAll('g').remove();
     this.ce = []
     //this.update();
   }
   addRandomElement() {
+
     let value = this.randomIntFromInterval(0, 99)
+
+    while (this.ce.includes(value))
+      value = this.randomIntFromInterval(1, 99)
+
     this.ce.push(value)
     this.update();
+  }
+  async bubbleSort() {
+
+    let isSorted;
+    do {
+
+      isSorted = true;
+      for (let j = 0; j < this.ce.length - 1; j++) {
+        if (this.ce[j] > this.ce[j + 1]) {
+          let temp = this.ce[j]
+          this.ce[j] = this.ce[j + 1]
+          this.ce[j + 1] = temp
+          isSorted = false;
+
+
+          console.log(this.ce)
+          await this.swapAnimation(this.ce[j], j, this.ce[j + 1], j + 1)
+        }
+
+      }
+    } while (!isSorted)
+
+
+    //let sorter = new SortingAlgorithms();
+    //sorter.bubbleSort(this.ce)
+    console.log(
+      'Bubble Sort'
+    )
+    this.update();
+  }
+  swapAnimation(d: any, i: any, d1: any, i1: any) {
+    let durationTime = 1000;
+    let textSel = `#text${d}`;
+    let textSel1 = `#text${d1}`;
+    let rectSel = `#rect${d}`;
+    let rectSel1 = `#rect${d1}`;
+    console.log(textSel, textSel1, rectSel, rectSel1)
+
+
+    let textSelX = d3.select(textSel).attr('x');
+    let textSel1X = d3.select(textSel1).attr('x');
+    let rectSelX = d3.select(rectSel).attr('x');
+    let rectSel1X = d3.select(rectSel1).attr('x');
+
+    return Promise.all([
+      d3.select(textSel)
+        .transition()
+        .duration(durationTime)
+        .attr('x', textSel1X)
+        .end(),
+
+      d3.select(textSel1)
+        .transition()
+        .duration(durationTime)
+        .attr('x', textSelX)
+        .end(),
+
+      d3.select(rectSel)
+        .transition()
+        .duration(durationTime)
+        .attr('x', rectSel1X)
+        .end(),
+
+      d3.select(rectSel1)
+        .transition()
+        .duration(durationTime)
+        .attr('x', rectSelX)
+        .end()
+    ])
   }
 }

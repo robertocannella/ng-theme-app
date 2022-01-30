@@ -11,9 +11,16 @@ array.
     Add SVG2 Node
 </button> -->
 
-<button mat-button color="primary" (click)="traverse()" aria-label="Traverse Button">
-    Traverse
-</button>
+<button mat-button color='primary' [matMenuTriggerFor]="menu">Sort</button>
+<mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="bubbleSort()" aria-label="Bubble Sort Button">Bubble Sort</button>
+    <button mat-menu-item (click)="traverse()" aria-label="Selection Sort Button">Selection Sort</button>
+    <button mat-menu-item (click)="traverse()" aria-label="Insertion Sort Button">Insertion Sort</button>
+    <button mat-menu-item (click)="traverse()" aria-label="Merge Sort Button">Merge Sort</button>
+    <button mat-menu-item (click)="traverse()" aria-label="Quick Sort Button">Quick Sort</button>
+    <button mat-menu-item (click)="traverse()" aria-label="Counting Sort Button">Counting Sort</button>
+    <button mat-menu-item (click)="traverse()" aria-label="Bucket Sort Button">Bucket Sort</button>
+</mat-menu>
 <button mat-button color="primary" (click)="obliterate()" aria-label="Obliterate Button">
     Obliterate
 </button>
