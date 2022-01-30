@@ -1,5 +1,6 @@
 <h2>{{ title }}</h2>
-Named after inventors Adelson-Velsky and Landis, the AVL tree is a self-balancing binary search tree. The tool below
+<a href='https://en.wikipedia.org/wiki/AVL_tree'>Named</a> after inventors Adelson-Velsky and Landis, the AVL tree is a
+self-balancing binary search tree. The tool below
 portrays the inner workings of an AVL tree. This AVL tree will keep the heights of each subtree from differing more
 than one by preforming the required number of rotations.
 <div class='linebreak-light'></div>
@@ -60,9 +61,7 @@ than one by preforming the required number of rotations.
             </div>
 
             <div>
-
                 <mat-label for="wing-span-slider">Wingspan</mat-label>
-
                 <mat-slider id="wing-span-slider" (input)="changeTotalShift($event.value)" [disabled]="disabled"
                     [invert]="invert" [max]="wingspanMax" [min]="wingspanMin" [(ngModel)]="wingspanValue" [step]="step"
                     [thumbLabel]="thumbLabel" [tickInterval]="getSliderTickInterval()" [vertical]="vertical"

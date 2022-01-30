@@ -38,12 +38,18 @@ export class ArrayComponent implements OnInit {
   panX: number = 0;
   panY: number = 0;
   panScale: number = 1;
+  _showIndex: boolean = true;
 
 
 
   constructor() { }
 
   ngOnInit(): void {
+    this.ce.push(this.randomIntFromInterval(0, 99))
+    this.ce.push(this.randomIntFromInterval(0, 99))
+    this.ce.push(this.randomIntFromInterval(0, 99))
+    this.ce.push(this.randomIntFromInterval(0, 99))
+
     this.buildSVG2()
   }
 
@@ -109,8 +115,8 @@ export class ArrayComponent implements OnInit {
             console.log(data) //, this.d3zoom)
           })
       })
-    svg
-      .selectAll('text')
+
+    svg.selectAll('g#array-elements rect')
       .data(this.ce)
       .enter()
       .append('text')
@@ -122,9 +128,36 @@ export class ArrayComponent implements OnInit {
       .attr('y', 75)
       .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
 
-
+    this.showIndex();
   }
+  showIndex() {
+    let xScale = d3.scaleLinear()
+      .domain([0, 10])
+      .range([-100, 550])
 
+    let svg = this.svg.select('svg')
+
+    if (this._showIndex) {
+      d3.selectAll('.index').remove();
+
+
+      svg.selectAll('g#array-elements rect')
+        .data(this.ce)
+        .enter()
+        .append('text')
+        .attr('class', 'element-index')
+        .text((d: any, i: any) => i)
+        .attr('id', (d: any) => 'element-' + d + '-index')
+        .attr('class', 'index')
+        .attr('text-anchor', 'middle')
+        .attr('opacity', '1')
+        .attr('alignment-baseline', 'central')
+        .attr("x", (d: any, i: any) => xScale(i.toString()) + 25)
+        .attr("y", 40)
+        .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
+
+    }
+  }
   zoomed(event: any) {
     d3.select('div#svg-array')
       .selectAll('text,rect')

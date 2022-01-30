@@ -236,8 +236,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
 
         node.selectAll("circle")
           .attr("r", () => d.radius)
-          .attr('fill', 'purple')
-          .attr('fill-opacity', 0.3)
+          .attr('fill', '#E0B0FF')
           .attr('stroke', 'black')
           .attr('stroke-width', '2px')
           .attr('cy', () => d.currentY)
@@ -274,12 +273,13 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
         .duration(500)
         .delay(500 * index)
         .attr('r', element.radius * 1.1)
-        .attr('fill-opacity', .7)
+        .attr('fill', '#DA70D6')
         .on('end', () => {
           node
             .transition()
             .duration(300)
-            .attr('fill-opacity', .3)
+            .attr('fill', '#E0B0FF')
+            .attr('r', element.radius)
         })
 
     });
@@ -549,12 +549,12 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
               node.transition()
                 .duration(1000)
                 .delay(500)
-                .attr('fill', 'pink')
+                .attr('r', element.radius * 1.2)
                 .attr('cy', element.currentY)
                 .attr('cx', element.currentX)
                 .transition()
                 .duration(500)
-                .attr('fill', 'white')
+                .attr('r', element.radius)
           })
         let label = d3.select('#node' + element.value + 'text')
         label
@@ -620,12 +620,12 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
               node.transition()
                 .duration(1000)
                 .delay(500)
-                .attr('fill', 'lightblue')
+                .attr('r', element.radius * 1.2)
                 .attr('cy', element.currentY)
                 .attr('cx', element.currentX)
                 .transition()
                 .duration(500)
-                .attr('fill', 'white')
+                .attr('r', element.radius)
           })
         let label = d3.select('#node' + element.value + 'text')
         label
