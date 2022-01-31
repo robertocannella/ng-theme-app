@@ -406,7 +406,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
     let cn = this.avlTree.preOrderArray();
 
     this.avlTree = new AVLTree(this.vbWidth, this.radius, newTotalShift!);
-    d3.selectAll('svg g').remove();
+    d3.selectAll('svgsvg#avlnodes g').remove();
 
     cn!.forEach((node) => {
       this.avlTree.insert(node.value)

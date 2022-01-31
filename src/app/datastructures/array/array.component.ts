@@ -107,7 +107,7 @@ export class ArrayComponent implements OnInit {
       .attr('stroke-width', 2)
       .attr('stroke', 'black')
       .attr('fill', 'purple')
-      .attr('fill-opacity', .3)
+      .attr('fill-opacity', (d: any) => d / 150 + .05)
       .attr('class', 'element')
       .attr('id', (d: any) => 'rect' + d)
       .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
@@ -204,7 +204,33 @@ export class ArrayComponent implements OnInit {
     this.ce.push(value)
     this.update();
   }
+
+  async shuffle() {
+
+    let buttons = document.querySelectorAll('button'); // Disable all the buttons
+    buttons.forEach((button) => {
+      button.disabled = true;
+    })
+    for (var i = this.ce.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+
+      await this.swapAnimation(this.ce[i], i, this.ce[j], j, 100)
+
+      var temp = this.ce[i];
+      this.ce[i] = this.ce[j];
+      this.ce[j] = temp;
+    }
+    buttons.forEach((button) => {
+      button.disabled = false;
+    })
+  }
   async selectionSort() { // Sort a[] into increasing order
+    let buttons = document.querySelectorAll('button'); // Disable all the buttons
+    buttons.forEach((button) => {
+      button.disabled = true;
+    })
+
+
     let n = this.ce.length;
 
     for (let i = 0; i < n; i++) {           // exchange a[i] with the smallest entry in a[i], ... , a[n-1].
@@ -212,11 +238,14 @@ export class ArrayComponent implements OnInit {
       for (let j = i + 1; j < n; j++)  // we are comparing with the next element  a[i + 1]
         if (this.less(this.ce[j], this.ce[min])) min = j;
 
-      // if (i !== min)
-      await this.swapAnimation(this.ce[i], i, this.ce[min], min)
+
+      await this.swapAnimation(this.ce[i], i, this.ce[min], min, 500)
       this.exchange(this.ce, i, min);
 
     }
+    buttons.forEach((button) => {
+      button.disabled = false;
+    })
     console.log(this.ce)
   }
   exchange(arr: number[], i: number, j: number) {
@@ -242,7 +271,7 @@ export class ArrayComponent implements OnInit {
           this.ce[j] = this.ce[j + 1]
           this.ce[j + 1] = temp
           isSorted = false;
-          await this.swapAnimation(this.ce[j], j, this.ce[j + 1], j + 1)
+          await this.swapAnimation(this.ce[j], j, this.ce[j + 1], j + 1, 250)
         }
 
       }
@@ -252,11 +281,12 @@ export class ArrayComponent implements OnInit {
       button.disabled = false;
     })
 
+    console.log(this.ce)
 
     this.update();
   }
-  swapAnimation(d: any, i: any, d1: any, i1: any) {
-    let durationTime = 500;
+  swapAnimation(d: any, i: any, d1: any, i1: any, durationTime: number) {
+
     let textSel = `#text${d}`;
     let textSel1 = `#text${d1}`;
     let rectSel = `#rect${d}`;
@@ -289,14 +319,21 @@ export class ArrayComponent implements OnInit {
         .transition()
         .duration(durationTime)
         .attr('x', rectSel1X)
+        // .attr('fill', 'grey')
+        // .transition()
+        // .duration(100)
+        // .attr('fill', 'purple')
         .end(),
 
       d3.select(rectSel1)
         .transition()
         .duration(durationTime)
         .attr('x', rectSelX)
+        // .attr('fill', 'grey')
+        // .transition()
+        // .duration(100)
+        // .attr('fill', 'purple')
         .end()
-
 
     ])
 
