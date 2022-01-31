@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { SortingAlgorithms } from './SortingAlgorithms';
 import * as d3 from 'd3';
 import * as d3Scale from 'd3';
@@ -17,7 +17,7 @@ export class ArrayComponent implements OnInit {
 
   title = 'Array';
   svg: any;
-  ce: number[] = [];
+  ce: any[] = [];
 
 
   private width = 800;
@@ -41,12 +41,8 @@ export class ArrayComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.ce.push(this.randomIntFromInterval(0, 99))
-    this.ce.push(this.randomIntFromInterval(0, 99))
-    this.ce.push(this.randomIntFromInterval(0, 99))
-    this.ce.push(this.randomIntFromInterval(0, 99))
-
-    this.buildSVG2()
+    this.addInitialElements(4);
+    this.buildSVG2();
   }
 
   buildSVG2() {
@@ -186,6 +182,16 @@ export class ArrayComponent implements OnInit {
     this.ce = []
     //this.update();
   }
+  addInitialElements(quantity: number) {
+    for (let i = 0; i < quantity; i++) {
+      let value = this.randomIntFromInterval(0, 99)
+
+      while (this.ce.includes(value))
+        value = this.randomIntFromInterval(1, 99)
+
+      this.ce.push(value)
+    }
+  }
   addRandomElement() {
     if (this.ce.length > 30)
       return;
@@ -197,6 +203,29 @@ export class ArrayComponent implements OnInit {
 
     this.ce.push(value)
     this.update();
+  }
+  async selectionSort() { // Sort a[] into increasing order
+    let n = this.ce.length;
+
+    for (let i = 0; i < n; i++) {           // exchange a[i] with the smallest entry in a[i], ... , a[n-1].
+      let min = i;                        // index of a minimal entry
+      for (let j = i + 1; j < n; j++)  // we are comparing with the next element  a[i + 1]
+        if (this.less(this.ce[j], this.ce[min])) min = j;
+
+      // if (i !== min)
+      await this.swapAnimation(this.ce[i], i, this.ce[min], min)
+      this.exchange(this.ce, i, min);
+
+    }
+    console.log(this.ce)
+  }
+  exchange(arr: number[], i: number, j: number) {
+    let temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+  }
+  less(v: number, w: number) {
+    return v < w;
   }
   async bubbleSort() {
     let buttons = document.querySelectorAll('button'); // Disable all the buttons
@@ -223,11 +252,7 @@ export class ArrayComponent implements OnInit {
       button.disabled = false;
     })
 
-    //let sorter = new SortingAlgorithms();
-    //sorter.bubbleSort(this.ce)
-    console.log(
-      'Bubble Sort'
-    )
+
     this.update();
   }
   swapAnimation(d: any, i: any, d1: any, i1: any) {
@@ -243,8 +268,11 @@ export class ArrayComponent implements OnInit {
     let textSel1X = d3.select(textSel1).attr('x');
     let rectSelX = d3.select(rectSel).attr('x');
     let rectSel1X = d3.select(rectSel1).attr('x');
+    if (rectSel1 === rectSel)     // added this for section sort error on duplicate tags
+      return;
 
     return Promise.all([
+
       d3.select(textSel)
         .transition()
         .duration(durationTime)
@@ -268,6 +296,8 @@ export class ArrayComponent implements OnInit {
         .duration(durationTime)
         .attr('x', rectSelX)
         .end()
+
+
     ])
 
   }
