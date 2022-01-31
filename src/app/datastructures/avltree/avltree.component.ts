@@ -165,9 +165,10 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
   }
 
   zoomed(event: any) {
-    let svgElements = d3.selectAll('svg#avlnodes line, g')
-
-    svgElements.attr('transform', event.transform)
+    let svgLine = d3.selectAll('svg#avlnodes line')
+    let svgGroup = d3.selectAll('svg#avlnodes g')
+    svgGroup.attr('transform', event.transform)
+    svgLine.attr('transform', event.transform)
   }
   // wheeled(event: any) {
   //   if (event.ctrlKey) {

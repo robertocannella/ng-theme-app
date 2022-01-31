@@ -187,6 +187,8 @@ export class ArrayComponent implements OnInit {
     //this.update();
   }
   addRandomElement() {
+    if (this.ce.length > 30)
+      return;
 
     let value = this.randomIntFromInterval(0, 99)
 
@@ -197,7 +199,10 @@ export class ArrayComponent implements OnInit {
     this.update();
   }
   async bubbleSort() {
-
+    let buttons = document.querySelectorAll('button'); // Disable all the buttons
+    buttons.forEach((button) => {
+      button.disabled = true;
+    })
     let isSorted;
     do {
 
@@ -208,15 +213,15 @@ export class ArrayComponent implements OnInit {
           this.ce[j] = this.ce[j + 1]
           this.ce[j + 1] = temp
           isSorted = false;
-
-
-          console.log(this.ce)
           await this.swapAnimation(this.ce[j], j, this.ce[j + 1], j + 1)
         }
 
       }
     } while (!isSorted)
 
+    buttons.forEach((button) => {
+      button.disabled = false;
+    })
 
     //let sorter = new SortingAlgorithms();
     //sorter.bubbleSort(this.ce)
@@ -226,7 +231,7 @@ export class ArrayComponent implements OnInit {
     this.update();
   }
   swapAnimation(d: any, i: any, d1: any, i1: any) {
-    let durationTime = 1000;
+    let durationTime = 500;
     let textSel = `#text${d}`;
     let textSel1 = `#text${d1}`;
     let rectSel = `#rect${d}`;
@@ -264,5 +269,6 @@ export class ArrayComponent implements OnInit {
         .attr('x', rectSelX)
         .end()
     ])
+
   }
 }
