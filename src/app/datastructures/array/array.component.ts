@@ -208,10 +208,7 @@ export class ArrayComponent implements OnInit {
 
   async shuffle() {
 
-    let buttons = document.querySelectorAll('button'); // Disable all the buttons
-    buttons.forEach((button) => {
-      button.disabled = true;
-    })
+    this.toggleButtons();
     for (var i = this.ce.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
 
@@ -221,9 +218,30 @@ export class ArrayComponent implements OnInit {
       this.ce[i] = this.ce[j];
       this.ce[j] = temp;
     }
-    buttons.forEach((button) => {
-      button.disabled = false;
-    })
+    this.toggleButtons();
+
+  }
+  async shellSort() {
+    this.toggleButtons();
+    let n = this.ce.length;
+    let h = 1;
+    while (h < n / 3)
+      h = Math.floor(3 * h + 1); // 1, 4,13,40,121,363,1093
+
+    while (h >= 1) { // h-sort the array
+      for (let i = h; i < n; i++) {
+        console.log(h);
+        for (let j = i; j >= h && this.less(this.ce[j], this.ce[j - h]); j -= h) {
+
+          await this.swapAnimation(this.ce[j], j, this.ce[j - h], j - h, 100);
+          this.exchange(this.ce, j, j - h);
+        }
+      }
+      h = Math.floor(h / 3);
+    }
+    console.log(this.ce)
+    this.toggleButtons();
+    this.update();
 
   }
   async insertionSort() {
@@ -334,6 +352,12 @@ export class ArrayComponent implements OnInit {
 
   }
   // --- UTILTIY FUNCTIONS ---- //
+  playAnimation() {
+    this.toggleButtons();
+
+
+    this.toggleButtons();
+  }
   toggleButtons() {
     let buttons = document.querySelectorAll('button'); // Disable all the buttons
     if (this._buttons) {
