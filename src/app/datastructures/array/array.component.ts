@@ -42,7 +42,7 @@ export class ArrayComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.addInitialElements(4);
+    this.addInitialElements(20);
     this.buildSVG2();
   }
 
@@ -81,7 +81,7 @@ export class ArrayComponent implements OnInit {
   update() {
 
     let xScale = d3.scaleLinear()
-      .domain([0, 10])
+      .domain([0, 50])
       .range([-100, 550])
 
     let groups = this.svg.select('svg#array-elements').selectAll('g')
@@ -99,13 +99,13 @@ export class ArrayComponent implements OnInit {
 
     groups
       .append('rect')
-      .attr('width', 50)
-      .attr('height', 50)
+      .attr('width', 10)
+      .attr('height', 75)
       .classed('element', true)
       .attr('x', (d: any, i: any) => xScale(i.toString()))
       .attr('y', 50)
       .attr('fill', 'white')
-      .attr('stroke-width', 2)
+      .attr('stroke-width', 1)
       .attr('stroke', 'black')
       .attr('fill', 'purple')
       .attr('fill-opacity', (d: any) => d / 150 + .05)
@@ -113,18 +113,18 @@ export class ArrayComponent implements OnInit {
       .attr('id', (d: any) => 'rect' + d)
       .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
 
-    groups
-      .append('text')
-      .text((d: any) => d)
-      .attr('alignment-baseline', 'central')
-      .attr('text-anchor', 'middle')
-      .attr('class', 'element-value')
-      .attr('id', (d: any) => 'text' + d)
-      .attr('x', (d: any, i: any) => xScale(i.toString()) + 25)
-      .attr('y', 75)
-      .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
+    // groups
+    //   .append('text')
+    //   .text((d: any) => d)
+    //   .attr('alignment-baseline', 'central')
+    //   .attr('text-anchor', 'middle')
+    //   .attr('class', 'element-value')
+    //   .attr('id', (d: any) => 'text' + d)
+    //   .attr('x', (d: any, i: any) => xScale(i.toString()) + 25)
+    //   .attr('y', 75)
+    //   .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
 
-    this.showIndex();
+    // this.showIndex();
   }
   showIndex() {
     let xScale = d3.scaleLinear()
@@ -194,7 +194,7 @@ export class ArrayComponent implements OnInit {
     }
   }
   addRandomElement() {
-    if (this.ce.length > 30)
+    if (this.ce.length > 50)
       return;
 
     let value = this.randomIntFromInterval(0, 99)
@@ -251,7 +251,7 @@ export class ArrayComponent implements OnInit {
         if (this.less(this.ce[j], this.ce[min])) min = j;
 
 
-      await this.swapAnimation(this.ce[i], i, this.ce[min], min, 500)
+      await this.swapAnimation(this.ce[i], i, this.ce[min], min, 200)
       this.exchange(this.ce, i, min);
 
     }
@@ -271,7 +271,7 @@ export class ArrayComponent implements OnInit {
           this.ce[j] = this.ce[j + 1]
           this.ce[j + 1] = temp
           isSorted = false;
-          await this.swapAnimation(this.ce[j], j, this.ce[j + 1], j + 1, 250)
+          await this.swapAnimation(this.ce[j], j, this.ce[j + 1], j + 1, 100)
         }
 
       }
@@ -282,15 +282,15 @@ export class ArrayComponent implements OnInit {
   }
   swapAnimation(d: any, i: any, d1: any, i1: any, durationTime: number) {
 
-    let textSel = `#text${d}`;
-    let textSel1 = `#text${d1}`;
+    // let textSel = `#text${d}`;
+    // let textSel1 = `#text${d1}`;
     let rectSel = `#rect${d}`;
     let rectSel1 = `#rect${d1}`;
-    console.log(textSel, textSel1, rectSel, rectSel1)
+    // console.log(textSel, textSel1, rectSel, rectSel1)
 
 
-    let textSelX = d3.select(textSel).attr('x');
-    let textSel1X = d3.select(textSel1).attr('x');
+    // let textSelX = d3.select(textSel).attr('x');
+    // let textSel1X = d3.select(textSel1).attr('x');
     let rectSelX = d3.select(rectSel).attr('x');
     let rectSel1X = d3.select(rectSel1).attr('x');
     if (rectSel1 === rectSel)     // added this for section sort error on duplicate tags
@@ -298,17 +298,17 @@ export class ArrayComponent implements OnInit {
 
     return Promise.all([
 
-      d3.select(textSel)
-        .transition()
-        .duration(durationTime)
-        .attr('x', textSel1X)
-        .end(),
+      // d3.select(textSel)
+      //   .transition()
+      //   .duration(durationTime)
+      //   .attr('x', textSel1X)
+      //   .end(),
 
-      d3.select(textSel1)
-        .transition()
-        .duration(durationTime)
-        .attr('x', textSelX)
-        .end(),
+      // d3.select(textSel1)
+      //   .transition()
+      //   .duration(durationTime)
+      //   .attr('x', textSelX)
+      //   .end(),
 
       d3.select(rectSel)
         .transition()
