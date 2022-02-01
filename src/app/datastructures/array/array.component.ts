@@ -35,6 +35,7 @@ export class ArrayComponent implements OnInit {
   panY: number = 0;
   panScale: number = 1;
   _showIndex: boolean = true;
+  _buttons: boolean = true;
 
 
 
@@ -223,14 +224,25 @@ export class ArrayComponent implements OnInit {
     buttons.forEach((button) => {
       button.disabled = false;
     })
+
+  }
+  async insertionSort() {
+    this.toggleButtons();
+    let n = this.ce.length;
+
+    for (let i = 0; i < n; i++) {
+      for (let j = i; j > 0 && this.less(this.ce[j], this.ce[j - 1]); j--) {
+
+        await this.swapAnimation(this.ce[j], j, this.ce[j - 1], j - 1, 100)
+        this.exchange(this.ce, j, j - 1);
+      }
+    }
+    this.toggleButtons();
+    this.update();
+
   }
   async selectionSort() { // Sort a[] into increasing order
-    let buttons = document.querySelectorAll('button'); // Disable all the buttons
-    buttons.forEach((button) => {
-      button.disabled = true;
-    })
-
-
+    this.toggleButtons();
     let n = this.ce.length;
 
     for (let i = 0; i < n; i++) {           // exchange a[i] with the smallest entry in a[i], ... , a[n-1].
@@ -243,24 +255,12 @@ export class ArrayComponent implements OnInit {
       this.exchange(this.ce, i, min);
 
     }
-    buttons.forEach((button) => {
-      button.disabled = false;
-    })
-    console.log(this.ce)
+    this.toggleButtons();
+    this.update();
   }
-  exchange(arr: number[], i: number, j: number) {
-    let temp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = temp;
-  }
-  less(v: number, w: number) {
-    return v < w;
-  }
+
   async bubbleSort() {
-    let buttons = document.querySelectorAll('button'); // Disable all the buttons
-    buttons.forEach((button) => {
-      button.disabled = true;
-    })
+    this.toggleButtons()
     let isSorted;
     do {
 
@@ -277,12 +277,7 @@ export class ArrayComponent implements OnInit {
       }
     } while (!isSorted)
 
-    buttons.forEach((button) => {
-      button.disabled = false;
-    })
-
-    console.log(this.ce)
-
+    this.toggleButtons()
     this.update();
   }
   swapAnimation(d: any, i: any, d1: any, i1: any, durationTime: number) {
@@ -337,5 +332,30 @@ export class ArrayComponent implements OnInit {
 
     ])
 
+  }
+  // --- UTILTIY FUNCTIONS ---- //
+  toggleButtons() {
+    let buttons = document.querySelectorAll('button'); // Disable all the buttons
+    if (this._buttons) {
+      buttons.forEach((button) => {
+        button.disabled = true;
+        this._buttons = false;
+      })
+    }
+    else {
+      buttons.forEach((button) => {
+
+        button.disabled = false;
+        this._buttons = true;
+      })
+    }
+  }
+  exchange(arr: number[], i: number, j: number) {
+    let temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+  }
+  less(v: number, w: number) {
+    return v < w;
   }
 }

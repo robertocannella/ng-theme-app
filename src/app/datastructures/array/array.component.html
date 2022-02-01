@@ -5,17 +5,20 @@ computer science, an array data structure, or simply an array, is a
 data structure consisting of a collection of elements, each identified by at least one array index or key.
 The simplest type of data structure is a linear array, also called one-dimensional array. Below is a visual
 representation of a one-dimensional
-array.
+array, along with numerous sorting algorithms.
 <div class='linebreak-light'></div>
 <!-- <button mat-button id='addSVGNode' color="primary" (click)="addElement()" aria-label="Add Random SVG Node Button">
     Add SVG2 Node
 </button> -->
 
 <button mat-button color='primary' [matMenuTriggerFor]="menu">Sort</button>
-<mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="bubbleSort()" aria-label="Bubble Sort Button">Bubble Sort</button>
-    <button mat-menu-item (click)="selectionSort()" aria-label="Selection Sort Button">Selection Sort</button>
-    <button mat-menu-item (click)="traverse()" aria-label="Insertion Sort Button">Insertion Sort</button>
+<mat-menu #menu="matMenu" [attr.disabled]="_buttons ?null:'true'">
+    <button mat-menu-item [attr.disabled]="_buttons ? null:'true'" (click)="bubbleSort()"
+        aria-label="Bubble Sort Button">Bubble Sort</button>
+    <button mat-menu-item [attr.disabled]="_buttons ? null :'true'" (click)="selectionSort()"
+        aria-label="Selection Sort Button">Selection Sort</button>
+    <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="insertionSort()"
+        aria-label="Insertion Sort Button">Insertion Sort</button>
     <button mat-menu-item (click)="traverse()" aria-label="Merge Sort Button">Merge Sort</button>
     <button mat-menu-item (click)="traverse()" aria-label="Quick Sort Button">Quick Sort</button>
     <button mat-menu-item (click)="traverse()" aria-label="Counting Sort Button">Counting Sort</button>
