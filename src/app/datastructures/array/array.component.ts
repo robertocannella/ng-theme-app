@@ -110,6 +110,7 @@ export class ArrayComponent implements OnInit {
       .data(arr, (data: any, index: any, nodes: any) => data)
       .enter()
       .append('g')
+      // .join('g')
       .attr('id', (d: any, i: any) => 'group' + i + '-' + d)
       .each((data: any, i: any, nodes: any) => {
         let node = d3.select(nodes[i])
@@ -124,16 +125,17 @@ export class ArrayComponent implements OnInit {
       .attr('width', 10)  // default to 10
       .attr('height', 75)
       .classed('element', true)
-      .attr('x', (d: any, i: any) => xScale(i.toString()))
+      .attr('class', 'element')
       .attr('y', 50)
       .attr('fill', 'white')
       .attr('stroke-width', 1)
       .attr('stroke', 'black')
+      .attr('x', (d: any, i: any) => xScale(i.toString()))
       .attr('fill', this.animationColor)
       .attr('fill-opacity', (d: any) => d / 150 + .05)
-      .attr('class', 'element')
       .attr('id', (d: any, i: any) => 'rect' + d)
       .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
+
 
     // groups
     //   .append('text')
@@ -233,8 +235,10 @@ export class ArrayComponent implements OnInit {
     this.toggleButtons();
     for (var i = 0; i < this.ce.length - 1; i++) {
       var j = Math.floor(Math.random() * (i + 1));
+      // for (var i = this.ce.length - 1; i > 0; i--) {
+      //   var j = Math.floor(Math.random() * (i + 1));
 
-      await this.swapAnimation(this.ce[i], i, this.ce[j], j, 100, 0)
+      await this.swapAnimation(this.ce[i], i, this.ce[j], j, 40, 0)
 
       var temp = this.ce[i];
       this.ce[i] = this.ce[j];
@@ -398,7 +402,7 @@ export class ArrayComponent implements OnInit {
     let groups = this.svg.select('svg#array-elements').selectAll('g')
 
     return Promise.all([
-      groups.remove(),
+      //groups.remove(),
 
       this.update(mainArray),
 
@@ -406,6 +410,7 @@ export class ArrayComponent implements OnInit {
         .transition()
         .duration(25)
         .end()
+
     ])
 
   }
@@ -448,8 +453,8 @@ export class ArrayComponent implements OnInit {
         .duration(durationTime)
         .delay(delayTime)
         .attr('x', () => {
-          console.log('3rd')
-          return rectSel1X
+          //console.log('3rd')
+          return rectSel1X;
         })
         // .attr('fill', 'grey')
         // .transition()

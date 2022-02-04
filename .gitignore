@@ -45,4 +45,5 @@ testem.log
 Thumbs.db
 
 # My Ignores
-.firebase/
+.firebase/*
+.firebase/hosting.ZGlzdC9uZy10aGVtZS1hcHA.cache
