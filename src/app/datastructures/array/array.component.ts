@@ -59,7 +59,9 @@ export class ArrayComponent implements OnInit {
     this.buildSVG2();
   }
   setColor(e: any) {
-    console.log(e)
+
+    if (e === 'random')
+      e = '#' + Math.floor(Math.random() * 16777215).toString(16);
     this.animationColor = e;
     let groups = this.svg.select('svg#array-elements').selectAll('g').remove();
     this.update(this.ce);
