@@ -6,7 +6,10 @@ import * as d3Shape from 'd3';
 import * as d3Array from 'd3';
 import * as d3Axis from 'd3';
 import * as d3Transform from 'd3';
-
+interface Color {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-array',
@@ -24,7 +27,7 @@ export class ArrayComponent implements OnInit {
   private height = 150;
   private vbWidth = 400;
   private vbHeight = 150;
-  animationColor = 'blue';
+
 
   private y = d3.scaleLinear().range([this.vbHeight, 0])
     .domain([0, Math.max(...this.ce) + 3]);
@@ -39,6 +42,15 @@ export class ArrayComponent implements OnInit {
   _buttons: boolean = true;
   allPromises: any = [];
   _mergeCount: number = 0;
+  toggleGroupSelectedVal: string = 'show-off'
+  animationColor = 'blue';
+  colors: Color[] = [
+    { value: 'blue', viewValue: 'Blue' },
+    { value: 'red', viewValue: 'Red' },
+    { value: 'green', viewValue: 'Green' },
+    { value: 'random', viewValue: 'Surprise Me!' },
+  ];
+
 
   constructor() { }
 
@@ -46,7 +58,12 @@ export class ArrayComponent implements OnInit {
     this.addInitialElements(20);
     this.buildSVG2();
   }
-
+  setColor(e: any) {
+    console.log(e)
+    this.animationColor = e;
+    let groups = this.svg.select('svg#array-elements').selectAll('g').remove();
+    this.update(this.ce);
+  }
   buildSVG2() {
     this.svg = d3.select('div#svg-array')
 
@@ -96,7 +113,7 @@ export class ArrayComponent implements OnInit {
         let node = d3.select(nodes[i])
         node
           .on('click', () => {
-            console.log(data) //, this.d3zoom)
+            //console.log(data) //, this.d3zoom)
           })
       })
 
@@ -212,7 +229,7 @@ export class ArrayComponent implements OnInit {
   async shuffle() {
 
     this.toggleButtons();
-    for (var i = this.ce.length - 1; i > 0; i--) {
+    for (var i = 0; i < this.ce.length - 1; i++) {
       var j = Math.floor(Math.random() * (i + 1));
 
       await this.swapAnimation(this.ce[i], i, this.ce[j], j, 100, 0)
@@ -222,23 +239,18 @@ export class ArrayComponent implements OnInit {
       this.ce[j] = temp;
     }
     this.toggleButtons();
-
   }
-
 
   async mergeSort() {
     this.allPromises = [];
-    console.log(`this.ce = [${this.ce}]`)
+    //console.log(`this.ce = [${this.ce}]`)
     this._mergeSort(this.ce, 0, this.ce.length - 1)
-    let count = 0;
 
-    //this.update();
-    console.log(this.allPromises)
+    //console.log(this.allPromises)
     for (let promise of this.allPromises) {
-      //console.log('count:', count++);
       await this.replaceAnimation(promise.array1, promise.array2, promise.mainArray);
     }
-
+    this.allPromises = [];
 
   }
   async _mergeSort(array: number[], lo: number, hi: number) {
@@ -252,17 +264,12 @@ export class ArrayComponent implements OnInit {
   }
 
   async _merge(array: number[], lo: number, mid: number, hi: number) {
-
     let aux: number[] = [];
     let i: number = lo;
     let j: number = mid + 1;
 
-
     for (let k = lo; k <= hi; k++)
       aux[k] = array[k];
-
-    console.log('=== section ===')
-
 
     for (let m = lo; m <= hi; m++) {
       if (i > mid) {
@@ -403,15 +410,15 @@ export class ArrayComponent implements OnInit {
   swapAnimation(d: any, i: any, d1: any, i1: any, durationTime: number, delayTime: number) {
 
 
-    let textSel = `#text${d}`;
-    let textSel1 = `#text${d1}`;
+    // let textSel = `#text${d}`;
+    // let textSel1 = `#text${d1}`;
     let rectSel = `#rect${d}`;
     let rectSel1 = `#rect${d1}`;
     // console.log(textSel, textSel1, rectSel, rectSel1)
 
 
-    let textSelX = d3.select(textSel).attr('x');
-    let textSel1X = d3.select(textSel1).attr('x');
+    // let textSelX = d3.select(textSel).attr('x');
+    // let textSel1X = d3.select(textSel1).attr('x');
     let rectSelX = d3.select(rectSel).attr('x');
     let rectSel1X = d3.select(rectSel1).attr('x');
     if (rectSel1 === rectSel)     // added this for section sort error on duplicate tags
@@ -420,19 +427,19 @@ export class ArrayComponent implements OnInit {
     return Promise.all([
 
 
-      d3.select(textSel)
-        .transition()
-        .duration(durationTime)
-        .delay(delayTime)
-        .attr('x', textSel1X)
-        .end().catch(error => console.log(error)),
+      // d3.select(textSel)
+      //   .transition()
+      //   .duration(durationTime)
+      //   .delay(delayTime)
+      //   .attr('x', textSel1X)
+      //   .end().catch(error => console.log(error)),
 
-      d3.select(textSel1)
-        .transition()
-        .duration(durationTime)
-        .delay(delayTime)
-        .attr('x', textSelX)
-        .end().catch(error => console.log(error)),
+      // d3.select(textSel1)
+      //   .transition()
+      //   .duration(durationTime)
+      //   .delay(delayTime)
+      //   .attr('x', textSelX)
+      //   .end().catch(error => console.log(error)),
 
       d3.select(rectSel)
         .transition()

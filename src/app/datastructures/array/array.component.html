@@ -41,7 +41,26 @@ array, along with numerous sorting algorithms.
 <button mat-button color="primary" (click)="shuffle()" aria-label="Shuffle Button">
     Shuffle
 </button>
-
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Options
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-card>
+        <mat-card-content>
+            <mat-form-field appearance="legacy">
+                <mat-label>Color</mat-label>
+                <mat-select [ngModel]="animationColor" (ngModelChange)="setColor($event)" name="sel2">
+                    <mat-option *ngFor="let color of colors" [value]="
+                        color.value">
+                        {{color.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </mat-card-content>
+    </mat-card>
+</mat-expansion-panel>
 <div id='svg-array' style="border:1px solid grey;overflow:scroll;text-align:center">
     <div id='vec-scale-val-span'></div>
     <div id='vec-scale-x-span'></div>
