@@ -9,8 +9,9 @@ than one by preforming the required number of rotations.
         <mat-label>Add a node:</mat-label>
         <input matInput id="addNode" type="number" formControlName="addNode">
     </mat-form-field>
-    <button mat-icon-button type="submit" [disabled]="!control.valid" color="primary" aria-label="Submit Button">
-        <fa-icon icon="check-circle"></fa-icon>
+    <button mat-icon-button type="submit" style="touch-action: manipulation;" [disabled]="!control.valid"
+        color="primary" aria-label="Submit Button">
+        <fa-icon style="touch-action: manipulation;" icon="check-circle"></fa-icon>
     </button>
 </form>
 
@@ -20,7 +21,8 @@ than one by preforming the required number of rotations.
 <button mat-button color="primary" (click)="obliterate()" aria-label="Obliterate Button">
     Obliterate
 </button>
-<button mat-button color="primary" (click)="addNode()" aria-label="Add Random Node Button">
+<button mat-button color="primary" style="touch-action: manipulation;" (click)="addNode()"
+    aria-label="Add Random Node Button">
     Add Random Node
 </button>
 

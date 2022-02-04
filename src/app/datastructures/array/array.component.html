@@ -22,19 +22,20 @@ array, along with numerous sorting algorithms.
     <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="shellSort()"
         aria-label="Shell Sort Button">Shell Sort</button>
 
-    <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="traverse()"
+    <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="mergeSort()"
         aria-label="Merge Sort Button">Merge Sort</button>
-    <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="traverse()"
+    <!-- <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="traverse()"
         aria-label="Quick Sort Button">Quick Sort</button>
     <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="traverse()"
         aria-label="Counting Sort Button">Counting Sort</button>
     <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="traverse()"
-        aria-label="Bucket Sort Button">Bucket Sort</button>
+        aria-label="Bucket Sort Button">Bucket Sort</button> -->
 </mat-menu>
 <button mat-button color="primary" (click)="obliterate()" aria-label="Obliterate Button">
     Obliterate
 </button>
-<button mat-button color="primary" (click)="addRandomElement()" aria-label="Add Random Element Button">
+<button style="touch-action: manipulation;" mat-button color="primary" (click)="addRandomElement()"
+    aria-label="Add Random Element Button">
     Add Element
 </button>
 <button mat-button color="primary" (click)="shuffle()" aria-label="Shuffle Button">
