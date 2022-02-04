@@ -265,63 +265,31 @@ export class ArrayComponent implements OnInit {
 
 
     for (let m = lo; m <= hi; m++) {
-      // this.allPromises.push([...array])
-      //console.log('M:', m, 'I:', i, 'J', j)
       if (i > mid) {
-
-        console.log(`Left half exhausted (${aux[i]}) (i: ${i}), take ${aux[j]} from RIGHT, set array[${m}] to index j: ${j}`)
-        console.log(`\ti: ${i}, j: ${j}, m: ${m}, lo: ${lo}, mid: ${mid}, hi: ${hi}, \n\t aux: ${aux}, array: ${array}`)
-        console.log(`\tAUX[j]: ${aux[j]}, AUX[i]: ${aux[i]}, ARRAY[m]: ${array[m]}`)
         this.allPromises.push({ array1: array[m], index1: m, array2: aux[j], index2: j, duration: 400, delay: 500, mainArray: [...array] });
-
-        console.log('count: ', this._mergeCount++);
         array[m] = aux[j];
-
         j++;
-
-
       }
       else if (j > hi) {
-        console.log(`Right half exhausted (${aux[j]}) (j: ${j}), take ${aux[i]} from LEFT, set array [${m}] to index i ${i} `)
-        console.log(`\ti: ${i}, j: ${j}, m: ${m}, lo: ${lo}, mid: ${mid}, hi: ${hi}, \n\t aux: ${aux}, array: ${array}`)
-        console.log(`\tAUX[j]: ${aux[j]}, AUX[i]: ${aux[i]}, ARRAY[m]: ${array[m]}`)
         this.allPromises.push({ array1: array[m], index1: m, array2: aux[i], index2: i, duration: 400, delay: 500, mainArray: [...array] });
-        console.log('count: ', this._mergeCount++);
         array[m] = aux[i]
-
         i++;
-
       }
       else if (aux[j] < aux[i]) {
-        console.log(`Current key (${aux[j]}) on right is LESS than current key (${aux[i]}) on left, take from the RIGHT set array[${m}] to aux index j: ${j}`)
-        console.log(`\ti: ${i}, j: ${j}, m: ${m}, lo: ${lo}, mid: ${mid}, hi: ${hi}, \n\t aux: ${aux}, array: ${array}`)
-        console.log(`\tAUX[j]: ${aux[j]}, AUX[i]: ${aux[i]}, ARRAY[m]: ${array[m]}`)
-
         this.allPromises.push({ array1: array[m], index1: m, array2: aux[j], index2: j, duration: 400, delay: 500, mainArray: [...array] });
-        console.log('count: ', this._mergeCount++);
         array[m] = aux[j];
-
         j++;
 
       }
       else {
-        console.log(`Current key  (${aux[j]}) on right is GREATER than or EQUAL to current key (${aux[i]}) on left, take from the LEFT, set array[${m}] to aux index i: ${i}]`)
-        console.log(`\ti: ${i}, j: ${j}, m: ${m}, lo: ${lo}, mid: ${mid}, hi: ${hi}, \n\t aux: ${aux}, array: ${array}`)
-        console.log(`\tAUX[j]: ${aux[j]}, AUX[i]: ${aux[i]}, ARRAY[m]: ${array[m]}`)
-
         this.allPromises.push({ array1: array[m], index1: m, array2: aux[i], index2: i, duration: 400, delay: 500, mainArray: [...array] });
-        console.log('count: ', this._mergeCount++);
         array[m] = aux[i];
-
         i++;
       }
-
     }
     this.allPromises.push({ array1: 0, index1: 0, array2: 0, index2: 0, duration: 400, delay: 500, mainArray: [...this.ce] });
-
-    console.log(`this.ce = [${this.ce}]`)
-
   }
+
   async shellSort() {
     let window = d3.select('svg#array-elements')
     window.select('.sort-detail').remove();
