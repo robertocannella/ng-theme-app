@@ -25,32 +25,51 @@ export class LinkedlistsComponent implements OnInit {
   title: string = 'Linked Lists';
   dataset: LinkedList[] = [];
 
-  // D3 Components
+  // SVG Components
   width = 700;
   height = 120;
   vbWidth = 400;
   vbHeight = 150;
+  xmlns = 'http://www.w3.org/2000/svg';
+  svgId = 'link-list-nodes';
+
+  // D3 Components
+  d3zoom: any = d3.zoom();
+  panX: number = 0;
+  panY: number = 0;
+  panScale: number = 1;
   canvas: any;
   bars: any;
   xScale: any;
   hScale: any;
   yScale: any;
-
-
-
-
+  buttons: boolean = true;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.init();
+    this.buildSVG();
   }
-  init() {
+  buildSVG() {
     this.canvas = d3.select('#svg-linked-lists')
       .append('svg')
       .attr('width', this.width)
       .attr('height', this.height)
+      .attr('viewBox', `0 0 ${this.vbWidth} ${this.vbHeight}`)
+      .attr('id', this.svgId)
+      .attr('xmlns', this.xmlns)
+      .call(this.d3zoom
+        .on("zoom", (event: any) => this.zoom(event))
+        .on('end', (event: any) => {
 
+          if (event.transform !== d3.zoomIdentity) {
+            let vectorPan: any = event.transform
+            this.panX = vectorPan.x;
+            this.panY = vectorPan.y;
+            this.panScale = vectorPan.k;
+          }
+        })
+      )
     this.xScale = d3.scaleLinear()
       .domain([0, 10])
       .range([0, 700])
@@ -63,11 +82,10 @@ export class LinkedlistsComponent implements OnInit {
 
     this.bars = this.canvas.selectAll('rect');
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 10; i++) {
       this.fillArray(this.dataset)
     }
     this.update();
-    console.log(this.dataset)
   }
   fillArray(arr: any[]) {
     arr.push({ 'value': Math.floor(Math.random() * 50) })
@@ -96,8 +114,14 @@ export class LinkedlistsComponent implements OnInit {
       .attr('y', (d: any) => this.height - this.hScale(d.value))
       .attr('x', (d: any, i: any) => i * 14 * 2)
       .style('fill', 'red')
-      .text((d: any) => d.value);
+      .text((d: any) => d.value)
+      .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`);
 
     this.bars.exit().remove();
+  }
+  zoom(event: any) {
+    d3.select('div#svg-linked-lists')
+      .selectAll('text,rect')
+      .attr('transform', event.transform)
   }
 }
