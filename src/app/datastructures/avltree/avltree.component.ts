@@ -146,7 +146,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
         .on('end', (event: any) => {
           //console.log('zoom.end', event.transform, d3.zoomIdentity)
           if (event.transform !== d3.zoomIdentity) {
-            console.log(event.transform)
+            //console.log(event.transform)
             // ALLOWS TO RESET ZOOM PROGRAMATICALLY
             // remove anonymous function
             //d3.select(this).transition().delay(500).call(event.target.transform, d3.zoomIdentity)
@@ -154,7 +154,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
             this.panX = vectorPan.x;
             this.panY = vectorPan.y;
             this.panScale = vectorPan.k;
-            console.log(this.panX, this.panY, this.panScale)
+            //console.log(this.panX, this.panY, this.panScale)
 
           }
         })

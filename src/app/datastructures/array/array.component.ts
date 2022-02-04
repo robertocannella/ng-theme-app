@@ -402,7 +402,7 @@ export class ArrayComponent implements OnInit {
     let groups = this.svg.select('svg#array-elements').selectAll('g')
 
     return Promise.all([
-      //groups.remove(),
+      groups.remove(),
 
       this.update(mainArray),
 
@@ -410,7 +410,6 @@ export class ArrayComponent implements OnInit {
         .transition()
         .duration(25)
         .end()
-
     ])
 
   }
