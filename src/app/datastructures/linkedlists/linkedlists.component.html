@@ -1,10 +1,16 @@
 <h2>{{ title }}</h2>
+
+<a href='https://en.wikipedia.org/wiki/Array_data_structure'>A Linked List</a> is a collection of nodes which together
+represent a sequence. Each elements location in memory is trivial due to the fact that each element(or node) contains a
+pointer to the next node in the sequence. This maintains some order, or more acurately a way to search the list. The
+tool
+below helps portray a linked list's inner workings.
 <div class='linebreak-light'></div>
-<button mat-button color='primary' [matMenuTriggerFor]="menu">Sort</button>
+<!-- <button mat-button color='primary' [matMenuTriggerFor]="menu">Sort</button>
 <mat-menu #menu="matMenu" [attr.disabled]="buttons ? null:'true'">
     <button mat-menu-item [attr.disabled]="buttons ? null:'true'" (click)="update()"
         aria-label="Bubble Sort Button">Bubble Sort</button>
-    <!-- <button mat-menu-item [attr.disabled]="_buttons ? null :'true'" (click)="selectionSort()"
+    <button mat-menu-item [attr.disabled]="_buttons ? null :'true'" (click)="selectionSort()"
         aria-label="Selection Sort Button">Selection Sort</button>
     <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="insertionSort()"
         aria-label="Insertion Sort Button">Insertion Sort</button>
@@ -12,8 +18,8 @@
         aria-label="Shell Sort Button">Shell Sort</button>
 
     <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="mergeSort()"
-        aria-label="Merge Sort Button">Merge Sort</button> -->
-</mat-menu>
+        aria-label="Merge Sort Button">Merge Sort</button>
+</mat-menu> -->
 <button mat-button color="primary" (click)="btnfunc()" aria-label="Add Button">
     Add
 </button>
@@ -21,7 +27,7 @@
     Remove
 </button>
 <button mat-button color="primary" (click)="btnfunc3()" aria-label="Random Button">
-    Random
+    Traverse
 </button>
 <div id='svg-linked-lists' style="border:1px solid grey;overflow:scroll;text-align:center">
     <!-- <div id='vec-scale-val-span'></div>  

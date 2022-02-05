@@ -13,7 +13,9 @@ import { AnonymousSubject } from 'rxjs/internal/Subject';
 
 
 interface LinkedList {
+  next: null;
   value: number;
+
 }
 
 @Component({
@@ -27,7 +29,7 @@ export class LinkedlistsComponent implements OnInit {
 
   // SVG Components
   width = 700;
-  height = 120;
+  height = 250;
   vbWidth = 400;
   vbHeight = 150;
   xmlns = 'http://www.w3.org/2000/svg';
@@ -39,7 +41,7 @@ export class LinkedlistsComponent implements OnInit {
   panY: number = 0;
   panScale: number = 1;
   canvas: any;
-  bars: any;
+  nodes: any;
   xScale: any;
   hScale: any;
   yScale: any;
@@ -51,11 +53,22 @@ export class LinkedlistsComponent implements OnInit {
     this.buildSVG();
   }
   buildSVG() {
+    this.xScale = d3.scaleLinear()
+      .domain([0, 10])
+      .range([0, 700])
+    this.hScale = d3.scaleLinear()
+      .domain([0, 110])
+      .range([0, this.height])
+    this.yScale = d3.scaleLinear()
+      .domain([0, 80])
+      .range([200, 0])
+
+
     this.canvas = d3.select('#svg-linked-lists')
       .append('svg')
       .attr('width', this.width)
       .attr('height', this.height)
-      .attr('viewBox', `0 0 ${this.vbWidth} ${this.vbHeight}`)
+      .attr('viewBox', `0 100 ${this.vbWidth} ${this.vbHeight}`)
       .attr('id', this.svgId)
       .attr('xmlns', this.xmlns)
       .call(this.d3zoom
@@ -70,17 +83,9 @@ export class LinkedlistsComponent implements OnInit {
           }
         })
       )
-    this.xScale = d3.scaleLinear()
-      .domain([0, 10])
-      .range([0, 700])
-    this.hScale = d3.scaleLinear()
-      .domain([0, 110])
-      .range([0, this.height])
-    this.yScale = d3.scaleLinear()
-      .domain([0, 80])
-      .range([200, 0])
 
-    this.bars = this.canvas.selectAll('rect');
+
+    this.nodes = this.canvas.selectAll('g');
 
     for (let i = 0; i < 10; i++) {
       this.fillArray(this.dataset)
@@ -105,19 +110,51 @@ export class LinkedlistsComponent implements OnInit {
     this.update();
   }
   update() {
-    this.bars = this.canvas.selectAll('rect').data(this.dataset);
+    this.nodes = this.canvas.selectAll('g').data(this.dataset);
 
-    this.bars
-      .join('rect')
-      .attr('width', 20)
-      .attr('height', (d: any) => this.hScale(d.value))
-      .attr('y', (d: any) => this.height - this.hScale(d.value))
-      .attr('x', (d: any, i: any) => i * 14 * 2)
-      .style('fill', 'red')
-      .text((d: any) => d.value)
-      .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`);
+    this.nodes
+      .join((enter: any) => enter.append('g')
+        .each((d: any, i: any, nodes: any) => {
+          d3.select(nodes[i]).append('rect')
+          d3.select(nodes[i]).append('text')
+        }))
+      .attr('class', 'node')
+      .each((d: any, index: any, nodes: any) => {
+        let node = d3.select(nodes[index])
+        console.log(this.xScale(index))
+        node.select('rect')
+          .attr('width', 40)
+          .attr('height', 60)
+          .attr('y', 150)
+          .attr('x', () => this.xScale(index.toString()))
+          .attr('fill', 'orange')
+          .attr('stroke-width', 1)
+          .attr('stroke', 'black')
+          .attr('fill-opacity', .5)
+          .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`);
 
-    this.bars.exit().remove();
+        node.select('text')
+          .text((d: any) => d.value)
+          .attr('alignment-baseline', 'central')
+          .attr('text-anchor', 'middle')
+          .attr('class', 'element-value')
+          .attr('id', (d: any, i: any) => 'text' + d)
+          .attr('x', (d: any, i: any) => this.xScale(index.toString()) + 20)
+          .attr('y', 200)
+          .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
+      })
+      .each((d: LinkedList, i: any, n: any) => {
+        const node = d3.select(n[i])
+        node
+          .on('click', (event) => {
+            //this.sliderY.value = d.currentY;
+            //sliderX.value = d.currentX;
+            console.log('Node: ', d.value)
+            console.log(event)
+          })
+      })
+
+    this.nodes.exit().remove();
   }
   zoom(event: any) {
     d3.select('div#svg-linked-lists')
