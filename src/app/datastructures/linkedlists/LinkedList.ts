@@ -4,9 +4,9 @@ export class LinkedList {
 
 
     constructor(
-        private first: LLNode | null,
-        private last: LLNode | null,
-        private size: number) { }
+        private first: LLNode | null = null,
+        private last: LLNode | null = null,
+        private size: number = 0) { }
 
     addFirst(value: number) {
         var node = new LLNode(value);

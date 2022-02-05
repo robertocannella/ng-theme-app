@@ -1,10 +1,11 @@
 <h2>{{ title }}</h2>
 
 <a href='https://en.wikipedia.org/wiki/Array_data_structure'>A Linked List</a> is a collection of nodes which together
-represent a sequence. Each elements location in memory is trivial due to the fact that each element(or node) contains a
-pointer to the next node in the sequence. This maintains some order, or more acurately a way to search the list. The
+represent a sequence. Each element's location in memory is trivial due to the fact that each element(or node) contains a
+pointer to the next node in the sequence. This maintains some order, or more acurately a way to search the list for
+common tasks such as insert, remove, find, etc. The
 tool
-below helps portray a linked list's inner workings.
+below, created dynamically with d3.js, helps portray a linked list's inner workings.
 <div class='linebreak-light'></div>
 <!-- <button mat-button color='primary' [matMenuTriggerFor]="menu">Sort</button>
 <mat-menu #menu="matMenu" [attr.disabled]="buttons ? null:'true'">
@@ -27,10 +28,13 @@ below helps portray a linked list's inner workings.
     Remove
 </button>
 <button mat-button color="primary" (click)="btnfunc3()" aria-label="Random Button">
-    Traverse
+    Randomize
 </button>
 <div id='svg-linked-lists' style="border:1px solid grey;overflow:scroll;text-align:center">
     <!-- <div id='vec-scale-val-span'></div>  
     <div id='vec-scale-x-span'></div>
     <div id='vec-scale-y-span'></div> -->
 </div>
+
+<svg id='svgtest' width="800" height="150">
+</svg>
