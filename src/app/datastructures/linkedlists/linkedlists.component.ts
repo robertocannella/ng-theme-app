@@ -1,17 +1,11 @@
-import { convertUpdateArguments } from '@angular/compiler/src/compiler_util/expression_converter';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { faDiceD20 } from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 import * as d3Scale from 'd3';
 import * as d3Shape from 'd3';
 import * as d3Array from 'd3';
 import * as d3Axis from 'd3';
 import * as d3Transform from 'd3';
-import { selection } from 'd3';
 import { LinkedList, LLNode } from './LinkedList';
-
-
-
 
 
 @Component({
@@ -20,11 +14,11 @@ import { LinkedList, LLNode } from './LinkedList';
   styleUrls: ['./linkedlists.component.sass']
 })
 export class LinkedlistsComponent implements OnInit {
-  title: string = 'Linked Lists';
+  title: string = 'Linked List';
   dataset: LLNode[] = [];
 
   // SVG Components
-  width = 500;
+  width = 700;
   height = 250;
   vbWidth = 400;
   vbHeight = 150;
@@ -42,9 +36,8 @@ export class LinkedlistsComponent implements OnInit {
   hScale: any;
   yScale: any;
   buttons: boolean = true;
-  data: any = [];
   linkedList: LinkedList = new LinkedList()
-
+  dataValues = new Set()
   constructor() { }
 
   ngOnInit(): void {
@@ -52,7 +45,7 @@ export class LinkedlistsComponent implements OnInit {
   }
   buildSVG() {
     this.xScale = d3.scaleLinear()
-      .domain([0, 10])
+      .domain([0, 15])
       .range([0, this.width + 100])
     this.hScale = d3.scaleLinear()
       .domain([0, 110])
@@ -66,7 +59,7 @@ export class LinkedlistsComponent implements OnInit {
       .append('svg')
       .attr('width', this.width)
       .attr('height', this.height)
-      .attr('viewBox', `-20 100 ${this.vbWidth} ${this.vbHeight}`)
+      .attr('viewBox', `-100 100 ${this.vbWidth} ${this.vbHeight}`)
       .attr('id', this.svgId)
       .attr('xmlns', this.xmlns)
       .call(this.d3zoom
@@ -80,26 +73,38 @@ export class LinkedlistsComponent implements OnInit {
           }
         })
       )
-
-    for (let i = 0; i < 4; i++) {
-      this.fillArray(this.dataset)
+    this.getArray(this.dataset)
+    this.updateSVG();
+  }
+  async getArray(arr: LLNode[]) {
+    // build linked list
+    for (let i = 0; i < 1; i++) {
+      let newNodeValue = Math.floor(Math.random() * 50)
+      this.linkedList.addLast(newNodeValue)
     }
-    this.updateSVG();
+    this.dataset = this.linkedList.toLLNodeArray();
   }
-  fillArray(arr: LLNode[]) {
+  async btnfunc() { // add
     let newNodeValue = Math.floor(Math.random() * 50)
-    this.linkedList.addFirst(newNodeValue)
-    let newNode = new LLNode(newNodeValue)
-    arr.push(newNode)
+    while (this.dataValues.has(newNodeValue))
+      newNodeValue = Math.floor(Math.random() * 50)
+
+
+    this.dataValues.add(newNodeValue);
+    this.linkedList.addLast(newNodeValue)
+    this.dataset = this.linkedList.toLLNodeArray()
+    this.updateSVG();
+
 
   }
-  btnfunc() { // add
-    this.fillArray(this.dataset);
-    this.updateSVG();
-  }
-  btnfunc2() { // remove
-    this.dataset.pop();
-    this.updateSVG();
+  async btnfunc2() { // remove
+    if (!this.linkedList.isEmpty()) {
+      this.dataValues.delete(this.linkedList.last?.value)
+      this.linkedList.deleteLast();
+      this.dataset = this.linkedList.toLLNodeArray()
+
+      this.updateSVG();
+    }
   }
   btnfunc3() { //randomize
     for (var i = 0; i < this.dataset.length; i++) {
@@ -107,10 +112,9 @@ export class LinkedlistsComponent implements OnInit {
     }
     this.updateSVG();
   }
-
-
-  updateSVG() {
+  async updateSVG() {
     let defualtDuration = 200;
+
 
     d3.select('#link-list-nodes')
       .selectAll('g')
@@ -134,6 +138,7 @@ export class LinkedlistsComponent implements OnInit {
                 .transition()
                 .duration(defualtDuration)
 
+              // Placeholder for value
               d3.select(nodes[i]).append('text')
                 .text((d: any) => d.value)
                 .attr('alignment-baseline', 'central')
@@ -146,7 +151,26 @@ export class LinkedlistsComponent implements OnInit {
                 .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
                 .transition()
                 .duration(defualtDuration)
+
+              // Placeholder for Next
+
+              d3.select(nodes[i]).append('text')
+                .text('next')
+                .attr('id', 'next-placeholder')
+                .attr('alignment-baseline', 'central')
+                .attr('text-anchor', 'middle')
+                .attr('class', 'next-placeholder')
+                .attr('x', (d: any, index: any) => this.xScale(i.toString()) + 20)
+                .attr('y', 155)
+                .attr('font-size', ".70em")
+                .attr('opacity', 0)
+                .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
+                .transition()
+                .duration(defualtDuration)
+                .delay(200)
+
             })
+
         },
         (update) => {
           return update
@@ -156,7 +180,7 @@ export class LinkedlistsComponent implements OnInit {
                 .attr('id', (d: any, i: any) => 'rect' + d.value)
                 .attr('x', (d: any, index: any) => this.xScale(i.toString()))
 
-              d3.select(nodes[i]).selectAll('text')
+              d3.select(nodes[i]).selectAll(`#text${d.value}`)
                 .attr('id', (d: any, i: any) => 'text' + d.value)
                 .text((d: any) => d.value)
             })
@@ -178,25 +202,90 @@ export class LinkedlistsComponent implements OnInit {
             .remove();
         }
       )
+      .attr('id', (d: any) => 'group' + d.value)
+      .attr('cursor', 'pointer')
       .each((d: LLNode, i: any, nodes: any) => {
-        let shapes = ['rect', 'circle', 'text']
+        let shapes = ['rect', 'circle', 'text', 'line']
         shapes.forEach(element => {
           d3.select(nodes[i]).selectAll(element)
-            .attr('cursor', 'pointer')
             .on('click', (event) => {
               console.log(`Node: ${d.value}`, d)
               console.log(event)
             })
             .transition()
             .duration(defualtDuration)
-            .attr('opacity', .75);
+            .attr('opacity', .75)
         });
       })
+    this.displayLinks(defualtDuration + 200);
 
   }
   zoom(event: any) {
     d3.select('div#svg-linked-lists')
-      .selectAll('text,rect,circle')
+      .selectAll('text,rect,circle,line')
       .attr('transform', event.transform)
+  }
+  displayLinks(defualtDuration: number) {
+    let currentSVG = d3.select('#link-list-nodes')
+    let listToArray = this.linkedList.toLLNodeArray();
+    currentSVG.selectAll('g line').remove();
+
+    currentSVG.selectAll('line')
+      .data(listToArray)
+      .join(enter => {
+        return enter
+          .append('line')
+          .each((d: any, i: any, nodes) => {
+            let currentNode = d3.select(nodes[i]);
+            console.log('dataset: ', listToArray)
+            currentSVG.select(`#line${d.value}`).remove();
+
+            currentNode
+              .attr('class', 'element-value')
+              .attr('id', (d: any, i: any) => 'line' + d.value)
+              .attr('x1', () => i > 0 ? this.xScale(i.toString()) : 0)
+              .attr('y1', () => i > 0 ? 175 : 0)
+              .attr('stroke-width', 1)
+              .attr('stroke', 'black')
+              .attr('x2', () => {
+                let previousX: number = parseInt(currentSVG.select(`#rect${d.previous.value}`).attr('x'));
+
+                return i > 0 ? previousX + 40 : 0;
+              })
+              .attr('y2', () => i > 0 ? 155 : 0)
+              .attr('opacity', 0)
+              .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
+              .transition()
+              .duration(defualtDuration)
+              .delay(200)
+              .attr('opacity', 1).on('end', () => {
+                if (d.next === null)
+                  currentNode
+                    .attr('y', 150)
+              })
+          })
+      },
+        // (update) => {
+        //   return update
+        //     //.data(this.dataset)
+        //     .each((d: any, i: any, nodes: any) => {
+        //       d3.select(nodes[i]).selectAll('line')
+        //         .attr('x2', (d: any, i: any) => {
+        //           if (d.next === d.next || d.next === null) {
+        //             let nextX: string = currentSVG.select(`#rect${d.value}`).attr('x');
+        //             console.log("connect x2 to : #rect", d.value, ': ', nextX)
+        //             console.log(this.dataset)
+        //             return parseInt(nextX)
+        //           }
+        //           else {
+        //             let nextX: string = currentSVG.select(`#rect${d.next.value}`).attr('x');
+        //             console.log('not null')
+        //             return parseInt(nextX + 20);
+        //           }
+        //         })
+        //     })
+        // }
+      )
+
   }
 }

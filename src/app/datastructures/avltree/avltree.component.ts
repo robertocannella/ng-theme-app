@@ -291,8 +291,6 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
     this.avlTree = new AVLTree(this.vbWidth, this.radius, this.totalShift);
 
     this.svg.select('svg#avlnodes').selectAll('g, line').remove();
-    //d3.selectAll('svg g').remove();
-    //d3.selectAll('svg line').remove();
     this.currentNodes.clear()
   }
   randomIntFromInterval(min: number, max: number) { // min and max included 
@@ -308,7 +306,6 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
       value = this.randomIntFromInterval(1, 99)
 
     this.control.setValue({ 'addNode': value })
-    //nodeInput.value = value;
     this.avlTree.insert(value);
 
     let newNode = this.avlTree.findNode(value)

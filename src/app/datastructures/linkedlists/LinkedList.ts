@@ -5,7 +5,7 @@ export class LinkedList {
 
     constructor(
         private first: LLNode | null = null,
-        private last: LLNode | null = null,
+        public last: LLNode | null = null,
         private size: number = 0) { }
 
     addFirst(value: number) {
@@ -24,7 +24,9 @@ export class LinkedList {
             this.first = this.last = node;
 
         this.last!.next = node;
+        node.previous = this.last;
         this.last = node;
+
         this.size++;
     }
     deleteFirst() {
@@ -61,21 +63,40 @@ export class LinkedList {
     indexOf(value: number): number {
         let index = 0;
         let current = this.first;
-        while (current != null) {
+        while (current !== null) {
             if (current.value == value) return index;
             current = current.next;
             index++;
         }
         return -1;
     }
+    toLLNodeArray(): LLNode[] {
+        let array: LLNode[] = [];
+        let current = this.first;
+        let index = 0;
+
+        while (current != null) {
+            array[index++] = current;
+            current = current.next;
+            if (current == this.first)
+                break;
+        }
+
+        return array
+    }
+
+
+
+
     toArray(): number[] {
         let array: number[] = [];
         let current = this.first;
         let index = 0;
 
-        while (current != null) {
+        while (current !== null) {
             array[index++] = current.value;
             current = current.next;
+            console.log(current)
         }
         return array;
     }
@@ -176,8 +197,10 @@ export class LinkedList {
 export class LLNode {
     value: number;
     next: LLNode | null = null;
+    previous: LLNode | null = null;
 
     constructor(value: number) {
         this.value = value
+
     }
 }
