@@ -427,7 +427,7 @@ export class ArrayComponent implements OnInit {
     // let textSel1X = d3.select(textSel1).attr('x');
     let rectSelX = d3.select(rectSel).attr('x');
     let rectSel1X = d3.select(rectSel1).attr('x');
-    if (rectSel1 === rectSel)     // added this for section sort error on duplicate tags
+    if (rectSel1 === rectSel)     // added this for selection sort error on duplicate tags
       return;
 
     return Promise.all([

@@ -6,6 +6,9 @@ pointer to the next node in the sequence. This maintains some order, or more acu
 common tasks such as insert, remove, find, etc. The
 tool
 below, created dynamically with d3.js, helps portray a linked list's inner workings.
+<br>
+<br>I am currently implementing insert
+and remove SVG animations.
 <div class='linebreak-light'></div>
 <!-- <button mat-button color='primary' [matMenuTriggerFor]="menu">Sort</button>
 <mat-menu #menu="matMenu" [attr.disabled]="buttons ? null:'true'">
@@ -21,14 +24,15 @@ below, created dynamically with d3.js, helps portray a linked list's inner worki
     <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="mergeSort()"
         aria-label="Merge Sort Button">Merge Sort</button>
 </mat-menu> -->
-<button mat-button color="primary" (click)="btnfunc()" aria-label="Add Button">
+<button [attr.disabled]="_buttons ? null : 'true'" mat-button color="primary" (click)="btnfunc()"
+    style="touch-action: manipulation;" aria-label="Add Button">
     Add Last
 </button>
-<button mat-button color="primary" (click)="btnfunc2()" aria-label="Remove Button">
+<button mat-button color="primary" (click)="btnfunc2()" style="touch-action: manipulation;" aria-label="Remove Button">
     Remove Last
 </button>
-<!-- <button mat-button color="primary" (click)="btnfunc3()" aria-label="Random Button">
-    Randomize
+<!-- <button mat-button color="primary" (click)="showAddLast()" aria-label="Random Button">
+    Show
 </button> -->
 <div id='svg-linked-lists' style="border:1px solid grey;overflow:scroll;text-align:center">
 

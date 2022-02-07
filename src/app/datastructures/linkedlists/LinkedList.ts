@@ -20,9 +20,10 @@ export class LinkedList {
     }
     addLast(value: number) {
         var node = new LLNode(value);
-        if (this.isEmpty())
+        if (this.isEmpty()) {
+            console.log('list is empty. ')
             this.first = this.last = node;
-
+        }
         this.last!.next = node;
         node.previous = this.last;
         this.last = node;
@@ -63,7 +64,7 @@ export class LinkedList {
     indexOf(value: number): number {
         let index = 0;
         let current = this.first;
-        while (current !== null) {
+        while (current != null) {
             if (current.value == value) return index;
             current = current.next;
             index++;
@@ -78,25 +79,23 @@ export class LinkedList {
         while (current != null) {
             array[index++] = current;
             current = current.next;
-            if (current == this.first)
-                break;
+            if (current == this.first)  // break out of loop if there is a single item in the Linked List
+                break;                  // ( all pointers, 'first','previous','last'  point to this node)
         }
 
         return array
     }
-
-
-
 
     toArray(): number[] {
         let array: number[] = [];
         let current = this.first;
         let index = 0;
 
-        while (current !== null) {
+        while (current != null) {
             array[index++] = current.value;
             current = current.next;
-            console.log(current)
+            if (current == this.first)  // break out of loop if there is a single item in the Linked List
+                break;                  // ( all pointers, 'first','previous','last'  point to this node)
         }
         return array;
     }

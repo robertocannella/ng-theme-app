@@ -1,3 +1,5 @@
+import { transition } from '@angular/animations';
+import { ContentObserver } from '@angular/cdk/observers';
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 import * as d3Scale from 'd3';
@@ -37,7 +39,8 @@ export class LinkedlistsComponent implements OnInit {
   yScale: any;
   buttons: boolean = true;
   linkedList: LinkedList = new LinkedList()
-  dataValues = new Set()
+  currentValues: any[] = [];
+  _buttons: boolean = true;
   constructor() { }
 
   ngOnInit(): void {
@@ -78,7 +81,7 @@ export class LinkedlistsComponent implements OnInit {
   }
   async getArray(arr: LLNode[]) {
     // build linked list
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < 0; i++) {
       let newNodeValue = Math.floor(Math.random() * 50)
       this.linkedList.addLast(newNodeValue)
     }
@@ -86,20 +89,24 @@ export class LinkedlistsComponent implements OnInit {
   }
   async btnfunc() { // add
     let newNodeValue = Math.floor(Math.random() * 50)
-    while (this.dataValues.has(newNodeValue))
+    this.currentValues = this.linkedList.toArray();
+
+    console.log(this.currentValues)
+    while (this.currentValues.includes(newNodeValue))
       newNodeValue = Math.floor(Math.random() * 50)
 
 
-    this.dataValues.add(newNodeValue);
     this.linkedList.addLast(newNodeValue)
     this.dataset = this.linkedList.toLLNodeArray()
+    this.toggleButtons();
+    await this.showAddLast();
+    this.toggleButtons();
     this.updateSVG();
 
 
   }
   async btnfunc2() { // remove
     if (!this.linkedList.isEmpty()) {
-      this.dataValues.delete(this.linkedList.last?.value)
       this.linkedList.deleteLast();
       this.dataset = this.linkedList.toLLNodeArray()
 
@@ -107,14 +114,20 @@ export class LinkedlistsComponent implements OnInit {
     }
   }
   btnfunc3() { //randomize
-    for (var i = 0; i < this.dataset.length; i++) {
-      this.dataset[i].value = Math.floor(Math.random() * 50);
-    }
-    this.updateSVG();
+    this.displayLinks(200);
+    // for (var i = 0; i < this.dataset.length; i++) {
+    //   this.dataset[i].value = Math.floor(Math.random() * 50);
+    // }
+    // this.updateSVG();
   }
   async updateSVG() {
     let defualtDuration = 200;
-
+    d3.selectAll('#show-add-last')
+      .transition()
+      .duration(1000)
+      .delay(100)
+      .attr('opacity', 0)
+      .remove()
 
     d3.select('#link-list-nodes')
       .selectAll('g')
@@ -123,7 +136,10 @@ export class LinkedlistsComponent implements OnInit {
         (enter) => {
           return enter
             .append('g')
-            .each((d: LLNode, i: any, nodes: any) => {
+            .attr('class', 'll-group')
+            .each(async (d: LLNode, i: any, nodes: any) => {
+
+
               d3.select(nodes[i]).append('rect')
                 .attr('width', 40)
                 .attr('height', 60)
@@ -137,6 +153,8 @@ export class LinkedlistsComponent implements OnInit {
                 .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
                 .transition()
                 .duration(defualtDuration)
+
+
 
               // Placeholder for value
               d3.select(nodes[i]).append('text')
@@ -169,12 +187,12 @@ export class LinkedlistsComponent implements OnInit {
                 .duration(defualtDuration)
                 .delay(200)
 
+
             })
 
         },
         (update) => {
           return update
-            //.data(this.dataset)
             .each((d: any, i: any, nodes: any) => {
               d3.select(nodes[i]).selectAll('rect')
                 .attr('id', (d: any, i: any) => 'rect' + d.value)
@@ -221,71 +239,99 @@ export class LinkedlistsComponent implements OnInit {
 
   }
   zoom(event: any) {
+
+
     d3.select('div#svg-linked-lists')
       .selectAll('text,rect,circle,line')
       .attr('transform', event.transform)
+
+  }
+  showAddLast() {
+    let currentSVG = d3.select('#link-list-nodes')
+
+    // var currentX = d3.select('#link-list-nodes').select('#rect' + currentValue).attr('x')
+    let index = this.currentValues.length;
+
+
+    return Promise.all([
+
+
+      currentSVG
+        .append('rect')
+        .attr('width', 40)
+        .attr('height', 60)
+        .attr('id', 'show-add-last')
+        .attr('y', 75)
+        .attr('x', 0)
+        .attr('opacity', 0.75)
+        .attr('fill', 'orange')
+        .attr('stroke-width', 1)
+        .attr('stroke', 'black')
+        .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
+        .transition()
+        .duration(() => index * Math.sqrt(1000))
+        .delay(0)
+        .attr('x', (d: any, i: any) => this.xScale(index.toString()))
+        .remove()
+        .transition()
+        .duration(() => index * Math.sqrt(1000))
+        .delay(50)
+        .attr('y', 150)
+        .end()
+
+    ])
+
+
+
   }
   displayLinks(defualtDuration: number) {
-    let currentSVG = d3.select('#link-list-nodes')
     let listToArray = this.linkedList.toLLNodeArray();
-    currentSVG.selectAll('g line').remove();
-
-    currentSVG.selectAll('line')
+    let currentSVG = d3.selectAll('g.ll-group')
+    currentSVG.selectAll('.link').remove();
+    currentSVG
+      .append('line')
       .data(listToArray)
-      .join(enter => {
-        return enter
-          .append('line')
-          .each((d: any, i: any, nodes) => {
-            let currentNode = d3.select(nodes[i]);
-            console.log('dataset: ', listToArray)
-            currentSVG.select(`#line${d.value}`).remove();
+      .attr('class', 'link')
+      .attr('id', (d: any, i: any) => 'line' + d.value)
+      .attr('x1', (d: any, i: any) => i > 0 ? this.xScale(i.toString()) : 0)
+      .attr('y1', (d: any, i: any) => i > 0 ? 175 : 0)
+      .attr('stroke-width', 1)
+      .attr('stroke', 'black')
+      .attr('x2', (d: any, i: any) => {
+        let previousX: number = parseInt(currentSVG.select(`#rect${d.previous.value}`).attr('x'));
+        return i > 0 ? previousX + 40 : 0;
+      })
+      .attr('y2', (d: any, i: any) => i > 0 ? 155 : 0)
+      .attr('opacity', .75)
+      .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
+      .transition()
+      .duration(defualtDuration)
+      .delay(200)
+      .attr('opacity', .75)
 
-            currentNode
-              .attr('class', 'element-value')
-              .attr('id', (d: any, i: any) => 'line' + d.value)
-              .attr('x1', () => i > 0 ? this.xScale(i.toString()) : 0)
-              .attr('y1', () => i > 0 ? 175 : 0)
-              .attr('stroke-width', 1)
-              .attr('stroke', 'black')
-              .attr('x2', () => {
-                let previousX: number = parseInt(currentSVG.select(`#rect${d.previous.value}`).attr('x'));
 
-                return i > 0 ? previousX + 40 : 0;
-              })
-              .attr('y2', () => i > 0 ? 155 : 0)
-              .attr('opacity', 0)
-              .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
-              .transition()
-              .duration(defualtDuration)
-              .delay(200)
-              .attr('opacity', 1).on('end', () => {
-                if (d.next === null)
-                  currentNode
-                    .attr('y', 150)
-              })
-          })
-      },
-        // (update) => {
-        //   return update
-        //     //.data(this.dataset)
-        //     .each((d: any, i: any, nodes: any) => {
-        //       d3.select(nodes[i]).selectAll('line')
-        //         .attr('x2', (d: any, i: any) => {
-        //           if (d.next === d.next || d.next === null) {
-        //             let nextX: string = currentSVG.select(`#rect${d.value}`).attr('x');
-        //             console.log("connect x2 to : #rect", d.value, ': ', nextX)
-        //             console.log(this.dataset)
-        //             return parseInt(nextX)
-        //           }
-        //           else {
-        //             let nextX: string = currentSVG.select(`#rect${d.next.value}`).attr('x');
-        //             console.log('not null')
-        //             return parseInt(nextX + 20);
-        //           }
-        //         })
-        //     })
-        // }
-      )
 
+    // .on('end', (d: any, i: any) => {
+    //   if (d.next === null)
+    //     currentNode
+    //       .attr('y', 150)
+    // } )
+  }
+  ////UTILITY FUNCTIONS
+  toggleButtons() {
+    let buttons = document.querySelectorAll('button'); // Disable all the buttons
+    if (this._buttons) {
+      buttons.forEach((button) => {
+        button.disabled = true;
+        this._buttons = false;
+      })
+    }
+    else {
+      buttons.forEach((button) => {
+
+        button.disabled = false;
+        this._buttons = true;
+      })
+    }
   }
 }
