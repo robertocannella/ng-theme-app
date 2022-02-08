@@ -91,7 +91,8 @@ export class LinkedList {
                     this.size--;
                     return 1;
                 }
-                if (current.previous == this.first) {
+                if (current.previous == this.first && this.hasSingleItem()) {
+                    console.log(this.hasSingleItem())
                     current.next.previous = current.next;
                     this.first = current.next;
                     current = null;
