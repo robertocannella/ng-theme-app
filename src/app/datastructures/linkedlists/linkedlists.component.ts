@@ -90,26 +90,21 @@ export class LinkedlistsComponent implements OnInit {
     this.toggleButtons();
     await this.showRemoveAt(value).then(() => {
 
-      d3.select('#link-list-nodes').selectAll('g').remove();
       this.linkedList.removeValue(parseInt(value));
       this.dataset = this.linkedList.toLLNodeArray();
       this.currentValues = this.linkedList.toArray();
+      this.updateSVG();
+      //remove existing elements to clear old animation
+      d3.select('#link-list-nodes').selectAll('g').remove();
 
     })
-    //this.linkedList.print();
+
 
     this.toggleButtons();
+    // call twice to reset next/null labeling
+    this.updateSVG();
     this.updateSVG();
 
-  }
-  async addElement(value: number) {
-
-    this.linkedList.addLast(value)
-    this.dataset = this.linkedList.toLLNodeArray()
-    // this.toggleButtons();
-    // await this.showAddLast();
-    // this.toggleButtons();
-    this.updateSVG();
   }
   async addLast() { // add
     let newNodeValue = Math.floor(Math.random() * 50)
@@ -121,11 +116,7 @@ export class LinkedlistsComponent implements OnInit {
     this.linkedList.addLast(newNodeValue)
     this.dataset = this.linkedList.toLLNodeArray()
     this.toggleButtons();
-    await this.showAddLast().then(() => {
-
-      console.log(this.linkedList)
-      console.log('current values', this.currentValues)
-    })
+    await this.showAddLast();
 
     this.toggleButtons();
     this.updateSVG();
@@ -147,6 +138,7 @@ export class LinkedlistsComponent implements OnInit {
     // this.updateSVG();
   }
   async updateSVG() {
+
     let defaultDuration = 200;
     d3.selectAll('#show-add-last')
       .transition()
@@ -175,7 +167,7 @@ export class LinkedlistsComponent implements OnInit {
                 .attr('fill', 'grey')
                 .attr('stroke-width', 1)
                 .attr('stroke', 'black')
-                .attr('opacity', 0)
+                .attr('opacity', .75)
                 .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
                 .transition()
                 .duration(defaultDuration)
@@ -191,7 +183,7 @@ export class LinkedlistsComponent implements OnInit {
                 .attr('id', (d: any, i: any) => 'text' + d.value)
                 .attr('x', (d: any, index: any) => this.xScale(i.toString()) + 20)
                 .attr('y', 200)
-                .attr('opacity', 0)
+                .attr('opacity', .75)
                 .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
                 .transition()
                 .duration(defaultDuration)
@@ -200,19 +192,18 @@ export class LinkedlistsComponent implements OnInit {
 
               d3.select(nodes[i]).append('text')
                 .text('null')
-                .attr('id', 'next-placeholder')
+                .attr('id', (d: any) => 'next-placeholder' + d.value)
                 .attr('alignment-baseline', 'central')
                 .attr('text-anchor', 'middle')
                 .attr('class', 'next-placeholder')
                 .attr('x', (d: any, index: any) => this.xScale(i.toString()) + 20)
                 .attr('y', 155)
                 .attr('font-size', ".70em")
-                .attr('opacity', 0)
+                .attr('opacity', .75)
                 .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
                 .transition()
                 .duration(defaultDuration)
                 .delay(200)
-
 
             })
 
@@ -267,13 +258,7 @@ export class LinkedlistsComponent implements OnInit {
     this.displayLinks(defaultDuration + 200);
 
   }
-  zoom(event: any) {
 
-    d3.select('div#svg-linked-lists')
-      .selectAll('text,rect,circle,line')
-      .attr('transform', event.transform)
-
-  }
   showRemoveAt(value: string) {
     let index = this.linkedList.indexOf(parseInt(value));
     let currentSVG = d3.select('#link-list-nodes');
@@ -302,41 +287,50 @@ export class LinkedlistsComponent implements OnInit {
       let bX = parseInt(d3.select(nodes.nodes()[1]).attr('x'))
       let aY = parseInt(d3.select(nodes.nodes()[0]).attr('y'))
       let bY = parseInt(d3.select(nodes.nodes()[1]).attr('y'))
-
       xDifference = aX - bX;
       yDifference = aY - bY;
-
     })
 
     return Promise.all([
 
       currentSVG
         .append('circle')
-        .attr('r', 3)
-        .attr('id', 'show-add-last')
-        .attr('cy', 75)
+        .attr('r', 5)
+        .attr('id', 'show-remove-at')
+        .attr('cy', 140)
         .attr('cx', 0)
-        .attr('opacity', 1)
-        .attr('fill-opacity', 0)
-        .attr('stroke-width', 1)
+        .attr('opacity', .90)
+        .attr('fill', 'cornflowerblue')
+        .attr('stroke-width', 0)
         .attr('stroke', 'black')
         .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
         .transition()
-        .duration(() => index * Math.sqrt(1000))
+        .duration(index * 100)
         .delay(0)
-        .attr('x', (d: any, i: any) => this.xScale(index.toString()))
-        .transition()
-        .duration(() => index * Math.sqrt(1000))
-        .delay(50)
-        .remove()
+        .attr('cx', (d: any, i: any) => this.xScale(index.toString()) + 20)
+        .on('end', (d: any, i: any, nodes: any) => {
+          d3.select(nodes[i])
+            .transition()
+            .duration(750)
+            .delay(0)
+            .attr('opacity', 0)
+            .remove()
+        })
         .end(),
 
       // remove node links
       currentSVG
-        .select(`#line${this.dataset[index].value}`).transition().duration(300).delay(0).attr('opacity', 0).remove().end(),
+        .select(`#line${this.dataset[index].value}`).transition().duration(750).delay(750).attr('opacity', 0).remove().end(),
       currentSVG
-        .select(`#line${this.dataset[index].next?.value}`).transition().duration(300).delay(0).attr('opacity', 0).remove().end(),
+        .select(`#line${this.dataset[index].next?.value}`).transition().duration(750).delay(750).attr('opacity', 0).remove().end(),
+      currentSVG
+        .select(`#rect${this.dataset[index].value}`).transition().duration(750).delay(750).attr('opacity', 0).remove().end(),
+      currentSVG
+        .select(`#text${this.dataset[index].value}`).transition().duration(750).delay(750).attr('opacity', 0).remove().end(),
+      currentSVG
+        .select(`#next-placeholder${this.dataset[index].value}`).transition().duration(750).delay(750).attr('opacity', 0).remove().end(),
 
+      currentElement.transition().duration(750).delay(1500).style('opacity', 0).remove().end(),
 
       // Lots of math here to get this right.  Basically, we need to shift all remaining items to left after we remove
       // the selected item.   To do this we need to include any transformations by pan/zoom.  To start,  we compare the 
@@ -346,13 +340,13 @@ export class LinkedlistsComponent implements OnInit {
       // To prevent further scaling, we set the scale to 1.
       remainingElements
         .transition()
-        .duration(1000)
-        .delay(200)
+        .duration(750)
+        .delay(1500)
         .attr('transform', `translate(${(xDifference * this.panScale - this.panX) + this.panX},
                                       ${(yDifference * this.panScale - this.panY) + this.panY}) scale(1)`)
-        .end(),
+        .end()
 
-      currentElement.transition().duration(1000).delay(299).attr('opacity', 0).remove().end()
+
     ])
   }
   showAddLast() {
@@ -411,6 +405,13 @@ export class LinkedlistsComponent implements OnInit {
 
   }
   ////UTILITY FUNCTIONS
+  zoom(event: any) {
+
+    d3.select('div#svg-linked-lists')
+      .selectAll('text,rect,circle,line')
+      .attr('transform', event.transform)
+
+  }
   toggleButtons() {
     let buttons = document.querySelectorAll('button'); // Disable all the buttons
     if (this._buttons) {
