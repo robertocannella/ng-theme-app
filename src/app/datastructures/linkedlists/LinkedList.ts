@@ -1,3 +1,5 @@
+import { thresholdFreedmanDiaconis } from "d3";
+import { retry } from "rxjs/operators";
 
 
 export class LinkedList {
@@ -72,18 +74,38 @@ export class LinkedList {
         return -1;
     }
     removeValue(value: number): number {
-        let index = 0;
         let current = this.first;
 
         while (current != null) {
             if (current.value == value) {
+                if (current.next == null) {
+                    console.log('current previous', current.previous)
+                    this.last = current.previous;
+                    current.previous!.next = null;
+                    current = null;
+                    this.size--;
+                    return 1;
+                }
+                if (current.next.value == value) {
+                    this.last = this.first = current = null
+                    this.size--;
+                    return 1;
+                }
+                if (current.previous == this.first) {
+                    current.next.previous = current.next;
+                    this.first = current.next;
+                    current = null;
+                    this.size--;
+                    return 1;
+                }
                 current.previous!.next = current.next;
                 current.next!.previous = current.previous;
                 current = null;
+                this.size--;
                 return 1;
+
             }
             current = current.next;
-            index++
         }
         return -1
     }
@@ -132,6 +154,9 @@ export class LinkedList {
     print() {
         if (this.isEmpty())
             console.log("No elements");
+
+        else if (this.hasSingleItem())
+            console.log(this.first?.value);
 
         else {
             let node = this.first;
@@ -206,6 +231,9 @@ export class LinkedList {
     }
     isEmpty() {
         return (this.first == null);
+    }
+    hasSingleItem() {
+        return (this.size == 1)
     }
 }
 
