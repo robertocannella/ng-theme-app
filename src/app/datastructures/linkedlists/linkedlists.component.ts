@@ -106,9 +106,9 @@ export class LinkedlistsComponent implements OnInit {
 
     this.linkedList.addLast(value)
     this.dataset = this.linkedList.toLLNodeArray()
-    //this.toggleButtons();
-    //await this.showAddLast();
-    //this.toggleButtons();
+    // this.toggleButtons();
+    // await this.showAddLast();
+    // this.toggleButtons();
     this.updateSVG();
   }
   async addLast() { // add
@@ -118,12 +118,15 @@ export class LinkedlistsComponent implements OnInit {
     while (this.currentValues.includes(newNodeValue))
       newNodeValue = Math.floor(Math.random() * 50)
 
-
-
     this.linkedList.addLast(newNodeValue)
     this.dataset = this.linkedList.toLLNodeArray()
     this.toggleButtons();
-    await this.showAddLast();
+    await this.showAddLast().then(() => {
+
+      console.log(this.linkedList)
+      console.log('current values', this.currentValues)
+    })
+
     this.toggleButtons();
     this.updateSVG();
 
@@ -144,7 +147,7 @@ export class LinkedlistsComponent implements OnInit {
     // this.updateSVG();
   }
   async updateSVG() {
-    let defualtDuration = 200;
+    let defaultDuration = 200;
     d3.selectAll('#show-add-last')
       .transition()
       .duration(1000)
@@ -175,7 +178,7 @@ export class LinkedlistsComponent implements OnInit {
                 .attr('opacity', 0)
                 .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
                 .transition()
-                .duration(defualtDuration)
+                .duration(defaultDuration)
 
 
 
@@ -191,7 +194,7 @@ export class LinkedlistsComponent implements OnInit {
                 .attr('opacity', 0)
                 .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
                 .transition()
-                .duration(defualtDuration)
+                .duration(defaultDuration)
 
               // Placeholder for Next
 
@@ -207,7 +210,7 @@ export class LinkedlistsComponent implements OnInit {
                 .attr('opacity', 0)
                 .attr('transform', `translate(${this.panX},${this.panY}) scale(${this.panScale}, ${this.panScale})`)
                 .transition()
-                .duration(defualtDuration)
+                .duration(defaultDuration)
                 .delay(200)
 
 
@@ -236,13 +239,13 @@ export class LinkedlistsComponent implements OnInit {
               shapes.forEach(element => {
                 d3.select(nodes[i]).selectAll(element)
                   .transition()
-                  .duration(defualtDuration)
+                  .duration(defaultDuration)
                   .attr('opacity', 0)
                   .remove();
               });
             })
             .transition()
-            .duration(defualtDuration)
+            .duration(defaultDuration)
             .remove();
         }
       )
@@ -257,11 +260,11 @@ export class LinkedlistsComponent implements OnInit {
               console.log(event)
             })
             .transition()
-            .duration(defualtDuration)
+            .duration(defaultDuration)
             .attr('opacity', .75)
         });
       })
-    this.displayLinks(defualtDuration + 200);
+    this.displayLinks(defaultDuration + 200);
 
   }
   zoom(event: any) {

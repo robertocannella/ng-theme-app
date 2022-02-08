@@ -103,7 +103,7 @@ export class LinkedList {
                     return 1;
                 }
                 if (current.previous == this.first) {
-                    this.last = this.first = current.next
+                    this.first = current.next
                     current.next.previous = current.next;
                     current = null;
                     this.size--;
