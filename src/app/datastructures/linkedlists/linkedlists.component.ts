@@ -75,7 +75,7 @@ export class LinkedlistsComponent implements OnInit {
           }
         })
       )
-    this.setupCanvas(1); // how many elements to start with?
+    this.setupCanvas(4); // how many elements to start with?
     this.updateSVG();
     //this.canvas.transition().call(this.d3zoom.translateBy, -100, 0)
     //this.canvas.transition().call(this.d3zoom.scaleBy, 0.9);
@@ -93,14 +93,8 @@ export class LinkedlistsComponent implements OnInit {
       d3.select('#link-list-nodes').selectAll('g').remove();
       this.linkedList.removeValue(parseInt(value));
       this.dataset = this.linkedList.toLLNodeArray();
-      let newDataSet = this.linkedList.toArray();
-      for (const value in newDataSet) {
-        if (Object.prototype.hasOwnProperty.call(newDataSet, value)) {
-          const element = newDataSet[value];
-          //this.addElement(element);
-          console.log(element)
-        }
-      }
+      this.currentValues = this.linkedList.toArray();
+
     })
 
     this.toggleButtons();
@@ -127,11 +121,6 @@ export class LinkedlistsComponent implements OnInit {
 
     this.linkedList.addLast(newNodeValue)
     this.dataset = this.linkedList.toLLNodeArray()
-    console.log('newNodeValue', newNodeValue)
-
-    console.log('currentValues', this.currentValues)
-
-    console.log('dataset', this.dataset)
     this.toggleButtons();
     await this.showAddLast();
     this.toggleButtons();
@@ -304,7 +293,6 @@ export class LinkedlistsComponent implements OnInit {
     let xDifference = 0;
     let yDifference = 0;
 
-    console.log('position: ', document.querySelector(`#rect${value}`))
     currentSVG.selectAll('.ll-group').selectAll('rect').call((nodes: any) => {
       let aX = parseInt(d3.select(nodes.nodes()[0]).attr('x'))
       let bX = parseInt(d3.select(nodes.nodes()[1]).attr('x'))
@@ -319,12 +307,11 @@ export class LinkedlistsComponent implements OnInit {
     return Promise.all([
 
       currentSVG
-        .append('rect')
-        .attr('width', 40)
-        .attr('height', 60)
+        .append('circle')
+        .attr('r', 3)
         .attr('id', 'show-add-last')
-        .attr('y', 75)
-        .attr('x', 0)
+        .attr('cy', 75)
+        .attr('cx', 0)
         .attr('opacity', 1)
         .attr('fill-opacity', 0)
         .attr('stroke-width', 1)
@@ -334,17 +321,17 @@ export class LinkedlistsComponent implements OnInit {
         .duration(() => index * Math.sqrt(1000))
         .delay(0)
         .attr('x', (d: any, i: any) => this.xScale(index.toString()))
-        .remove()
         .transition()
         .duration(() => index * Math.sqrt(1000))
         .delay(50)
-        .attr('y', 150)
+        .remove()
         .end(),
 
+      // remove node links
       currentSVG
-        .select(`#line${this.dataset[index].value}`).transition().duration(1000).delay(100).attr('opacity', 0).remove().end(),
+        .select(`#line${this.dataset[index].value}`).transition().duration(300).delay(0).attr('opacity', 0).remove().end(),
       currentSVG
-        .select(`#line${this.dataset[index].next?.value}`).transition().duration(1000).delay(100).attr('opacity', 0).remove().end(),
+        .select(`#line${this.dataset[index].next?.value}`).transition().duration(300).delay(0).attr('opacity', 0).remove().end(),
 
 
       // Lots of math here to get this right.  Basically, we need to shift all remaining items to left after we remove
@@ -353,9 +340,7 @@ export class LinkedlistsComponent implements OnInit {
       // and is dynamic.  This difference changes based on the amount of pan/zoom.  To offset x and y, we multiply the 
       // difference by the current scaled amount (stored in panScale) then subtract the panX and panY respectively.  
       // To prevent further scaling, we set the scale to 1.
-      remainingElements.each((d: any, i: any, n: any) => {
-        console.log(n[i])
-      })
+      remainingElements
         .transition()
         .duration(1000)
         .delay(200)

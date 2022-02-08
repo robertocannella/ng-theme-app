@@ -75,11 +75,15 @@ export class LinkedList {
     }
     removeValue(value: number): number {
         let current = this.first;
-
+        console.log(this);
         while (current != null) {
             if (current.value == value) {
+                if (this.hasSingleItem()) {
+                    current = this.last = this.first = null;
+                    this.size--;
+                    return 1;
+                }
                 if (current.next == null) {
-                    console.log('current previous', current.previous)
                     this.last = current.previous;
                     current.previous!.next = null;
                     current = null;
@@ -91,10 +95,19 @@ export class LinkedList {
                     this.size--;
                     return 1;
                 }
-                if (current.previous == this.first && this.hasSingleItem()) {
-                    console.log(this.hasSingleItem())
+                if (current.previous == this.first && this.size == 2) {
                     current.next.previous = current.next;
-                    this.first = current.next;
+                    current.next.next = current.next;
+                    this.last = this.first = current.next;
+                    current = null;
+                    this.size--;
+                    return 1;
+                }
+                if (current.previous == this.first) {
+
+                    this.last = this.first = current.next;
+                    current.next.previous = current.next;
+
                     current = null;
                     this.size--;
                     return 1;
