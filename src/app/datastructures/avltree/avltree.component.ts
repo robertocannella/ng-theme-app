@@ -21,7 +21,7 @@ export class AVLTreeComponent implements OnInit, AfterViewInit {
 
 
 
-  public title = 'AVL Tree';
+  public title = 'Binary Search Trees';
   private width = 800;
   private height = 400;
   private vbWidth = 900;

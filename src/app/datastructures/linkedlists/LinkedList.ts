@@ -71,6 +71,22 @@ export class LinkedList {
         }
         return -1;
     }
+    removeValue(value: number): number {
+        let index = 0;
+        let current = this.first;
+
+        while (current != null) {
+            if (current.value == value) {
+                current.previous!.next = current.next;
+                current.next!.previous = current.previous;
+                current = null;
+                return 1;
+            }
+            current = current.next;
+            index++
+        }
+        return -1
+    }
     toLLNodeArray(): LLNode[] {
         let array: LLNode[] = [];
         let current = this.first;

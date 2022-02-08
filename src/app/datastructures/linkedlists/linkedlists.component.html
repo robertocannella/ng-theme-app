@@ -24,16 +24,33 @@ and remove SVG animations.
     <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="mergeSort()"
         aria-label="Merge Sort Button">Merge Sort</button>
 </mat-menu> -->
-<button [attr.disabled]="_buttons ? null : 'true'" mat-button color="primary" (click)="btnfunc()"
+<button [attr.disabled]="_buttons ? null : 'true'" mat-button color="primary" (click)="addLast()"
     style="touch-action: manipulation;" aria-label="Add Button">
     Add Last
 </button>
-<button mat-button color="primary" (click)="btnfunc2()" style="touch-action: manipulation;" aria-label="Remove Button">
+<button [attr.disabled]="_buttons ? null:'true'" mat-button color="primary" (click)="btnfunc2()"
+    style="touch-action: manipulation;" aria-label="Remove Button">
     Remove Last
 </button>
+
 <!-- <button mat-button color="primary" (click)="showAddLast()" aria-label="Random Button">
     Show
 </button> -->
+<button mat-button color='primary' [matMenuTriggerFor]="menu">Remove At</button>
+<mat-menu #menu="matMenu" [attr.disabled]="_buttons ?null:'true'">
+    <div *ngIf="this.linkedList.getSize() == 0">
+        Empty List
+    </div>
+    <div *ngFor="let currentNode of dataset; let i = index">
+        <button [attr.disabled]="_buttons ?null:'true'" mat-menu-item type="button"
+            (click)="removeAt(currentNode.value)">{{i}} : {{ currentNode.value }}</button>
+    </div>
+    <!--
+    <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="traverse()"
+        aria-label="Counting Sort Button">Counting Sort</button>
+    <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="traverse()"
+        aria-label="Bucket Sort Button">Bucket Sort</button> -->
+</mat-menu>
 <div id='svg-linked-lists' style="border:1px solid grey;overflow:scroll;text-align:center">
 
 </div>

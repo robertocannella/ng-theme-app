@@ -18,7 +18,7 @@ interface Color {
 })
 export class ArrayComponent implements OnInit {
 
-  title = 'Array';
+  title = 'Arrays';
   svg: any;
   ce: any[] = [];
 
