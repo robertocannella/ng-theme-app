@@ -96,6 +96,7 @@ export class LinkedlistsComponent implements OnInit {
       this.currentValues = this.linkedList.toArray();
 
     })
+    //this.linkedList.print();
 
     this.toggleButtons();
     this.updateSVG();
