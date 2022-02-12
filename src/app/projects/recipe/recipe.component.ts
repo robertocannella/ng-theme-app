@@ -12,12 +12,12 @@ export class RecipeComponent implements OnInit {
   currentDrink: any;
   isFavorite: boolean = false;
   favoriteDrinks: Set<any> = new Set()
+  searchResults: Set<any> = new Set()
   constructor() { }
 
   ngOnInit(): void {
     this.setUpApp();
     this.getRandomDrink()
-    console.log(this.favoriteDrinks)
   }
 
   setUpApp() {
@@ -27,7 +27,6 @@ export class RecipeComponent implements OnInit {
     });
   }
   removeFavorite(drink: any) {
-    console.log(this.currentDrink.idDrink, drink.idDrink)
     if (this.currentDrink.idDrink === drink.idDrink)
       this.isFavorite = !this.isFavorite
 
@@ -35,27 +34,34 @@ export class RecipeComponent implements OnInit {
     this.removeDrinkLS(drink.idDrink)
   }
   setFavorite(drink: any) {
-    this.isFavorite = !this.isFavorite;
+    let drinkIds = this.getDrinksLS()
 
-    if (this.isFavorite) {
-      this.favoriteDrinks.add(drink);
-      this.addDrinkLS(this.currentDrink.idDrink)
+    if (drinkIds.includes(drink.idDrink)) {
+      this.favoriteDrinks.forEach((item: any) => {
+        if (item.idDrink === drink.idDrink) {
+          this.favoriteDrinks.delete(item)
+          this.removeDrinkLS(this.currentDrink.idDrink)
+        }
+      })
+      return;
     }
     else {
-      this.favoriteDrinks.delete(drink);
-      this.removeDrinkLS(this.currentDrink.idDrink)
+      this.favoriteDrinks.add(drink);
+      this.addDrink(drink, false)
+      this.addDrinkLS(this.currentDrink.idDrink)
     }
-    console.log(this.favoriteDrinks)
   }
   addDrink(drink: any, random: boolean = false) {
+    this.searchResults.clear();
     this.random = random;
     this.currentDrink = drink;
     this.isFavorite = (this.favoriteDrinks.has(this.currentDrink));
   }
   addDrinkLS(drinkId: any) {
     let drinkIds = this.getDrinksLS()
+    if (drinkIds.includes(drinkId))
+      return;
     localStorage.setItem('drinkIds', JSON.stringify([...drinkIds, drinkId]))
-    console.log('ls', drinkId)
   }
   removeDrinkLS(drinkId: string) {
     let drinkIds = this.getDrinksLS()
@@ -67,6 +73,14 @@ export class RecipeComponent implements OnInit {
 
     return drinkIds
   }
+  isInFavorites(drink: any) {
+    let drinkIds = this.getDrinksLS()
+    console.log(drink?.idDrink)
+    if (drinkIds.includes(drink?.idDrink))
+      return true;
+
+    return false;
+  }
   async getDrinkById(id: string) {
     let resp = await fetch('https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=' + id);
     let respData = await resp.json()
@@ -75,11 +89,17 @@ export class RecipeComponent implements OnInit {
     return drink
   }
   async getDrinksBySearch(term: string) {
-    console.log(term)
     let respData = await (await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=' + term)).json()
     let drink = respData.drinks[0]
-
+    let drinks = respData.drinks
     this.addDrink(drink, false);
+
+    for (const drink in drinks) {
+      if (Object.prototype.hasOwnProperty.call(drinks, drink)) {
+        const element = drinks[drink];
+        this.searchResults.add(element);
+      }
+    }
   }
 
   async getRandomDrink() {

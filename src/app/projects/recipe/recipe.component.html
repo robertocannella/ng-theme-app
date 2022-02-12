@@ -32,7 +32,21 @@
             </div>
             <div class="drink-body">
                 <h4>{{currentDrink?.strDrink}}</h4>
-                <button (click)="setFavorite(currentDrink)" class="fav-btn" [class.active]="isFavorite">
+                <button (click)="setFavorite(currentDrink)" class="fav-btn"
+                    [class.active]="isInFavorites(currentDrink)">
+                    <fa-icon icon="heart"></fa-icon>&nbsp;
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="drinks" id="search-drinks" *ngIf="searchResults">
+        <div class="drink" *ngFor="let result of searchResults; let i = index">
+            <div class="drink-header">
+                <img src={{result?.strDrinkThumb}} alt="result?.strDrink">
+            </div>
+            <div class="drink-body">
+                <h4>{{result?.strDrink}}</h4>
+                <button (click)="setFavorite(result)" class="fav-btn" [class.active]="isInFavorites(result)">
                     <fa-icon icon="heart"></fa-icon>&nbsp;
                 </button>
             </div>
