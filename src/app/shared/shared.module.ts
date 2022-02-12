@@ -9,7 +9,7 @@ import {
   faGreaterThan, faPlus, faMinus,
   faRobot, faFilter, faPencilRuler,
   faBezierCurve, faChevronRight, faChevronLeft, faBars,
-  faCalculator, faCheckCircle, faHeart, faSearch, faRandom
+  faCalculator, faCheckCircle, faHeart, faSearch, faRandom, faWindowClose
 } from '@fortawesome/free-solid-svg-icons';
 import { faStackOverflow, faGithub, faMedium, faGit } from '@fortawesome/free-brands-svg-icons';
 import { TextPostComponent } from './components/text-post/text-post.component';
@@ -96,6 +96,6 @@ export class SharedModule {
       faFilter, faPencilRuler, faBezierCurve,
       faChevronRight, faChevronLeft, faBars,
       faCalculator, faCheckCircle, faHeart,
-      faRandom, faSearch)
+      faRandom, faSearch, faWindowClose)
   }
 }

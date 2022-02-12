@@ -1,12 +1,14 @@
 <div class="mobile-container">
     <header>
-        <button id="btn-random" (click)="getRandomDrink()">
-            <fa-icon icon="random"></fa-icon>
-        </button>
-        <input type="text">
-        <button id="search">
-            <fa-icon icon="search"></fa-icon>
-        </button>
+        <form (ngSubmit)="getDrinksBySearch(searchTerm.value)">
+            <button id="btn-random" (click)="getRandomDrink()">
+                <fa-icon icon="random"></fa-icon>
+            </button>
+            <input #searchTerm type="text">
+            <button type="submit" id="search">
+                <fa-icon icon="search"></fa-icon>
+            </button>
+        </form>
     </header>
     <div class="fav-container">
         <h3>Favorite Cocktails</h3>
@@ -14,6 +16,9 @@
             <li class="fav-drink" *ngFor="let favDrink of favoriteDrinks; let i = index"><img
                     src="{{favDrink.strDrinkThumb}}" alt="favDrink.strDrink" (click)="addDrink(favDrink,false)">
                 <span class="fav-drink-label">{{favDrink.strDrink}}</span>
+                <button class="clear" (click)="removeFavorite(favDrink)">
+                    <fa-icon icon="window-close"></fa-icon>
+                </button>
             </li>
 
         </ul>

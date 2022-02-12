@@ -21,21 +21,29 @@ export class RecipeComponent implements OnInit {
   }
 
   setUpApp() {
-    let storedDrinks = this.getDrinksFromLS()
+    let storedDrinks = this.getDrinksLS()
     storedDrinks.forEach(async (drinkId: any) => {
       this.favoriteDrinks.add(await this.getDrinkById(drinkId));
     });
+  }
+  removeFavorite(drink: any) {
+    console.log(this.currentDrink.idDrink, drink.idDrink)
+    if (this.currentDrink.idDrink === drink.idDrink)
+      this.isFavorite = !this.isFavorite
+
+    this.favoriteDrinks.delete(drink)
+    this.removeDrinkLS(drink.idDrink)
   }
   setFavorite(drink: any) {
     this.isFavorite = !this.isFavorite;
 
     if (this.isFavorite) {
       this.favoriteDrinks.add(drink);
-      this.addDrinkToLS(this.currentDrink.idDrink)
+      this.addDrinkLS(this.currentDrink.idDrink)
     }
     else {
       this.favoriteDrinks.delete(drink);
-      this.removeDrinkFromLS(this.currentDrink.idDrink)
+      this.removeDrinkLS(this.currentDrink.idDrink)
     }
     console.log(this.favoriteDrinks)
   }
@@ -44,16 +52,16 @@ export class RecipeComponent implements OnInit {
     this.currentDrink = drink;
     this.isFavorite = (this.favoriteDrinks.has(this.currentDrink));
   }
-  addDrinkToLS(drinkId: any) {
-    let drinkIds = this.getDrinksFromLS()
+  addDrinkLS(drinkId: any) {
+    let drinkIds = this.getDrinksLS()
     localStorage.setItem('drinkIds', JSON.stringify([...drinkIds, drinkId]))
     console.log('ls', drinkId)
   }
-  removeDrinkFromLS(drinkId: string) {
-    let drinkIds = this.getDrinksFromLS()
+  removeDrinkLS(drinkId: string) {
+    let drinkIds = this.getDrinksLS()
     localStorage.setItem('drinkIds', JSON.stringify(drinkIds.filter((id: any) => id !== drinkId)))
   }
-  getDrinksFromLS() {
+  getDrinksLS() {
     let drinkIds = JSON.parse(localStorage.getItem('drinkIds') || '[]');
     if (!drinkIds) return;
 
@@ -67,7 +75,11 @@ export class RecipeComponent implements OnInit {
     return drink
   }
   async getDrinksBySearch(term: string) {
-    let drinks = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=' + term)
+    console.log(term)
+    let respData = await (await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=' + term)).json()
+    let drink = respData.drinks[0]
+
+    this.addDrink(drink, false);
   }
 
   async getRandomDrink() {

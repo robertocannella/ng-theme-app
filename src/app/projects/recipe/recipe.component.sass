@@ -37,10 +37,6 @@ header button
     font-size: 1.5rem
     margin-left: 10px
     margin-right: 10px
-li
-    contain: layout
-    box-sizing: border-box
-    white-space: pre-wrap
 
 .fav-container
     border-radius: 3px
@@ -59,8 +55,30 @@ li
     height: 175px
     overflow-x: scroll
     overflow-y: hide
-
+    padding: 0
     -webkit-overflow-scrolling: touch
+
+.fav-drinks li
+    contain: layout
+    box-sizing: border-box
+    white-space: pre-wrap
+
+.fav-drinks li .clear
+    border: none
+    color: grey
+    font-size: -0.5rem
+    background-color: transparent
+    position: absolute
+    top: 0rem
+    right: -0.3rem
+    cursor: pointer
+    opacity: 0
+    transition-property: opacity
+    transition-duration: 500ms
+    transition-delay: 0s
+
+.fav-drinks li:hover .clear
+    opacity: 1
 
 .fav-drinks img
     object-fit: cover
@@ -83,6 +101,7 @@ li
     display: inline-block
     white-space: normal
     overflow: hidden
+    vertical-align: top
 
 .drink
     margin: .5rem
@@ -97,7 +116,6 @@ li
     background-color: #eee
     position: absolute
     top: 1rem
-    cursor: pointer
     padding: .25rem 1rem
     border-top-right-radius: 3px
     border-bottom-right-radius: 3px
