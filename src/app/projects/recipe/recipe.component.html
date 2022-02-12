@@ -1,9 +1,7 @@
 <div class="mobile-container">
+
     <header>
         <form (ngSubmit)="getDrinksBySearch(searchTerm.value)">
-            <button id="btn-random" (click)="getRandomDrink()">
-                <fa-icon icon="random"></fa-icon>
-            </button>
             <input #searchTerm type="text">
             <button type="submit" id="search">
                 <fa-icon icon="search"></fa-icon>
@@ -23,6 +21,9 @@
 
         </ul>
     </div>
+    <button id="btn-random" (click)="getRandomDrink()">
+        <fa-icon icon="random"></fa-icon>
+    </button>
     <div class="drinks" id="drinks">
         <div class="drink">
             <div class="drink-header">
