@@ -1,5 +1,8 @@
 <div class="mobile-container">
     <header>
+        <button id="btn-random" (click)="getRandomDrink()">
+            <fa-icon icon="random"></fa-icon>
+        </button>
         <input type="text">
         <button id="search">
             <fa-icon icon="search"></fa-icon>
@@ -7,46 +10,23 @@
     </header>
     <div class="fav-container">
         <h3>Favorite Cocktails</h3>
-        <div class="fav-drinks">
-            <div class="fav-drink"><img
-                    src="https://www.thecocktaildb.com/images/media/drink/tsxpty1468923417.jpg/preview" alt="">
-                <div class=" fav-drink-label">Test</div>
-            </div>
-            <div class="fav-drink"><img
-                    src="https://www.thecocktaildb.com/images/media/drink/ek0mlq1504820601.jpg/preview" alt="">
-                <div class=" fav-drink-label">Test</div>
-            </div>
-            <div class="fav-drink"><img
-                    src="https://www.thecocktaildb.com/images/media/drink/xxsxqy1472668106.jpg/preview" alt="">
-                <div class=" fav-drink-label">Test</div>
-            </div>
-            <div class="fav-drink"><img
-                    src="https://www.thecocktaildb.com/images/media/drink/xxsxqy1472668106.jpg/preview" alt="">
-                <div class=" fav-drink-label">Test</div>
-            </div>
-            <div class="fav-drink"><img
-                    src="https://www.thecocktaildb.com/images/media/drink/xxsxqy1472668106.jpg/preview" alt="">
-                <div class=" fav-drink-label">Test</div>
-            </div>
-            <div class="fav-drink"><img
-                    src="https://www.thecocktaildb.com/images/media/drink/xxsxqy1472668106.jpg/preview" alt="">
-                <div class=" fav-drink-label">Test</div>
-            </div>
-            <div class="fav-drink"><img
-                    src="https://www.thecocktaildb.com/images/media/drink/xxsxqy1472668106.jpg/preview" alt="">
-                <div class=" fav-drink-label">Test</div>
-            </div>
-        </div>
+        <ul class="fav-drinks">
+            <li class="fav-drink" *ngFor="let favDrink of favoriteDrinks; let i = index"><img
+                    src="{{favDrink.strDrinkThumb}}" alt="favDrink.strDrink" (click)="addDrink(favDrink,false)">
+                <span class="fav-drink-label">{{favDrink.strDrink}}</span>
+            </li>
+
+        </ul>
     </div>
     <div class="drinks" id="drinks">
         <div class="drink">
             <div class="drink-header">
                 <span class="random" *ngIf="random">Random Cocktail</span>
-                <img src={{currentDrinkImage}} alt="currentDrink">
+                <img src={{currentDrink?.strDrinkThumb}} alt="currentDrink">
             </div>
             <div class="drink-body">
-                <h4>{{currentDrink}}</h4>
-                <button class="fav-btn ">
+                <h4>{{currentDrink?.strDrink}}</h4>
+                <button (click)="setFavorite(currentDrink)" class="fav-btn" [class.active]="isFavorite">
                     <fa-icon icon="heart"></fa-icon>&nbsp;
                 </button>
             </div>

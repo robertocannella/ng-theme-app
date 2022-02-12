@@ -36,6 +36,11 @@ header button
     border: none
     font-size: 1.5rem
     margin-left: 10px
+    margin-right: 10px
+li
+    contain: layout
+    box-sizing: border-box
+    white-space: pre-wrap
 
 .fav-container
     border-radius: 3px
@@ -51,9 +56,10 @@ header button
     font-weight: bold
 .fav-drinks
     white-space: nowrap
-    height: 150px
+    height: 175px
     overflow-x: scroll
     overflow-y: hide
+
     -webkit-overflow-scrolling: touch
 
 .fav-drinks img
@@ -73,7 +79,10 @@ header button
     background-color: #eee
 
 .fav-drink-label
-    font-size: .8rem
+    font-size: .9rem
+    display: inline-block
+    white-space: normal
+    overflow: hidden
 
 .drink
     margin: .5rem
