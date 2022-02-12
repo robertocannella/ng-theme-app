@@ -24,6 +24,7 @@ import { AVLTreeSVGComponent } from "./datastructures/avl_tree_svg.component";
 import { AVLTreeComponent } from "./datastructures/avltree/avltree.component";
 import { ArrayComponent } from './datastructures/array/array.component';
 import { LinkedlistsComponent } from './datastructures/linkedlists/linkedlists.component';
+import { RecipeComponent } from './projects/recipe/recipe.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { LinkedlistsComponent } from './datastructures/linkedlists/linkedlists.c
     AVLTreeSVGComponent,
     AVLTreeComponent,
     ArrayComponent,
-    LinkedlistsComponent
+    LinkedlistsComponent,
+    RecipeComponent
   ],
   imports: [
     BrowserModule,

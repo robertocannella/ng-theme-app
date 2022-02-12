@@ -14,16 +14,16 @@ array, along with numerous sorting algorithms.
 <button mat-button color='primary' [matMenuTriggerFor]="menu">Sort</button>
 <mat-menu #menu="matMenu" [attr.disabled]="_buttons ?null:'true'">
     <button mat-menu-item [attr.disabled]="_buttons ? null:'true'" (click)="bubbleSort()"
-        aria-label="Bubble Sort Button">Bubble Sort</button>
+        aria-label="Bubble Sort Button">Bubble Sort O(n<sup>2</sup>)</button>
     <button mat-menu-item [attr.disabled]="_buttons ? null :'true'" (click)="selectionSort()"
-        aria-label="Selection Sort Button">Selection Sort</button>
+        aria-label="Selection Sort Button">Selection Sort O(n<sup>2</sup>)</button>
     <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="insertionSort()"
-        aria-label="Insertion Sort Button">Insertion Sort</button>
+        aria-label="Insertion Sort Button">Insertion Sort O(n<sup>2</sup>)</button>
     <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="shellSort()"
-        aria-label="Shell Sort Button">Shell Sort</button>
+        aria-label="Shell Sort Button">Shell Sort O(n<sup>2</sup>)</button>
 
     <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="mergeSort()"
-        aria-label="Merge Sort Button">Merge Sort</button>
+        aria-label="Merge Sort Button">Merge SortO(n log n)</button>
     <!-- <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="traverse()"
         aria-label="Quick Sort Button">Quick Sort</button>
     <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="traverse()"
