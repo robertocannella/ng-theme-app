@@ -24,6 +24,7 @@ header
     justify-content: center
 
 header input
+    font-family: inherit
     background-color: #eee
     border: none
     border-radius: 3px
@@ -37,15 +38,18 @@ header button
     margin-left: 10px
 
 .fav-container
-    background-color: #eefcf4
-    padding: 1rem 0
+    border-radius: 3px
+    background-color: #eee
+    padding: .25rem 0rem
     text-align: center
     overflow: hidden
     text-align: center
-    margin: 0
+    margin: .6rem
+    box-shadow: 0 0 2px 2px #3333331a
 
+.fav-container h3
+    font-weight: bold
 .fav-drinks
-
     white-space: nowrap
     overflow-x: scroll
     overflow-y: hide
@@ -65,4 +69,48 @@ header button
     width: 100px
     height: 100px
     //text-align: center
-    background-color: #eefcf4
+    background-color: #eee
+
+.fav-drink-label
+    font-size: .8rem
+
+.drink
+    margin: .5rem
+    box-shadow: 0 0 10px 2px #3333331a
+    border-radius: 3px
+    overflow: hidden
+
+.drink-header
+    position: relative
+
+.drink-header .random
+    background-color: #eee
+    position: absolute
+    top: 1rem
+    padding: .25rem 1rem
+    border-top-right-radius: 3px
+    border-bottom-right-radius: 3px
+
+.drink img
+    object-fit: cover
+    height: 250px
+    width: 100%
+.drink-body
+    display: flex
+    align-items: center
+    justify-content: space-between
+    padding: 1rem
+
+.drink-body h4
+    margin: 0
+    font-weight: bold
+
+.fav-btn
+    background-color: transparent
+    border: none
+    font-size: 1.5rem
+    color: grey
+    cursor: pointer
+
+.fav-btn.active
+    color: rgb(249, 133, 210)

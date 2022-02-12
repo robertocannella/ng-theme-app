@@ -3,7 +3,6 @@
         <input type="text">
         <button id="search">
             <fa-icon icon="search"></fa-icon>
-
         </button>
     </header>
     <div class="fav-container">
@@ -11,45 +10,43 @@
         <div class="fav-drinks">
             <div class="fav-drink"><img
                     src="https://www.thecocktaildb.com/images/media/drink/tsxpty1468923417.jpg/preview" alt="">
-                <div>Test</div>
+                <div class=" fav-drink-label">Test</div>
             </div>
             <div class="fav-drink"><img
                     src="https://www.thecocktaildb.com/images/media/drink/ek0mlq1504820601.jpg/preview" alt="">
-                <div>Test</div>
+                <div class=" fav-drink-label">Test</div>
             </div>
             <div class="fav-drink"><img
                     src="https://www.thecocktaildb.com/images/media/drink/xxsxqy1472668106.jpg/preview" alt="">
-                <div>Test</div>
+                <div class=" fav-drink-label">Test</div>
             </div>
             <div class="fav-drink"><img
                     src="https://www.thecocktaildb.com/images/media/drink/xxsxqy1472668106.jpg/preview" alt="">
-                <div>Test</div>
+                <div class=" fav-drink-label">Test</div>
             </div>
             <div class="fav-drink"><img
                     src="https://www.thecocktaildb.com/images/media/drink/xxsxqy1472668106.jpg/preview" alt="">
-                <div>Test</div>
+                <div class=" fav-drink-label">Test</div>
             </div>
             <div class="fav-drink"><img
                     src="https://www.thecocktaildb.com/images/media/drink/xxsxqy1472668106.jpg/preview" alt="">
-                <div>Test</div>
+                <div class=" fav-drink-label">Test</div>
             </div>
             <div class="fav-drink"><img
                     src="https://www.thecocktaildb.com/images/media/drink/xxsxqy1472668106.jpg/preview" alt="">
-                <div>Test</div>
+                <div class=" fav-drink-label">Test</div>
             </div>
         </div>
     </div>
-
-    <div class="drinks">
+    <div class="drinks" id="drinks">
         <div class="drink">
-            <span class="random">Random Recipe</span>
-
-            <div class="drink-header"><img src="https://www.thecocktaildb.com/images/media/drink/apictz1493069760.jpg"
-                    alt="">
+            <div class="drink-header">
+                <span class="random" *ngIf="random">Random Cocktail</span>
+                <img src={{currentDrinkImage}} alt="currentDrink">
             </div>
             <div class="drink-body">
-                <h4>Gin And Tonic</h4>
-                <button>
+                <h4>{{currentDrink}}</h4>
+                <button class="fav-btn ">
                     <fa-icon icon="heart"></fa-icon>&nbsp;
                 </button>
             </div>
