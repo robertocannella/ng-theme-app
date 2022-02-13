@@ -63,7 +63,7 @@
         </button>
         <div class="drink-details" id="drink-details">
             <h1>{{currentDrink?.strDrink}}</h1>
-            <img src="{{currentDrink?.strDrinkThumb}}" alt="">
+            <img src="{{currentDrink?.strDrinkThumb}}" (click)="closePopup()" alt="currentDrink?.strDrink">
             <p>{{currentDrink?.strInstructions}}</p>
             <h3>Ingredients</h3>
             <ul class="ingredient-list">
