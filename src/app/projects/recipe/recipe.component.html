@@ -1,13 +1,5 @@
 <div class="mobile-container">
 
-    <header>
-        <form (ngSubmit)="getDrinksBySearch(searchTerm.value)">
-            <input #searchTerm type="text">
-            <button type="submit" id="search">
-                <fa-icon icon="search"></fa-icon>
-            </button>
-        </form>
-    </header>
     <div class="fav-container">
         <h3>Favorite Cocktails</h3>
         <ul class="fav-drinks">
@@ -18,12 +10,8 @@
                     <fa-icon icon="window-close"></fa-icon>
                 </button>
             </li>
-
         </ul>
     </div>
-    <button id="btn-random" (click)="getRandomDrink()">
-        <fa-icon icon="random"></fa-icon>
-    </button>
     <div class="drinks" id="drinks">
         <div class="drink">
             <div class="drink-header">
@@ -39,17 +27,29 @@
             </div>
         </div>
     </div>
-    <div class="drinks" id="search-drinks" *ngIf="searchResults">
-        <div class="drink" *ngFor="let result of searchResults; let i = index">
-            <div class="drink-header">
-                <img src={{result?.strDrinkThumb}} alt="result?.strDrink">
-            </div>
-            <div class="drink-body">
-                <h4>{{result?.strDrink}}</h4>
-                <button (click)="setFavorite(result)" class="fav-btn" [class.active]="isInFavorites(result)">
-                    <fa-icon icon="heart"></fa-icon>&nbsp;
-                </button>
-            </div>
-        </div>
+
+    <header>
+        <button id="btn-random" (click)="getRandomDrink()">
+            <fa-icon icon="random"></fa-icon>
+        </button>
+        <form (ngSubmit)="getDrinksBySearch(searchTerm.value)">
+            <input #searchTerm type="text">
+            <button type="submit" id="search">
+                <fa-icon icon="search"></fa-icon>
+            </button>
+        </form>
+    </header>
+
+    <div class="fav-container" *ngIf="searchActive">
+        <h3>Search Results</h3>
+        <ul class="fav-drinks">
+
+            <li class="fav-drink" *ngFor="let result of searchResults; let i = index"><img
+                    src="{{result?.strDrinkThumb}}" alt="result?.strDrink" (click)="addDrink(result,false)">
+                <span class="fav-drink-label">{{result.strDrink}}</span>
+            </li>
+        </ul>
     </div>
+
+
 </div>

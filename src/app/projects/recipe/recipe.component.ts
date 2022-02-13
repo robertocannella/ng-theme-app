@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { faLaptopHouse } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-recipe',
@@ -13,6 +14,7 @@ export class RecipeComponent implements OnInit {
   isFavorite: boolean = false;
   favoriteDrinks: Set<any> = new Set()
   searchResults: Set<any> = new Set()
+  searchActive = false;
   constructor() { }
 
   ngOnInit(): void {
@@ -34,12 +36,14 @@ export class RecipeComponent implements OnInit {
     this.removeDrinkLS(drink.idDrink)
   }
   setFavorite(drink: any) {
+    //this.searchActive = false;
     let drinkIds = this.getDrinksLS()
 
     if (drinkIds.includes(drink.idDrink)) {
       this.favoriteDrinks.forEach((item: any) => {
         if (item.idDrink === drink.idDrink) {
           this.favoriteDrinks.delete(item)
+          this.removeFavorite(drink)
           this.removeDrinkLS(this.currentDrink.idDrink)
         }
       })
@@ -52,7 +56,7 @@ export class RecipeComponent implements OnInit {
     }
   }
   addDrink(drink: any, random: boolean = false) {
-    this.searchResults.clear();
+    //this.searchActive = false;
     this.random = random;
     this.currentDrink = drink;
     this.isFavorite = (this.favoriteDrinks.has(this.currentDrink));
@@ -64,6 +68,7 @@ export class RecipeComponent implements OnInit {
     localStorage.setItem('drinkIds', JSON.stringify([...drinkIds, drinkId]))
   }
   removeDrinkLS(drinkId: string) {
+    //this.searchActive = false;
     let drinkIds = this.getDrinksLS()
     localStorage.setItem('drinkIds', JSON.stringify(drinkIds.filter((id: any) => id !== drinkId)))
   }
@@ -81,6 +86,10 @@ export class RecipeComponent implements OnInit {
 
     return false;
   }
+  showDrink(drink: any) {
+    this.searchActive = false;
+    this.addDrink(drink)
+  }
   async getDrinkById(id: string) {
     let resp = await fetch('https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=' + id);
     let respData = await resp.json()
@@ -89,10 +98,11 @@ export class RecipeComponent implements OnInit {
     return drink
   }
   async getDrinksBySearch(term: string) {
+    this.searchResults.clear()
     let respData = await (await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=' + term)).json()
     let drink = respData.drinks[0]
     let drinks = respData.drinks
-    this.addDrink(drink, false);
+    //this.addDrink(drink, false);
 
     for (const drink in drinks) {
       if (Object.prototype.hasOwnProperty.call(drinks, drink)) {
@@ -100,6 +110,7 @@ export class RecipeComponent implements OnInit {
         this.searchResults.add(element);
       }
     }
+    this.searchActive = true;
   }
 
   async getRandomDrink() {
