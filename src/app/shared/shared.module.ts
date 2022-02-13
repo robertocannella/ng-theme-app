@@ -34,7 +34,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MAT_CHECKBOX_DEFAULT_OPTIONS_FACTORY } from '@angular/material/checkbox';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
-
 @NgModule({
   declarations: [
     SidenavComponent,

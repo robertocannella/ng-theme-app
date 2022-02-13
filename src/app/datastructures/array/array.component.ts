@@ -14,7 +14,7 @@ interface Color {
 @Component({
   selector: 'app-array',
   templateUrl: './array.component.html',
-  styleUrls: ['./array.component.sass']
+  styleUrls: ['./array.component.sass', '../datastructures.component.sass']
 })
 export class ArrayComponent implements OnInit {
 

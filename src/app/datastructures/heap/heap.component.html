@@ -1,1 +1,5 @@
-<p>heap works!</p>
+<h2>{{ title }}</h2>
+{{ (summary | async)?.summary }}
+<span><a class='ds-citation' href='{{ (summary | async)?.citation }}'> {{ (summary | async)?.citation }} </a></span>
+<span><a class='ds-page-link' href='{{ (summary | async)?.wikiLink }}'>wiki</a></span>
+<div class='linebreak-light'></div>
