@@ -41,7 +41,7 @@
         <div class="drink">
             <div class="drink-header">
                 <span class="random" *ngIf="random">Random Cocktail</span>
-                <img src={{currentDrink?.strDrinkThumb}} (click)="showDrink(currentDrink)" alt="currentDrink">
+                <img src={{currentDrink?.strDrinkThumb}} (click)="openPopup(currentDrink)" alt="currentDrink">
             </div>
             <div class="drink-body">
                 <h4>{{currentDrink?.strDrink}}</h4>
@@ -55,9 +55,21 @@
     <button id="btn-random" (click)="getRandomDrink()">
         <fa-icon icon="random"></fa-icon>
     </button>
-
-
-
-
-
+</div>
+<div class="popup-container hidden " id="drink-popup">
+    <div class="drink-popup">
+        <button class="close-popup" id="close-popup" (click)="closePopup()">
+            <fa-icon icon="times"></fa-icon>
+        </button>
+        <div class="drink-details" id="drink-details">
+            <h1>{{currentDrink?.strDrink}}</h1>
+            <img src="{{currentDrink?.strDrinkThumb}}" alt="">
+            <p>{{currentDrink?.strInstructions}}</p>
+            <h3>Ingredients</h3>
+            <ul class="ingredient-list">
+                <li *ngFor="let ing of currentIngredients" class="ingredient-list">
+                    {{ing.ingredient}}: {{ing.measure}}</li>
+            </ul>
+        </div>
+    </div>
 </div>

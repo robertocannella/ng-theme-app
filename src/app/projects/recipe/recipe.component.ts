@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { faLaptopHouse } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-recipe',
@@ -11,6 +10,7 @@ export class RecipeComponent implements OnInit {
   drink: any;
   random: boolean = false;
   currentDrink: any;
+  currentIngredients: any = [];
   isFavorite: boolean = false;
   favoriteDrinks: Set<any> = new Set()
   searchResults: Set<any> = new Set()
@@ -52,15 +52,19 @@ export class RecipeComponent implements OnInit {
     }
     else {
       this.favoriteDrinks.add(drink);
-      this.addDrink(drink, false)
+      this.addDrink(drink, true)
+      this.random = false;
       this.addDrinkLS(this.currentDrink.idDrink)
     }
   }
   addDrink(drink: any, random: boolean = false) {
     //this.searchActive = false;
+
     this.random = random;
     this.currentDrink = drink;
     this.isFavorite = (this.favoriteDrinks.has(this.currentDrink));
+    if (!this.random)
+      this.openPopup(this.currentDrink)
   }
   addDrinkLS(drinkId: any) {
     let drinkIds = this.getDrinksLS()
@@ -81,7 +85,6 @@ export class RecipeComponent implements OnInit {
   }
   isInFavorites(drink: any) {
     let drinkIds = this.getDrinksLS()
-    console.log(drink?.idDrink)
     if (drinkIds.includes(drink?.idDrink))
       return true;
 
@@ -90,8 +93,8 @@ export class RecipeComponent implements OnInit {
   showDrink(drink: any) {
     this.searchActive = false;
     this.addDrink(drink)
-    console.log(drink)
   }
+
   async getDrinkById(id: string) {
     let resp = await fetch('https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=' + id);
     let respData = await resp.json()
@@ -126,5 +129,28 @@ export class RecipeComponent implements OnInit {
     let randomDrink = respData.drinks[0];
 
     this.addDrink(randomDrink, true);
+  }
+  openPopup(drink: any) {
+    const popup = document.getElementById('drink-popup')
+    if (!popup)
+      return;
+    popup.classList.remove('hidden');
+
+    // API ingredients are listed indivually (up to 16)
+    console.log(drink)
+    this.currentIngredients = []
+    for (let i = 1; i < 16; i++) {
+      if (drink['strIngredient' + i] !== null && drink['strIngredient' + i] !== '') {
+        this.currentIngredients.push({ 'ingredient': drink['strIngredient' + i], 'measure': drink['strMeasure' + i] })
+      }
+    }
+
+    console.log(this.currentIngredients)
+  }
+  closePopup() {
+    const popup = document.getElementById('drink-popup')
+    if (!popup)
+      return;
+    popup.classList.add('hidden');
   }
 }

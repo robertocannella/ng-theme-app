@@ -191,3 +191,40 @@ header button
     object-position: top
     height: 300px
     width: 100%
+
+.popup-container
+    position: fixed
+    display: flex
+    align-items: center
+    justify-content: center
+    background-color: rgba(0,0 , 0,0.5)
+    left: 0
+    top: 0
+    right: 0
+    bottom: 0
+    overflow: auto
+
+.drink-popup
+    background-color: #fff
+    padding: 0 1rem
+    border-radius: 3px
+    max-width: 400px
+    width: 100%
+    position: absolute
+    top: 4rem
+.hidden
+    opacity: 0
+    pointer-events: none
+
+.drink-popup h1
+    text-align: center
+
+.drink-popup .close-popup
+    background-color: transparent
+    border: none
+    position: absolute
+    top: 1rem
+    right: 1rem
+.ingredient-list
+    list-style: none
+    text-align: left
