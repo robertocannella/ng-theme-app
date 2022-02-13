@@ -1,6 +1,31 @@
 <div class="mobile-container">
+    <header>
+        <form (ngSubmit)="getDrinksBySearch(searchTerm.value)">
+            <input #searchTerm type="text">
+            <button type="submit" id="search">
+                <fa-icon icon="search"></fa-icon>
+            </button>
+        </form>
+    </header>
+    <div class="fav-container" *ngIf="searchActive">
+        <header class="search-header">
+            <h3>Search Results</h3>
+            <button (click)="searchActive = !searchActive" id="fav-back-btn">
+                <fa-icon icon="heart"></fa-icon>&nbsp;
+                <span class="fav-back-btn-tip">Show Favorites</span>
+            </button>
+        </header>
 
-    <div class="fav-container">
+        <span *ngIf='resultsEmpty'>No Results</span>
+        <ul class="fav-drinks">
+
+            <li class="fav-drink" *ngFor="let result of searchResults; let i = index"><img
+                    src="{{result?.strDrinkThumb}}" alt="result?.strDrink" (click)="addDrink(result,false)">
+                <span class="fav-drink-label">{{result.strDrink}}</span>
+            </li>
+        </ul>
+    </div>
+    <div class="fav-container" *ngIf="!searchActive">
         <h3>Favorite Cocktails</h3>
         <ul class="fav-drinks">
             <li class="fav-drink" *ngFor="let favDrink of favoriteDrinks; let i = index"><img
@@ -30,27 +55,9 @@
     <button id="btn-random" (click)="getRandomDrink()">
         <fa-icon icon="random"></fa-icon>
     </button>
-    <header>
 
-        <form (ngSubmit)="getDrinksBySearch(searchTerm.value)">
-            <input #searchTerm type="text">
-            <button type="submit" id="search">
-                <fa-icon icon="search"></fa-icon>
-            </button>
-        </form>
-    </header>
 
-    <div class="fav-container" *ngIf="searchActive">
-        <h3>Search Results</h3>
-        <span *ngIf='resultsEmpty'>No Results</span>
-        <ul class="fav-drinks">
 
-            <li class="fav-drink" *ngFor="let result of searchResults; let i = index"><img
-                    src="{{result?.strDrinkThumb}}" alt="result?.strDrink" (click)="addDrink(result,false)">
-                <span class="fav-drink-label">{{result.strDrink}}</span>
-            </li>
-        </ul>
-    </div>
 
 
 </div>

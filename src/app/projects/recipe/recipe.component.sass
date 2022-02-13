@@ -152,6 +152,30 @@ header button
 .fav-btn.active
     color: rgb(249, 133, 210)
 
+.search-header
+    padding: 0rem 0rem
+    display: flex
+    align-items: center
+    justify-content: center
+    align-items: baseline
+
+.search-header button
+    background-color: #eee
+    cursor: pointer
+    position: relative
+
+.fav-back-btn-tip
+    align-items: baseline
+    opacity: 0
+    font-size: 1rem
+    transition-property: opacity
+    transition-duration: 250ms
+    transition-delay: 50ms
+    position: absolute
+
+.search-header button:hover .fav-back-btn-tip
+    opacity: 1
+
 .search-drink-header
     position: relative
 .search-body
