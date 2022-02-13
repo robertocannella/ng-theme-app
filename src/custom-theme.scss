@@ -81,9 +81,13 @@ $typography: mat.define-typography-config(
   $title: mat.define-typography-level(20px, $font-family: $heading-font-family),
 );
 // USE STYLES.CSS
+
+
 html,
 body {
   height: 100%;
+  overscroll-behavior-y: none;
+  overscroll-behavior-x: none;
 }
 body {
   margin: 0px;

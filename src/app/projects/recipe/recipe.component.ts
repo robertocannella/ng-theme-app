@@ -15,6 +15,7 @@ export class RecipeComponent implements OnInit {
   favoriteDrinks: Set<any> = new Set()
   searchResults: Set<any> = new Set()
   searchActive = false;
+  resultsEmpty = false;
   constructor() { }
 
   ngOnInit(): void {
@@ -89,6 +90,7 @@ export class RecipeComponent implements OnInit {
   showDrink(drink: any) {
     this.searchActive = false;
     this.addDrink(drink)
+    console.log(drink)
   }
   async getDrinkById(id: string) {
     let resp = await fetch('https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=' + id);
@@ -100,7 +102,7 @@ export class RecipeComponent implements OnInit {
   async getDrinksBySearch(term: string) {
     this.searchResults.clear()
     let respData = await (await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=' + term)).json()
-    let drink = respData.drinks[0]
+    //let drink = respData.drinks[0]
     let drinks = respData.drinks
     //this.addDrink(drink, false);
 
@@ -110,7 +112,12 @@ export class RecipeComponent implements OnInit {
         this.searchResults.add(element);
       }
     }
+    if (this.searchResults.size < 1)
+      this.resultsEmpty = true;
+    else
+      this.resultsEmpty = false;
     this.searchActive = true;
+
   }
 
   async getRandomDrink() {

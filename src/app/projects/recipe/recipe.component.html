@@ -16,7 +16,7 @@
         <div class="drink">
             <div class="drink-header">
                 <span class="random" *ngIf="random">Random Cocktail</span>
-                <img src={{currentDrink?.strDrinkThumb}} alt="currentDrink">
+                <img src={{currentDrink?.strDrinkThumb}} (click)="showDrink(currentDrink)" alt="currentDrink">
             </div>
             <div class="drink-body">
                 <h4>{{currentDrink?.strDrink}}</h4>
@@ -27,11 +27,11 @@
             </div>
         </div>
     </div>
-
+    <button id="btn-random" (click)="getRandomDrink()">
+        <fa-icon icon="random"></fa-icon>
+    </button>
     <header>
-        <button id="btn-random" (click)="getRandomDrink()">
-            <fa-icon icon="random"></fa-icon>
-        </button>
+
         <form (ngSubmit)="getDrinksBySearch(searchTerm.value)">
             <input #searchTerm type="text">
             <button type="submit" id="search">
@@ -42,6 +42,7 @@
 
     <div class="fav-container" *ngIf="searchActive">
         <h3>Search Results</h3>
+        <span *ngIf='resultsEmpty'>No Results</span>
         <ul class="fav-drinks">
 
             <li class="fav-drink" *ngFor="let result of searchResults; let i = index"><img
