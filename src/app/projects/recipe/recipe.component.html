@@ -62,7 +62,14 @@
             <fa-icon icon="times"></fa-icon>
         </button>
         <div class="drink-details" id="drink-details">
-            <h1>{{currentDrink?.strDrink}}</h1>
+
+            <div class="drink-body">
+                <h3>{{currentDrink?.strDrink}}</h3>
+                <button (click)="setFavorite(currentDrink)" class="fav-btn"
+                    [class.active]="isInFavorites(currentDrink)">
+                    <fa-icon icon="heart"></fa-icon>&nbsp;
+                </button>
+            </div>
             <img src="{{currentDrink?.strDrinkThumb}}" (click)="closePopup()" alt="currentDrink?.strDrink">
             <p>{{currentDrink?.strInstructions}}</p>
             <h3>Ingredients</h3>
@@ -70,6 +77,7 @@
                 <li *ngFor="let ing of currentIngredients" class="ingredient-list">
                     {{ing.ingredient}}: {{ing.measure}}</li>
             </ul>
+
         </div>
     </div>
 </div>
