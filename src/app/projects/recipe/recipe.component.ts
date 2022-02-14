@@ -1,4 +1,7 @@
+import { coerceStringArray } from '@angular/cdk/coercion';
 import { Component, OnInit } from '@angular/core';
+import { async } from '@firebase/util';
+import { sort } from 'd3';
 
 @Component({
   selector: 'app-recipe',
@@ -25,6 +28,9 @@ export class RecipeComponent implements OnInit {
 
   setUpApp() {
     let storedDrinks = this.getDrinksLS()
+    if (storedDrinks.length === 0)
+      this.populateEmptyList()
+
     storedDrinks.forEach(async (drinkId: any) => {
       this.favoriteDrinks.add(await this.getDrinkById(drinkId));
     });
@@ -152,5 +158,18 @@ export class RecipeComponent implements OnInit {
     if (!popup)
       return;
     popup.classList.add('hidden');
+  }
+
+  async populateEmptyList() {
+
+    for (let i = 0; i < 5; i++) {
+
+      let resp = await fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php');
+      let respData = await resp.json()
+      let randomDrink = await respData.drinks[0];
+      this.searchResults.add(randomDrink)
+    }
+    this.searchActive = true;
+    console.log(this.searchResults)
   }
 }
