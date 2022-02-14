@@ -19,16 +19,21 @@ export class RecipeComponent implements OnInit {
   searchResults: Set<any> = new Set()
   searchActive = false;
   resultsEmpty = false;
+
   constructor() { }
 
   ngOnInit(): void {
     this.setUpApp();
     this.getRandomDrink()
   }
+  favIsEmpty() {
+    let storedDrinks = this.getDrinksLS()
+    return storedDrinks.length === 0;
+  }
 
   setUpApp() {
     let storedDrinks = this.getDrinksLS()
-    if (storedDrinks.length === 0)
+    if (this.favIsEmpty())
       this.populateEmptyList()
 
     storedDrinks.forEach(async (drinkId: any) => {
@@ -170,6 +175,6 @@ export class RecipeComponent implements OnInit {
       this.searchResults.add(randomDrink)
     }
     this.searchActive = true;
-    console.log(this.searchResults)
+    console.log(this.random)
   }
 }

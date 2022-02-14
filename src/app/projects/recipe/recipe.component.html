@@ -9,7 +9,7 @@
     </header>
     <div class="fav-container" *ngIf="searchActive">
         <header class="search-header">
-            <h3>Search Results</h3>
+            <h3>{{this.favIsEmpty() ? 'Some Random Drinks' : 'Search Results'}}</h3>
             <button (click)="searchActive = !searchActive" id="fav-back-btn">
                 <fa-icon icon="heart"></fa-icon>&nbsp;
                 <span class="fav-back-btn-tip">Show Favorites</span>
@@ -18,15 +18,22 @@
 
         <span *ngIf='resultsEmpty'>No Results</span>
         <ul class="fav-drinks">
-
             <li class="fav-drink" *ngFor="let result of searchResults; let i = index"><img
                     src="{{result?.strDrinkThumb}}" alt="result?.strDrink" (click)="addDrink(result,false)">
                 <span class="fav-drink-label">{{result.strDrink}}</span>
             </li>
         </ul>
     </div>
+
     <div class="fav-container" *ngIf="!searchActive">
-        <h3>Favorite Cocktails</h3>
+        <header class="search-header">
+            <h3>Favorite Cocktails</h3>
+            <button (click)="searchActive = !searchActive" id="search-back-btn" *ngIf="'searchResults.length > 0'">
+                <fa-icon icon="search"></fa-icon>&nbsp;
+                <span class="search-back-btn-tip">Results</span>
+            </button>
+        </header>
+        {{this.favIsEmpty() ? 'Search for some cocktails to add to your favorites' : ''}}
         <ul class="fav-drinks">
             <li class="fav-drink" *ngFor="let favDrink of favoriteDrinks; let i = index"><img
                     src="{{favDrink.strDrinkThumb}}" alt="favDrink.strDrink" (click)="addDrink(favDrink,false)">
