@@ -9,10 +9,10 @@
     </header>
     <div class="fav-container" *ngIf="searchActive">
         <header class="search-header">
-            <h3>{{this.favIsEmpty() ? 'Some Random Drinks' : 'Search Results'}}</h3>
+            <h3>Search Results</h3>
             <button (click)="searchActive = !searchActive" id="fav-back-btn">
                 <fa-icon icon="heart"></fa-icon>&nbsp;
-                <span class="fav-back-btn-tip">Show Favorites</span>
+                <span class="fav-back-btn-tip"> Favorites</span>
             </button>
         </header>
 

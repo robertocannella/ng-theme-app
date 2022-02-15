@@ -26,6 +26,10 @@ import { ArrayComponent } from './datastructures/array/array.component';
 import { LinkedlistsComponent } from './datastructures/linkedlists/linkedlists.component';
 import { RecipeComponent } from './projects/recipe/recipe.component';
 import { HeapComponent } from './datastructures/heap/heap.component';
+import { CodingChallangesComponent } from './coding-challanges/coding-challanges.component';
+import { DuplicateZerosComponent } from './coding-challenges/duplicate-zeros/duplicate-zeros.component';
+import { CodingChallengesComponent } from './coding-challenges/coding-challenges.component';
+import { SortedSquaresComponent } from './coding-challenges/sorted-squares/sorted-squares.component';
 
 
 @NgModule({
@@ -50,7 +54,11 @@ import { HeapComponent } from './datastructures/heap/heap.component';
     ArrayComponent,
     LinkedlistsComponent,
     RecipeComponent,
-    HeapComponent
+    HeapComponent,
+    CodingChallangesComponent,
+    DuplicateZerosComponent,
+    CodingChallengesComponent,
+    SortedSquaresComponent
   ],
   imports: [
     BrowserModule,
