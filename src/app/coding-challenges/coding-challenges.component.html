@@ -1,5 +1,20 @@
-<div>
-    <button routerLink="duplicate-zeros">Duplicate Zeros</button>
-    <button routerLink="sorted-squares">Sorted Squares</button>
-</div>
-<router-outlet></router-outlet>
+<div class=container>
+    <span class="sub-header cc-sub-header">
+        <div class="t2">Coding Challenges</div>
+        <button mat-button color='secodary' [matMenuTriggerFor]="menu">
+            <fa-icon class='cc-bars' icon="bars"></fa-icon>&nbsp;
+        </button>
+    </span>
+
+    <div class="linebreak"></div>
+    <div class='summary'>
+        <div>
+            <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item routerLink="duplicate-zeros" aria-label="Duplicate Zeros Button">Duplicate
+                    Zeros</button>
+                <button mat-menu-item routerLink="sorted-squares" aria-label="Sorted Squares Button">Sorted
+                    Squares</button>
+            </mat-menu>
+        </div>
+        <router-outlet></router-outlet>
+    </div>

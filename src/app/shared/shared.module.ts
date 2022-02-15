@@ -96,6 +96,6 @@ export class SharedModule {
       faChevronRight, faChevronLeft, faBars,
       faCalculator, faCheckCircle, faHeart,
       faRandom, faSearch, faWindowClose,
-      faTimes, faCode)
+      faTimes, faCode, faBars)
   }
 }

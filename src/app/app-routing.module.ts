@@ -10,7 +10,6 @@ import { DataScienceComponent } from './data-science/data-science.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { ToolsComponent } from './tools/tools.component';
 import { MathComponent } from './math/math.component';
-import { CodingChallangesComponent } from './coding-challanges/coding-challanges.component';
 import { DuplicateZerosComponent } from './coding-challenges/duplicate-zeros/duplicate-zeros.component';
 import { CodingChallengesComponent } from './coding-challenges/coding-challenges.component';
 import { SortedSquaresComponent } from './coding-challenges/sorted-squares/sorted-squares.component';
