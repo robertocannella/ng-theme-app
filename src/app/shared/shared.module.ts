@@ -31,7 +31,6 @@ import { YouTubePlayerModule } from "@angular/youtube-player";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { KatexModule } from 'ng-katex';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MAT_CHECKBOX_DEFAULT_OPTIONS_FACTORY } from '@angular/material/checkbox';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @NgModule({

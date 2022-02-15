@@ -1,6 +1,6 @@
 <div class=container>
     <span class="sub-header cc-sub-header">
-        <div class="t2">Coding Challenges</div>
+        <div class="t2">{{title}}</div>
         <button mat-button color='secodary' [matMenuTriggerFor]="menu">
             <fa-icon class='cc-bars' icon="bars"></fa-icon>&nbsp;
         </button>
@@ -17,4 +17,6 @@
             </mat-menu>
         </div>
         <router-outlet></router-outlet>
+        <div id='svg-coding-stage' style="border:1px solid grey;overflow:scroll;text-align:center">
+        </div>
     </div>

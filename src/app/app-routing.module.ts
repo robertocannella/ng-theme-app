@@ -25,8 +25,12 @@ const routes: Routes = [
     component: CodingChallengesComponent,
     children: [
       {
+        path: '',
+        component: DuplicateZerosComponent // DEFAULT
+      },
+      {
         path: 'duplicate-zeros',
-        component: DuplicateZerosComponent,
+        component: DuplicateZerosComponent
       },
       {
         path: 'sorted-squares',
