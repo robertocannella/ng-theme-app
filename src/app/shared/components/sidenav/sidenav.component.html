@@ -5,7 +5,7 @@
     <mat-toolbar [color]="themeColor">
 
         <button mat-icon-button (click)="toggleSideNav()">
-            <fa-icon [icon]="isOpen ? 'bars' : 'bars'"></fa-icon>
+            <fa-icon class='menu-bars' [icon]="isOpen ? 'bars' : 'bars'"></fa-icon>
         </button>
 
         <span class="brand example-spacer" routerLink="/" (click)="closeSideNav()">{{brand}}</span>

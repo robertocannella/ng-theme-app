@@ -7,6 +7,7 @@ import * as d3Shape from 'd3';
 import * as d3Array from 'd3';
 import * as d3Axis from 'd3';
 import * as d3Transform from 'd3';
+import { concatMapTo } from 'rxjs/operators';
 import { D3Service } from 'src/app/d3.service';
 import { SvgService } from 'src/app/svg.service';
 
@@ -17,7 +18,10 @@ import { SvgService } from 'src/app/svg.service';
   styleUrls: ['./duplicate-zeros.component.sass', '../coding-challenges.component.sass']
 })
 export class DuplicateZerosComponent implements OnInit {
-  dataset = [1, 2, 3, 0, 4, 5, 0, 6, 7, 8, 9, 1]
+  //dataset = [2, 7, 7, 5, 8, 6, 4, 1, 0]  // only one zero at the end (fixed)
+  //dataset = [8, 0, 2, 8, 2, 2, 8, 5, 0]   // one included zero and one zero at the end (fixed)
+  //dataset = [8, 3, 5, 3, 7, 1, 8, 0, 0]   // two zeros at the end (fixed)
+  dataset = [4, 4, 0, 4, 6, 0, 0, 4, 7]
   codingOutlet = d3.select('#coding-outlet')
   //D3 Components
   d3Zoom: any = d3.zoom().scaleExtent([.4, 1.1]);
@@ -34,14 +38,36 @@ export class DuplicateZerosComponent implements OnInit {
   defaultDuration = 500;
   _buttons = false;
   padding = 20;
-  width = 375;
-  height = 450;
-  vbWidth = 800;
+  width = 600;
+  height = 200;
+  vbWidth = 325;
   vbHeight = 150;
   xmlns = 'http://www.w3.org/2000/svg';
   svgId = 'coding-outlet';
   constructor(private svg: SvgService, private d3Service: D3Service) { }
 
+  async test(qty: number, sizeEach: number) {
+    for (let i = 0; i <= qty; i++) {
+
+      this.dataset = []
+      this.update();
+
+      for (let j = 0; j < sizeEach; j++) {
+        this.dataset.push(this.getRandomInt(0, 9))
+      }
+      console.log('test beginning for: ', this.dataset)
+      this.update();
+      await this.animate();
+
+    }
+  }
+  getRandomInt(min: number, max: number) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min);
+
+    //The maximum is exclusive and the minimum is inclusive
+  }
   async animate() {
     let n = this.dataset.length;
 
@@ -62,43 +88,41 @@ export class DuplicateZerosComponent implements OnInit {
 
         d3.select(curr)
           .transition()
-          .duration(400)
-          .attr('fill', 'orange')
+          .duration(200)
+          .attr('fill', '#79d14d')
           .end(),
 
         await new Promise(async (resolve, reject) => {
 
-          if (this.dataset[i] === 0 && i !== n) {
+          if (this.dataset[i] === 0 && ((i + 1 + totalZeros) <= coords.length - 1)) {
 
-
-            let lastElement = d3.select(`#group-${n - 1 - totalZeros}`).transition().duration(200).attr('opacity', 0).remove()
-            console.log(coords)
+            let _ = d3.select(`#group-${n - 1 - totalZeros}`).transition().duration(200).attr('opacity', 0).remove()
             for (let j = this.dataset.length - 1 - totalZeros; j > i + 1; j--) {
               let prevRect = d3.select(`#rect${j - 1}-${this.dataset[j - 1]}`)
               let prevText = d3.select(`#text${j - 1}-${this.dataset[j - 1]}`)
               await Promise.all([
-                prevRect.transition().duration(400).delay(50)
-                  .attr('fill', 'brown')
+                prevRect.transition().duration(200)
+                  .attr('fill', 'orange')
                   .attr('x', () => {
 
                     return coords[j + totalZeros].rectX
                   })
-                  .transition().duration(400).delay(200)
-                  .attr('fill', '#999')
+                  .transition().duration(200)
+                  .attr('fill', '#bbb')
                   .end(),
 
-                prevText.transition().duration(400).delay(50)
+                prevText.transition().duration(200)
                   .attr('x', () => {
 
                     return coords[j + totalZeros].textX
                   })
-                  .transition().duration(400).delay(200)
+                  .transition().duration(200)
                   .end(),
               ])
             }
 
-            console.log(n, ':', i)
             let newZeroGroup = d3.select(`#${this.svgId}`).append('g')
+
             newZeroGroup
               .append('rect')
               .attr('class', 'element-shape')
@@ -107,11 +131,9 @@ export class DuplicateZerosComponent implements OnInit {
               .attr('id', () => `rectZero`)
               .attr('y', 15)
               .attr('x', () => coords[i + 1 + totalZeros].rectX)
-              .attr('fill', 'orange')
-              .attr('stroke', 1)
-              .attr('stroke-width', 1)
+              .attr('fill', '#79d14d')
               .attr('opacity', 0)
-              .transition().duration(400)
+              .transition().duration(200)
               .attr('opacity', 1)
 
             newZeroGroup
@@ -120,14 +142,13 @@ export class DuplicateZerosComponent implements OnInit {
               .attr('y', 40)
               .attr('x', () => coords[i + 1 + totalZeros].textX)
               .attr('opacity', 0)
-              .transition().duration(400)
+              .transition().duration(200)
               .attr('opacity', 1)
 
             totalZeros++;
 
 
           }
-
           setTimeout(resolve, 200);
         }),
 
@@ -136,7 +157,7 @@ export class DuplicateZerosComponent implements OnInit {
   }
 
   addNaturalNumber() {
-    this.dataset.push(Math.floor(Math.random() * (9 - 1) * 1))
+    this.dataset.push(this.getRandomInt(1, 9))
     this.update();
   }
   addZero() {
@@ -182,7 +203,7 @@ export class DuplicateZerosComponent implements OnInit {
                 .attr('id', () => `rect${index}-${data}`)
                 .attr('y', 15)
                 .attr('x', () => 30 * index)
-                .attr('fill', '#999')
+                .attr('fill', '#bbb')
                 .attr('stroke', 1)
                 .attr('stroke-width', 1)
 
