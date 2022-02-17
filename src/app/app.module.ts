@@ -29,6 +29,7 @@ import { HeapComponent } from './datastructures/heap/heap.component';
 import { DuplicateZerosComponent } from './coding-challenges/duplicate-zeros/duplicate-zeros.component';
 import { CodingChallengesComponent } from './coding-challenges/coding-challenges.component';
 import { SortedSquaresComponent } from './coding-challenges/sorted-squares/sorted-squares.component';
+import { D3Service } from "./d3.service";
 
 
 @NgModule({
@@ -65,7 +66,7 @@ import { SortedSquaresComponent } from './coding-challenges/sorted-squares/sorte
     SharedModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
   ],
-  providers: [],
+  providers: [D3Service],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

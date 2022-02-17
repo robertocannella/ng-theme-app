@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material/material.module';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { AppRoutingModule } from '../app-routing.module';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   faCoffee, faBook, faProjectDiagram, faLessThan,
@@ -32,6 +34,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { KatexModule } from 'ng-katex';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { D3Service } from '../d3.service';
 
 @NgModule({
   declarations: [
@@ -80,11 +83,13 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatSliderModule,
     MatButtonToggleModule,
     KatexModule
-  ]
+  ],
+  providers: [D3Service],
 })
 export class SharedModule {
 
   constructor(private library: FaIconLibrary) {
+    library.addIconPacks(fas, far);
     library.addIcons(
       faCoffee, faGit, faGithub,
       faStackOverflow, faMedium,

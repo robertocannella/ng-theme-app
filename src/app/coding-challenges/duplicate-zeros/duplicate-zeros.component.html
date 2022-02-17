@@ -1,1 +1,19 @@
 <h3>Dulplicate Zeros</h3>
+
+<span class="sub-header cc-sub-header">
+
+    <button mat-button color="primary" (click)='animate()' aria-label=" Animate Button">
+        Animate
+    </button>
+
+    <button mat-button color='secondar' [matMenuTriggerFor]="menu">Customize</button>
+    <mat-menu #menu="matMenu" [attr.disabled]="_buttons ?null:'true'">
+        <button mat-menu-item [attr.disabled]="_buttons ? null:'true'" (click)="addNaturalNumber()"
+            aria-label="Bubble Sort Button">Push Natural Number</button>
+        <button mat-menu-item [attr.disabled]="_buttons ? null :'true'" (click)="pop()"
+            aria-label="Selection Sort Button">Pop</button>
+        <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="addZero()"
+            aria-label="Insertion Sort Button">Push Zero</button>
+    </mat-menu>
+
+</span>

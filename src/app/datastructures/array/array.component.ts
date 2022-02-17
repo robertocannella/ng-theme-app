@@ -476,7 +476,6 @@ export class ArrayComponent implements OnInit {
     ]).catch(error => {
       console.log(error.message)
     })
-
   }
   // --- UTILTIY FUNCTIONS ---- //
   playAnimation() {
