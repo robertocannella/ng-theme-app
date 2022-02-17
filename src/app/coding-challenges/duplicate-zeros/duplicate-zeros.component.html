@@ -2,20 +2,33 @@
 
 <span class="sub-header cc-sub-header">
 
-    <button mat-button color="secondary" (click)='animate()' aria-label=" Animate Button">
-        Animate
-    </button>
-    <button mat-button color="secondary" (click)='test(30,10)' aria-label=" Animate Button">
-        Random Sequences
-    </button>
-    <button mat-button color='secondary' [matMenuTriggerFor]="menu">Customize</button>
-    <mat-menu #menu="matMenu" [attr.disabled]="_buttons ?null:'true'">
-        <button mat-menu-item [attr.disabled]="_buttons ? null:'true'" (click)="addNaturalNumber()"
-            aria-label="Bubble Sort Button">Push Natural Number</button>
-        <button mat-menu-item [attr.disabled]="_buttons ? null :'true'" (click)="pop()"
-            aria-label="Selection Sort Button">Pop</button>
-        <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="addZero()"
-            aria-label="Insertion Sort Button">Push Zero</button>
-    </mat-menu>
+    <ng-container *ngIf="isPlayingAnimation; then stop; else playRandom">
+    </ng-container>
 
+    <ng-template #stop>
+        <button mat-button color="secondary" (click)='stopAnimation()' aria-label=" Animate Button">
+            Stop
+        </button>
+    </ng-template>
+    <ng-template #playRandom>
+        <button mat-button color="secondary" [attr.disabled]="_buttons ? null:'true' " (click)='animate()' aria-label="
+        Animate Button">
+            Animate
+        </button>
+        <button mat-button color="secondary" (click)='test(30,10)' aria-label=" Animate Button">
+            Play Random
+        </button>
+
+
+        <button mat-button color='secondary' [attr.disabled]="_buttons ? null:'true'"
+            [matMenuTriggerFor]="menu">Customize</button>
+        <mat-menu #menu="matMenu" [attr.disabled]="_buttons ?null:'true'">
+            <button mat-menu-item [attr.disabled]="_buttons ? null:'true'" (click)="addNaturalNumber()"
+                aria-label="Bubble Sort Button">Push Natural Number</button>
+            <button mat-menu-item [attr.disabled]="_buttons ? null :'true'" (click)="pop()"
+                aria-label="Selection Sort Button">Pop</button>
+            <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="addZero()"
+                aria-label="Insertion Sort Button">Push Zero</button>
+        </mat-menu>
+    </ng-template>
 </span>

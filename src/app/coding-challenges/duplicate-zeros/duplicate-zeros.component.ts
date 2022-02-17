@@ -44,8 +44,14 @@ export class DuplicateZerosComponent implements OnInit {
   vbHeight = 150;
   xmlns = 'http://www.w3.org/2000/svg';
   svgId = 'coding-outlet';
+  isPlayingAnimation = false;
   constructor(private svg: SvgService, private d3Service: D3Service) { }
-
+  stopAnimation() {
+    d3.select(`#${this.svgId}`).selectAll('*').interrupt()
+    this.update();
+    this.isPlayingAnimation = false;
+    console.log('stop animation')
+  }
   async test(qty: number, sizeEach: number) {
     for (let i = 0; i <= qty; i++) {
 
@@ -69,6 +75,8 @@ export class DuplicateZerosComponent implements OnInit {
     //The maximum is exclusive and the minimum is inclusive
   }
   async animate() {
+    this._buttons = true;
+    this.isPlayingAnimation = true;
     let n = this.dataset.length;
 
 
@@ -154,11 +162,13 @@ export class DuplicateZerosComponent implements OnInit {
 
       ])
     }
+    this.isPlayingAnimation = false;
+    this.update();
   }
 
   addNaturalNumber() {
     this.dataset.push(this.getRandomInt(1, 9))
-    this.update();
+
   }
   addZero() {
     this.dataset.push(0)
