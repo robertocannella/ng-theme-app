@@ -1,52 +1,113 @@
-<h3>Dulplicate Zeros</h3>
+<a href='https://leetcode.com/problems/duplicate-zeros/'>
+    <h3>Dulplicate Zeros</h3>
+</a>
+<span class="sub-header cc-sub-header">Approach 1:</span>
+Brute Force O(n<sup>2</sup>) time, O(1) space
 
+<div class='linebreak-light'></div>
 <span class="sub-header cc-sub-header">
 
     <ng-container *ngIf="isPlayingAnimation; then stop; else playRandom">
     </ng-container>
-
-    <ng-template #stop>
-        <span class="sub-header cc-sub-header">
-
-            <button mat-button color="secondary" (click)='stopAnimation()' aria-label=" Animate Button">
-                Stop
-            </button>
-            <div class="index">
-                <span>index i: {{ currentI}}</span>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <span>index j: {{ currentJ}}</span>
-            </div>
-        </span>
+</span>
 
 
-    </ng-template>
+<ng-template #stop>
+    <span class="sub-header cc-sub-header">
 
+        <button mat-button color="secondary" (click)='stopAnimation()' aria-label=" Animate Button">
+            Stop
+        </button>
+        <div class="index">
+            <span>index i: {{ currentI}}</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <span>index j: {{ currentJ}}</span>
+        </div>
+    </span>
+</ng-template>
 
+<ng-template #playRandom>
+    <span class="sub-header cc-sub-header">
 
-
-    <ng-template #playRandom>
-        <span class="sub-header cc-sub-header">
-
-            <button mat-button color="secondary" [attr.disabled]="_buttons ? null:'true' " (click)='animate()'
-                aria-label="
+        <button mat-button color="secondary" [attr.disabled]="_buttons ? null:'true' " (click)='animate()' aria-label="
         Animate Button">
-                Animate
-            </button>
-            <button mat-button color="secondary" (click)='test(30,10)' aria-label=" Animate Button">
-                Play Random
-            </button>
+            Animate
+        </button>
+        <button mat-button color="secondary" (click)='test(30,10)' aria-label=" Animate Button">
+            Play Random
+        </button>
 
 
-            <button mat-button color='secondary' [attr.disabled]="_buttons ? null:'true'"
-                [matMenuTriggerFor]="menu">Customize</button>
-            <mat-menu #menu="matMenu" [attr.disabled]="_buttons ?null:'true'">
-                <button mat-menu-item [attr.disabled]="_buttons ? null:'true'" (click)="addNaturalNumber()"
-                    aria-label="Bubble Sort Button">Push Natural Number</button>
-                <button mat-menu-item [attr.disabled]="_buttons ? null :'true'" (click)="pop()"
-                    aria-label="Selection Sort Button">Pop</button>
-                <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="addZero()"
-                    aria-label="Insertion Sort Button">Push Zero</button>
-            </mat-menu>
-        </span>
+        <button mat-button color='secondary' [attr.disabled]="_buttons ? null:'true'"
+            [matMenuTriggerFor]="menu">Customize</button>
+        <mat-menu #menu="matMenu" [attr.disabled]="_buttons ?null:'true'">
+            <button mat-menu-item [attr.disabled]="_buttons ? null:'true'" (click)="addNaturalNumber()"
+                aria-label="Bubble Sort Button">Push Natural Number</button>
+            <button mat-menu-item [attr.disabled]="_buttons ? null :'true'" (click)="pop()"
+                aria-label="Selection Sort Button">Pop</button>
+            <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="addZero()"
+                aria-label="Insertion Sort Button">Push Zero</button>
+        </mat-menu>
+    </span>
 
-    </ng-template>
+</ng-template>
+<div id='svg-coding-stage-1' style="overflow:scroll;text-align:center">
+</div>
+
+<span class="sub-header cc-sub-header">Approach 2:</span>
+Two Passes O(n) time, O(1) space
+
+<div class='linebreak-light'></div>
+
+
+<span class="sub-header cc-sub-header">
+
+    <ng-container *ngIf="isPlayingAnimationStage2; then stopStage2; else playRandomStage2">
+    </ng-container>
+</span>
+
+
+<ng-template #stopStage2>
+    <span class="sub-header cc-sub-header">
+
+        <button mat-button color="secondary" (click)='stopAnimationStage2()' aria-label=" Animate Button">
+            Stop
+        </button>
+        <div class="index">
+            <span>index i: {{ currentIStage2}}</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <span>index j: {{ currentJStage2}}</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <span>Total Zeros: {{ totalZerosStage2 }}</span>
+        </div>
+    </span>
+</ng-template>
+
+<ng-template #playRandomStage2>
+    <span class="sub-header cc-sub-header">
+
+        <button mat-button color="secondary" [attr.disabled]="_buttons ? null:'true' " (click)='animateStage2()'
+            aria-label="
+        Animate Button">
+            Animate
+        </button>
+        <button mat-button color="secondary" (click)='testStage2()' aria-label=" Animate Button">
+            test
+        </button>
+
+
+        <button mat-button color='secondary' [attr.disabled]="_buttons ? null:'true'"
+            [matMenuTriggerFor]="menu">Customize</button>
+        <mat-menu #menu="matMenu" [attr.disabled]="_buttonsStage2 ?null:'true'">
+            <button mat-menu-item [attr.disabled]="_buttonsStage2 ? null:'true'" (click)="addNaturalNumberStage2()"
+                aria-label="Bubble Sort Button">Push Natural Number</button>
+            <button mat-menu-item [attr.disabled]="_buttonsStage2 ? null :'true'" (click)="popStage2()"
+                aria-label="Selection Sort Button">Pop</button>
+            <button mat-menu-item [attr.disabled]="_buttonsStage2 ? null : 'true'" (click)="addZeroStage2()"
+                aria-label="Insertion Sort Button">Push Zero</button>
+        </mat-menu>
+    </span>
+
+</ng-template>
+<div id='svg-coding-stage-2' style="overflow:scroll;text-align:center">
+</div>

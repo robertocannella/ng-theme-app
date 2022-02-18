@@ -1,3 +1,4 @@
+import { core } from '@angular/compiler';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 import * as d3Scale from 'd3';
@@ -21,8 +22,14 @@ export class DuplicateZerosComponent implements OnInit {
   //dataset = [8, 3, 5, 3, 7, 1, 8, 0, 0]   // two zeros at the end (fixed)
   //dataset = [4, 4, 0, 4, 6, 0, 0, 4, 7]
   //datasetStage2 = [8, 0, 2, 0, 2, 2, 8, 5, 0]
-  datasetStage2 = [8, 0, 2, 3, 2, 2, 8, 5, 0, 0]  // one zero with two zeros at the end (bug displays one too many yellow indexs)
-  //datasetStage2 = [0, 8, 6, 7, 0, 4, 5, 0, 5, 3]
+  //datasetStage2 = [8, 0, 2, 3, 2, 2, 8, 5, 0, 0]  // one zero with two zeros at the end (fixed)
+  //datasetStage2 = [0, 8, 6, 7, 0, 4, 5, 0, 5, 3]  // (fixed)
+  //datasetStage2 = [0, 1, 6, 5, 1, 7, 0, 5] // (fixed)
+  //datasetStage2 = [4, 5, 4, 2, 7, 5, 0, 1]  // 
+  //datasetStage2 = [1, 0, 7, 6, 6, 3, 0, 5]
+  //datasetStage2 = [0, 0, 4, 3, 2, 0, 5, 2]
+  datasetStage2 = [0, 0, 8]
+  //datasetStage2 = [0, 0, 1, 0]
   codingOutlet = d3.select('#coding-outlet-1')
   //D3 Components
   d3Zoom: any = d3.zoom().scaleExtent([.4, 1.1]);
@@ -52,6 +59,7 @@ export class DuplicateZerosComponent implements OnInit {
   currentI = 0
   currentJ = 0
   currentIStage2 = 0
+  currentJStage2 = 0
   totalZerosStage2 = 0
 
   constructor(private svg: SvgService, private d3Service: D3Service) { }
@@ -72,8 +80,9 @@ export class DuplicateZerosComponent implements OnInit {
 
     }
   }
-  async testStage2(sizeEach: number = this.getRandomInt(8, 13)) {
-    while (true) {
+  async testStage2(sizeEach: number = this.getRandomInt(8, 10)) {
+    this.isPlayingAnimationStage2 = true;
+    while (this.isPlayingAnimationStage2) {
 
       this.datasetStage2 = []
       this.updateStage2();
@@ -354,7 +363,7 @@ export class DuplicateZerosComponent implements OnInit {
       let curr = `#rect${i}-${this.datasetStage2[i]}-stage2`
 
       this.currentIStage2 = i
-      this.currentJ = 0
+      //this.currentJ = 0
 
       await Promise.all([
 
@@ -365,7 +374,7 @@ export class DuplicateZerosComponent implements OnInit {
           .attr('fill', () => {
             if (this.datasetStage2[i] === 0) {
               // Edge case: This zero can't be duplicated. We have no more space,
-              // as left is pointing to the last element which could be included
+              // as `last` is pointing to the last element which could be included
               if (i >= n - this.totalZerosStage2) {
 
                 if (this.totalZerosStage2 === 0) {
@@ -376,7 +385,7 @@ export class DuplicateZerosComponent implements OnInit {
 
               this.totalZerosStage2++;
             }
-            if (i > n - this.totalZerosStage2) return '#fcba03';
+            if (i > n - this.totalZerosStage2) return '#fcba03'; //yellow
 
             return (this.datasetStage2[i] === 0) ? 'cornflowerblue' : '#79d14d';
           })
@@ -455,16 +464,50 @@ export class DuplicateZerosComponent implements OnInit {
     //   this.isPlayingAnimationStage2 = false;
     //   this.updateStage2();
     // })
+    await this.edgeCaseTwo()
     return Promise.all([
 
       // d3.select() HERE
-      this.edgeCaseTwo(),
+      //this.edgeCaseTwo(),
+      this.secondPassStage2(),
       //this.updateAwait(),
-      this.timeout(10),
+      this.timeout(500),
 
     ]);
 
 
+  }
+  secondPassStage2() {
+    return new Promise(async (resolve) => {
+      console.log('stage two second pass')
+      console.log(this.datasetStage2)
+      if (this.totalZerosStage2 < 1) resolve(false);
+      else {
+        let n = this.datasetStage2.length - 1;
+        let last = n - this.totalZerosStage2;
+        let coords: any = [];
+        // save all the X-Positions into a list
+        for (let i = 0; i <= n; i++) {
+          let currRect = d3.select(`#rect${i}-${this.datasetStage2[i]}-stage2`);
+          let currText = d3.select(`#text${i}-${this.datasetStage2[i]}-stage2`);
+          coords.push({ rectX: currRect.attr('x'), textX: currText.attr('x') });
+        }
+        await this.clearEnds();
+
+        // Start backwards from the last element which would be part of new array.
+        for (let j = last; j >= 0; j--) {
+          this.currentJStage2 = j
+
+          //let curr = `#rect${j}-${this.datasetStage2[j]}-stage2`
+
+          await Promise.all([
+            // d3.select(curr).transition().duration(300).attr('fill', 'white').end(),
+            this.insertAnimation(j, coords),
+          ])
+        }
+        resolve(true)
+      }
+    })
   }
   timeout(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -472,7 +515,7 @@ export class DuplicateZerosComponent implements OnInit {
   updateAwait() {
     return new Promise((resolve) => {
       this.updateStage2();
-      resolve('done')
+      resolve(true)
     })
   }
   edgeCaseTwo() {
@@ -482,12 +525,107 @@ export class DuplicateZerosComponent implements OnInit {
       if (this.datasetStage2[n - this.totalZerosStage2] === 0) {
         let curr = `#rect${n - this.totalZerosStage2}-${this.datasetStage2[n - this.totalZerosStage2]}-stage2`
         d3.select(curr).attr('fill', `#79d14d`)
-        console.log('n - 2 is a zero value')
         this.datasetErrors.push({ 'dataset': this.datasetStage2 })
-        console.log("error sets: ", this.datasetErrors)
       }
+      resolve(true)
+    })
+  }
+  insertAnimation(index: number, coords: any[]) {
 
-      resolve('complete')
+    return new Promise(async (resolve) => {
+      let lastRect = d3.select(`#rect${index}-${this.datasetStage2[index]}-stage2`)
+      let lastText = d3.select(`#text${index}-${this.datasetStage2[index]}-stage2`)
+
+      // if (this.datasetStage2[index] === 0 && index === this.datasetStage2.length - 1 - this.totalZerosStage2 && this.totalZerosStage2 === 1) {
+      //   console.log('edge case')
+      //   lastRect.attr('fill', 'cornflowerblue')
+      //   this.appendZero(index, coords)
+      //   this.totalZerosStage2--;
+      // }
+      // else if (this.datasetStage2[index] === 0 && index === this.datasetStage2.length - 1 - this.totalZerosStage2) {
+      //   // Ending zero cannot be duplicated due to space constraints
+      //   lastRect.transition().duration(400).attr('x', coords[index + this.totalZerosStage2].rectX)
+      //   lastText.transition().duration(400).attr('x', coords[index + this.totalZerosStage2].textX)
+      // }
+      // if (this.datasetStage2[index] === 0) {
+      //   lastRect.transition().duration(400).attr('x', coords[index + this.totalZerosStage2].rectX)
+      //   lastText.transition().duration(400).attr('x', coords[index + this.totalZerosStage2].textX)
+
+      //   this.totalZerosStage2--;
+      //   await this.insertZero(index, coords);
+      // }
+      // lastRect.transition().duration(400).attr('x', coords[index + this.totalZerosStage2].rectX)
+      // lastText.transition().duration(400).attr('x', coords[index + this.totalZerosStage2].textX)
+
+      setTimeout(resolve, 400)
+    });
+  }
+  appendZero(index: number, coords: any[]) {
+    return new Promise(async (resolve) => {
+      d3.select(`#${this.svgStage2}`).append('g')
+        .append('rect')
+        .attr('class', 'element-shape')
+        .attr('width', 28)
+        .attr('height', 40)
+        .attr('id', () => `rect${index}-'0'-stage2`)
+        .attr('y', 15)
+        .attr('x', () => {
+          return coords[coords.length - 1].rectX
+        })
+        .attr('fill', 'cornflowerblue')
+        .attr('stroke', 1)
+        .attr('stroke-width', 1)
+
+      d3.select(`#${this.svgStage2}`).append('g')
+        .append('text')
+        .attr('class', 'element-text')
+        .text('0')
+        .attr('id', () => `text${index}-0}-stage2`)
+        .attr('x', () => {
+          return coords[coords.length - 1].textX
+        })
+        .attr('y', 40)
+      resolve(true)
+    })
+  }
+  clearEnds() {
+    return new Promise(async (resolve) => {
+      let len = this.datasetStage2.length - 1
+      for (let i = 0; i < this.totalZerosStage2; i++) {
+        d3.select(`#rect${len - i}-${this.datasetStage2[len - i]}-stage2`).remove()
+        d3.select(`#text${len - i}-${this.datasetStage2[len - i]}-stage2`).remove()
+      }
+      resolve(true)
+    })
+  }
+
+  insertZero(index: number, coords: any[]) {
+    return new Promise((resolve) => {
+      d3.select(`#${this.svgStage2}`).append('g')
+        .append('rect')
+        .attr('class', 'element-shape')
+        .attr('width', 28)
+        .attr('height', 40)
+        .attr('id', () => `rect${index + this.totalZerosStage2}-'0'-stage2`)
+        .attr('y', 15)
+        .attr('x', () => {
+          return coords[index + this.totalZerosStage2 + 1].rectX
+        })
+        .attr('fill', 'cornflowerblue')
+        .attr('stroke', 1)
+        .attr('stroke-width', 1)
+
+      d3.select(`#${this.svgStage2}`).append('g')
+        .append('text')
+        .attr('class', 'element-text')
+        .text('0')
+        .attr('id', () => `text${index}-0}-stage2`)
+        .attr('x', () => {
+          return coords[index + this.totalZerosStage2 + 1].textX
+        })
+        .attr('y', 40)
+
+      resolve(true)
     })
   }
 }
