@@ -1,5 +1,6 @@
 import { core } from '@angular/compiler';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { faDiceD20 } from '@fortawesome/free-solid-svg-icons';
 import * as d3 from 'd3';
 import * as d3Scale from 'd3';
 import * as d3Shape from 'd3';
@@ -25,12 +26,15 @@ export class DuplicateZerosComponent implements OnInit {
   //datasetStage2 = [8, 0, 2, 3, 2, 2, 8, 5, 0, 0]  // one zero with two zeros at the end (fixed)
   //datasetStage2 = [0, 8, 6, 7, 0, 4, 5, 0, 5, 3]  // (fixed)
   //datasetStage2 = [0, 1, 6, 5, 1, 7, 0, 5] // (fixed)
-  //datasetStage2 = [4, 5, 4, 2, 7, 5, 0, 1]  // 
+  //datasetStage2 = [4, 5, 4, 2, 7, 5, 0,]  // 
   //datasetStage2 = [1, 0, 7, 6, 6, 3, 0, 5]
   //datasetStage2 = [0, 0, 4, 3, 2, 0, 5, 2]
-  //dataetStage2 = [6, 0, 3, 4, 8, 3, 5, 0, 1]
-  datasetStage2 = [0, 6, 7, 4, 5, 0, 3, 7]
-  //datasetStage2 = [0, 0, 1, 0]
+  //datasetStage2 = [6, 0, 3, 4, 8, 3, 5, 0, 1]
+  //datasetStage2 = [0, 6, 7, 4, 5, 0, 3, 7]
+  //datasetStage2 = [0, 7, 0, 6, 7, 1, 5, 0, 2]
+  //datasetStage2 = [5, 0, 0]
+  //datasetStage2 = [0, 2, 1, 0, 0, 1]
+  datasetStage2 = [1, 3, 0, 0, 3]
   codingOutlet = d3.select('#coding-outlet-1')
   //D3 Components
   d3Zoom: any = d3.zoom().scaleExtent([.4, 1.1]);
@@ -81,9 +85,10 @@ export class DuplicateZerosComponent implements OnInit {
 
     }
   }
-  async testStage2(sizeEach: number = this.getRandomInt(8, 10)) {
+  async testStage2(sizeEach: number = this.getRandomInt(2, 4)) {
     this.isPlayingAnimationStage2 = true;
     while (this.isPlayingAnimationStage2) {
+      let sizeEach = this.getRandomInt(10, 15)
 
       this.datasetStage2 = []
       this.updateStage2();
@@ -93,7 +98,6 @@ export class DuplicateZerosComponent implements OnInit {
       }
       this.updateStage2();
       await this._animateStage2();
-
     }
   }
   getRandomInt(min: number, max: number) {
@@ -350,7 +354,6 @@ export class DuplicateZerosComponent implements OnInit {
     this._buttonsStage2 = true;
     this.isPlayingAnimationStage2 = true;
     let n = this.datasetStage2.length - 1;
-
     this.totalZerosStage2 = 0;
     let coords: any = [];
     for (let i = 0; i < n; i++) {
@@ -367,25 +370,30 @@ export class DuplicateZerosComponent implements OnInit {
         d3.select(curr)
           .transition()
           .duration(200)
-          .attr('fill', () => {
+          .attr('fill', (data: any, index: any, nodes: any) => {
             if (this.datasetStage2[i] === 0) {
-              this.totalZerosStage2++;
-              // Edge case: This zero can't be duplicated. We have no more space,
-              // as left is pointing to the last element which could be included
-              if (i >= n - this.totalZerosStage2) {
-                if (this.totalZerosStage2 === 0) return '#79d14d';
-                return '#fcba03';
+              let remainSpace = n - i
+              console.log('rem space: ', remainSpace, 'total zeros: ', this.totalZerosStage2)
+              if (i > n - this.totalZerosStage2) return '#fcba03'; // yellow
+
+              if (this.totalZerosStage2 >= remainSpace) {
+                return '#79d14d' // green
               }
+              d3.select(nodes[index]).attr('duplicate', true)
+              this.totalZerosStage2++;
+              return 'cornflowerblue';
             }
-            if (i > n - this.totalZerosStage2) return '#fcba03';
-            return (this.datasetStage2[i] === 0) ? 'cornflowerblue' : '#79d14d';
-          }).end(),
+            else {
+              if (i > n - this.totalZerosStage2) return '#fcba03'; // yellow
+              return '#79d14d' // green
+            }
+          }).end()
       ])
     }
-    await this.edgeCaseTwo()
+    //await this.edgeCases()
     return Promise.all([
       this.secondPassStage2(),
-      this.timeout(500),
+      this.timeout(100),
     ]);
   }
 
@@ -426,15 +434,30 @@ export class DuplicateZerosComponent implements OnInit {
       resolve(true)
     })
   }
-  edgeCaseTwo() {
+  edgeCases() {
     // Edge case two,  The last two indexes are zeros
     return new Promise((resolve) => {
       let n = this.datasetStage2.length - 1
-      if (this.datasetStage2[n - this.totalZerosStage2] === 0) {
-        let curr = `#rect${n - this.totalZerosStage2}-${this.datasetStage2[n - this.totalZerosStage2]}-stage2`
-        d3.select(curr).attr('fill', `#79d14d`)
-        this.datasetErrors.push({ 'dataset': this.datasetStage2 })
+      let len = this.datasetStage2.length
+
+      // Edge Case 1: There is not enough space for all the zeros in the array
+      // In this case, we should decrement the total zeros 
+      if (len % 2 != 0 && (this.totalZerosStage2 * 2 > len)) {
+        console.log('edge case 1')
+        //this.totalZerosStage2--;
+        d3.select(`#rect${n - this.totalZerosStage2}-${this.datasetStage2[n - this.totalZerosStage2]}-stage2`).attr('fill', '#79d14d')
       }
+      // Edge Case 2: Zero is at the end of the array without any other Zeros Preset
+      // In this event we should return no action
+      else if (this.datasetStage2[n] === 0 && this.totalZerosStage2 === 0) {
+        console.log('edge case 2')
+        d3.select(`#rect${n}-${this.datasetStage2[n]}-stage2`).attr('fill', '#79d14d')
+      }
+      // if (this.datasetStage2[n - this.totalZerosStage2] === 0) {
+      //   let curr = `#rect${n - this.totalZerosStage2}-${this.datasetStage2[n - this.totalZerosStage2]}-stage2`
+      //   d3.select(curr).attr('fill', `#79d14d`)
+      //   this.datasetErrors.push({ 'dataset': this.datasetStage2 })
+      // }
       resolve(true)
     })
   }
@@ -443,24 +466,12 @@ export class DuplicateZerosComponent implements OnInit {
       let lastRect = d3.select(`#rect${index}-${this.datasetStage2[index]}-stage2`)
       let lastText = d3.select(`#text${index}-${this.datasetStage2[index]}-stage2`)
 
-      if (this.datasetStage2[index] === 0 && index === this.datasetStage2.length - 1 - this.totalZerosStage2 && this.totalZerosStage2 === 1) {
-        console.log('edge case')
-        lastRect.attr('fill', 'cornflowerblue')
-        this.appendZero(index, coords)
-        this.totalZerosStage2--;
-      }
-      else if (this.datasetStage2[index] === 0 && index === this.datasetStage2.length - 1 - this.totalZerosStage2) {
-        // Ending zero cannot be duplicated due to space constraints
-        lastRect.transition().duration(400).attr('x', coords[index + this.totalZerosStage2].rectX)
-        lastText.transition().duration(400).attr('x', coords[index + this.totalZerosStage2].textX)
-      }
-      else if (this.datasetStage2[index] === 0) {
-        lastRect.transition().duration(400).attr('x', coords[index + this.totalZerosStage2].rectX)
-        lastText.transition().duration(400).attr('x', coords[index + this.totalZerosStage2].textX)
 
+      if (this.datasetStage2[index] === 0 && lastRect.attr('duplicate')) {
+        await this.insertZero(index, coords)
         this.totalZerosStage2--;
-        await this.insertZero(index, coords);
       }
+
       lastRect.transition().duration(400).attr('x', coords[index + this.totalZerosStage2].rectX)
       lastText.transition().duration(400).attr('x', coords[index + this.totalZerosStage2].textX)
 
@@ -516,7 +527,7 @@ export class DuplicateZerosComponent implements OnInit {
         .attr('id', () => `rect${index + this.totalZerosStage2}-'0'-stage2`)
         .attr('y', 15)
         .attr('x', () => {
-          return coords[index + this.totalZerosStage2 + 1].rectX
+          return coords[index + this.totalZerosStage2].rectX
         })
         .attr('fill', 'cornflowerblue')
         .attr('stroke', 1)
@@ -528,7 +539,7 @@ export class DuplicateZerosComponent implements OnInit {
         .text('0')
         .attr('id', () => `text${index}-0}-stage2`)
         .attr('x', () => {
-          return coords[index + this.totalZerosStage2 + 1].textX
+          return coords[index + this.totalZerosStage2].textX
         })
         .attr('y', 40)
 
