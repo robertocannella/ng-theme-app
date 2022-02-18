@@ -1,8 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as d3 from 'd3';
-import { D3Service } from 'src/app/d3.service';
-import { SvgService } from 'src/app/svg.service';
-
+import { BreakpointObserver, LayoutModule, BreakpointState, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-duplicate-zeros',
@@ -30,11 +28,19 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
   currentIStage2 = 0
   currentJStage2 = 0
   totalZerosStage2 = 0
+  isHandheld: boolean = false;
 
-  constructor(private svg: SvgService, private d3Service: D3Service) { }
+  constructor(public breakpointObserver: BreakpointObserver) { }
 
   /// Angular Methods
   ngOnInit(): void {
+
+    this.breakpointObserver.observe([
+      Breakpoints.XSmall
+    ]).subscribe((state: BreakpointState) => {
+      this.isHandheld = (state.matches)
+    });
+
     this.buildSVG();
     this.update();
     this.updateStage2();
@@ -336,7 +342,6 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
           .attr('fill', (data: any, index: any, nodes: any) => {
             if (this.datasetStage2[i] === 0) {
               let remainSpace = n - i
-              console.log('rem space: ', remainSpace, 'total zeros: ', this.totalZerosStage2)
               if (i > n - this.totalZerosStage2) return '#fcba03'; // yellow
 
               if (this.totalZerosStage2 >= remainSpace) {
@@ -361,7 +366,6 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
   /// STAGE 2 Helper Methods
   secondPassStage2() {
     return new Promise(async (resolve) => {
-      console.log(this.datasetStage2)
       if (this.totalZerosStage2 < 1) resolve(false);
       else {
         let n = this.datasetStage2.length - 1;
