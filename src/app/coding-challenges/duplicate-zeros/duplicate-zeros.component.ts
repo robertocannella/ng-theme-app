@@ -48,6 +48,7 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.stopAnimation();
     this.stopAnimationStage2();
+    // unsubscribe from breakpoint subscription
   }
   /// Common Methods
   buildSVG() {
@@ -191,7 +192,8 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
         d3.select(curr)
           .transition()
           .duration(200)
-          .attr('fill', '#79d14d')
+          .attr('fill', () =>
+            (this.dataset[i] === 0) ? 'cornflowerblue' : '#79d14d')
           .end(),
 
         await new Promise(async (resolve, reject) => {
@@ -205,7 +207,7 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
               let prevText = d3.select(`#text${j - 1}-${this.dataset[j - 1]}`)
               await Promise.all([
                 prevRect.transition().duration(200)
-                  .attr('fill', 'orange')
+                  .attr('fill', '#fcba03')
                   .attr('x', () => {
 
                     return coords[j + totalZeros].rectX
@@ -216,7 +218,6 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
 
                 prevText.transition().duration(200)
                   .attr('x', () => {
-
                     return coords[j + totalZeros].textX
                   })
                   .transition().duration(200)
@@ -234,7 +235,7 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
               .attr('id', () => `rectZero`)
               .attr('y', 15)
               .attr('x', () => coords[i + 1 + totalZeros].rectX)
-              .attr('fill', '#79d14d')
+              .attr('fill', 'cornflowerblue')
               .attr('opacity', 0)
               .transition().duration(200)
               .attr('opacity', 1)
@@ -308,8 +309,11 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
   /// STAGE 2 Stop Animation
   stopAnimationStage2() {
     this._buttonsStage2 = false;
-    d3.select(`#${this.svgStage2}`).selectAll('*').interrupt()
+
+    d3.select(`#${this.svgStage2}`).selectAll('rect').transition();
     this.updateStage2();
+
+
     this.isPlayingAnimationStage2 = false;
 
   }
@@ -382,9 +386,9 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
         // Start backwards from the last element which would be part of new array.
         for (let j = last; j >= 0; j--) {
           this.currentJStage2 = j
-          await Promise.all([
-            this.insertAnimation(j, coords),
-          ])
+
+          await this.insertAnimation(j, coords)
+
           if (this.totalZerosStage2 === 0) break;
         }
         resolve(true)
@@ -398,7 +402,7 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
     })
   }
   insertAnimation(index: number, coords: any[]) {
-    return new Promise(async (resolve) => {
+    return new Promise(async (resolve, reject) => {
       let lastRect = d3.select(`#rect${index}-${this.datasetStage2[index]}-stage2`)
       let lastText = d3.select(`#text${index}-${this.datasetStage2[index]}-stage2`)
 
@@ -406,11 +410,16 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
         await this.insertZero(index, coords)
         this.totalZerosStage2--;
       }
-
+      // interrupt code below not used, but cool idea to store animation stat in localstorage for pause/resume functionallity
       lastRect.transition().duration(400).attr('x', coords[index + this.totalZerosStage2].rectX)
+        .on('interrupt', (_: any, index: any, nodes: any) => {
+          reject(false);
+          localStorage.setItem(nodes[index], d3.select(nodes[index]).attr('x'))
+        })
       lastText.transition().duration(400).attr('x', coords[index + this.totalZerosStage2].textX)
 
       setTimeout(resolve, 400)
+
     });
   }
   clearEnds() {

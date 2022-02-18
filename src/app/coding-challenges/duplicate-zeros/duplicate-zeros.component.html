@@ -117,16 +117,33 @@ Two Passes O(n) time, O(1) space
         <button mat-button color="secondary" (click)='testStage2()' aria-label=" Animate Button">
             Play Random
         </button>
-        <button mat-button color='secondary' [attr.disabled]="_buttons ? null:'true'"
-            [matMenuTriggerFor]="menu">Customize</button>
-        <mat-menu #menu="matMenu" [attr.disabled]="_buttonsStage2 ?null:'true'">
-            <button mat-menu-item [attr.disabled]="_buttonsStage2 ? null:'true'" (click)="addNaturalNumberStage2()"
+
+
+
+        <ng-container *ngIf="isHandheld; then handheldStage2; else webPortraitStage2">
+
+        </ng-container>
+
+        <ng-template #handheldStage2>
+            <button mat-button color='secondary' [attr.disabled]="_buttons ? null:'true'"
+                [matMenuTriggerFor]="menu">Customize</button>
+            <mat-menu #menu="matMenu" [attr.disabled]="_buttonsStage2 ?null:'true'">
+                <button mat-menu-item [attr.disabled]="_buttonsStage2 ? null:'true'" (click)="addNaturalNumberStage2()"
+                    aria-label="Bubble Sort Button">Push Natural Number</button>
+                <button mat-menu-item [attr.disabled]="_buttonsStage2 ? null :'true'" (click)="popStage2()"
+                    aria-label="Selection Sort Button">Pop</button>
+                <button mat-menu-item [attr.disabled]="_buttonsStage2 ? null : 'true'" (click)="addZeroStage2()"
+                    aria-label="Insertion Sort Button">Push Zero</button>
+            </mat-menu>
+        </ng-template>
+        <ng-template #webPortraitStage2>
+            <button mat-button [attr.disabled]="_buttonsStage2 ? null:'true'" (click)="addNaturalNumberStage2()"
                 aria-label="Bubble Sort Button">Push Natural Number</button>
-            <button mat-menu-item [attr.disabled]="_buttonsStage2 ? null :'true'" (click)="popStage2()"
+            <button mat-button [attr.disabled]="_buttonsStage2 ? null :'true'" (click)="popStage2()"
                 aria-label="Selection Sort Button">Pop</button>
-            <button mat-menu-item [attr.disabled]="_buttonsStage2 ? null : 'true'" (click)="addZeroStage2()"
+            <button mat-button [attr.disabled]="_buttonsStage2 ? null : 'true'" (click)="addZeroStage2()"
                 aria-label="Insertion Sort Button">Push Zero</button>
-        </mat-menu>
+        </ng-template>
     </span>
 
 </ng-template>
