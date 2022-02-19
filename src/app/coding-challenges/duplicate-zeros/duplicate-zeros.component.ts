@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 import { BreakpointObserver, LayoutModule, BreakpointState, Breakpoints } from '@angular/cdk/layout';
+import { InvokeMethodExpr } from '@angular/compiler';
 
 @Component({
   selector: 'app-duplicate-zeros',
@@ -28,6 +29,7 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
   currentIStage2 = 0
   currentJStage2 = 0
   totalZerosStage2 = 0
+
   isHandheld: boolean = false;
 
   constructor(public breakpointObserver: BreakpointObserver) { }
@@ -65,13 +67,21 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
       .attr('xmlns', this.xmlns)
   }
   async playAll() {
+    this.datasetStage2 = [...this.dataset]
+    this.updateStage2();
     return Promise.all([
       this._animateStage2(),
       this.animate()
-    ]).then(() => {
-      this.update()
-      this.updateStage2()
-    })
+    ])
+
+  }
+  reset() {
+
+    this.update()
+    this.updateStage2()
+
+    this.isPlayingAnimation = false
+    this.isPlayingAnimationStage2 = false
   }
   // Stage 1 Buttons
   async test(sizeEach: number = this.getRandomInt(9, 9)) {
@@ -115,6 +125,7 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
   }
   async testStage2(sizeEach: number = this.getRandomInt(9, 9)) {
     this.isPlayingAnimationStage2 = true;
+
     while (this.isPlayingAnimationStage2) {
 
       this.datasetStage2 = []
@@ -307,69 +318,64 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
         })
   }
   /// STAGE 2 Stop Animation
-  stopAnimationStage2() {
-    this._buttonsStage2 = false;
+  async stopAnimationStage2() {
+    this.totalZerosStage2 = 0;
 
-    d3.select(`#${this.svgStage2}`).selectAll('rect').transition();
+    //this._buttonsStage2 = false;
+    d3.select(`#${this.svgStage2}`).selectAll('*').interrupt()
     this.updateStage2();
-
-
     this.isPlayingAnimationStage2 = false;
 
   }
   async animateStage2() {
     await this._animateStage2();
-    await this.updateAwait();
-    this.isPlayingAnimationStage2 = false
+    this._buttonsStage2 = false
+    //await this.updateAwait();
+    //this.isPlayingAnimationStage2 = false
   }
   /// STAGE 2 Animation
   async _animateStage2() {
     this._buttonsStage2 = true;
     this.isPlayingAnimationStage2 = true;
+    await this.firstPassStage2().catch(e => { console.log('Promise Interrupted') })
+    await this.secondPassStage2().catch(e => { console.log('Promise Interrupted') })
+    await this.timeout(500) // time between each iteration
+  }
+  /// STAGE 2 Helper Methods
+  async firstPassStage2() {
     let n = this.datasetStage2.length - 1;
     this.totalZerosStage2 = 0;
-    let coords: any = [];
-    for (let i = 0; i < n; i++) {  // list of x coordinates for text and rect
-      let currRect = d3.select(`#rect${i}-${this.datasetStage2[i]}-stage2`);
-      let currText = d3.select(`#text${i}-${this.datasetStage2[i]}-stage2`);
-      coords.push({ rectX: currRect.attr('x'), textX: currText.attr('x') });
-    }
+    this.currentJStage2 = 0;
 
-    for (let i = 0; i <= n; i++) {
+    for (let i = 0; i <= n; i++) {  // begin animation loop
       let curr = `#rect${i}-${this.datasetStage2[i]}-stage2`
       this.currentIStage2 = i
 
-      await Promise.all([
-        d3.select(curr)
-          .transition()
-          .duration(200)
-          .attr('fill', (data: any, index: any, nodes: any) => {
-            if (this.datasetStage2[i] === 0) {
-              let remainSpace = n - i
-              if (i > n - this.totalZerosStage2) return '#fcba03'; // yellow
+      await d3.select(curr)
+        .transition()
+        .duration(200)
+        .attr('fill', (data: any, index: any, nodes: any) => {
+          if (this.datasetStage2[i] === 0) {
+            let remainSpace = n - i
+            if (i > n - this.totalZerosStage2) return '#fcba03'; // yellow
 
-              if (this.totalZerosStage2 >= remainSpace) {
-                return '#79d14d' // green
-              }
-              d3.select(nodes[index]).attr('duplicate', true) // tag with "duplicate" attribute for later processing
-              this.totalZerosStage2++;
-              return 'cornflowerblue';
-            }
-            else {
-              if (i > n - this.totalZerosStage2) return '#fcba03'; // yellow
+            if (this.totalZerosStage2 >= remainSpace) {
               return '#79d14d' // green
             }
-          }).end()
-      ])
+            d3.select(nodes[index]).attr('duplicate', true) // tag with "duplicate" attribute for later processing
+            this.totalZerosStage2++;
+            return 'cornflowerblue';
+          }
+          else {
+            if (i > n - this.totalZerosStage2) return '#fcba03'; // yellow
+            return '#79d14d' // green
+          }
+        }).end()
+
     }
-    return Promise.all([
-      this.secondPassStage2(),
-      this.timeout(100), // time between each iteration
-    ]);
   }
-  /// STAGE 2 Helper Methods
-  secondPassStage2() {
-    return new Promise(async (resolve) => {
+  async secondPassStage2() {
+    return new Promise(async (resolve, reject) => {
       if (this.totalZerosStage2 < 1) resolve(false);
       else {
         let n = this.datasetStage2.length - 1;
@@ -383,7 +389,7 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
         }
         await this.clearEnds();
 
-        // Start backwards from the last element which would be part of new array.
+        // Start backwards from the last element and begin writing over old values
         for (let j = last; j >= 0; j--) {
           this.currentJStage2 = j
 
@@ -392,8 +398,9 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
           if (this.totalZerosStage2 === 0) break;
         }
         resolve(true)
+
       }
-    })
+    }).catch(e => console.log(e))
   }
   updateAwait() {
     return new Promise((resolve) => {
@@ -413,7 +420,6 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
       // interrupt code below not used, but cool idea to store animation stat in localstorage for pause/resume functionallity
       lastRect.transition().duration(400).attr('x', coords[index + this.totalZerosStage2].rectX)
         .on('interrupt', (_: any, index: any, nodes: any) => {
-          reject(false);
           localStorage.setItem(nodes[index], d3.select(nodes[index]).attr('x'))
         })
       lastText.transition().duration(400).attr('x', coords[index + this.totalZerosStage2].textX)

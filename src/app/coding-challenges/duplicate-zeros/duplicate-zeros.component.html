@@ -62,7 +62,6 @@ Brute Force O(n<sup>2</sup>) time, O(1) space
         </ng-template>
         <ng-template #webPortrait>
 
-
             <button mat-button [attr.disabled]="_buttons ? null:'true'" (click)="addNaturalNumber()"
                 aria-label="Bubble Sort Button">Push Natural Number</button>
             <button mat-button [attr.disabled]="_buttons ? null :'true'" (click)="pop()"
@@ -72,8 +71,8 @@ Brute Force O(n<sup>2</sup>) time, O(1) space
 
         </ng-template>
     </span>
-
 </ng-template>
+
 <div id='svg-coding-stage-1' style="overflow:scroll;text-align:center">
 </div>
 
@@ -94,7 +93,7 @@ Two Passes O(n) time, O(1) space
     <span class="sub-header cc-sub-header">
 
         <button mat-button color="secondary" (click)='stopAnimationStage2()' aria-label=" Animate Button">
-            Stop
+            Reset
         </button>
         <div class="index">
             <span>index i: {{ currentIStage2}}</span>
@@ -109,8 +108,7 @@ Two Passes O(n) time, O(1) space
 <ng-template #playRandomStage2>
     <span class="sub-header cc-sub-header">
 
-        <button mat-button color="secondary" [attr.disabled]="_buttons ? null:'true' " (click)='animateStage2()'
-            aria-label="
+        <button mat-button color="secondary" (click)='animateStage2()' aria-label="
         Animate Button">
             Animate
         </button>
@@ -125,24 +123,19 @@ Two Passes O(n) time, O(1) space
         </ng-container>
 
         <ng-template #handheldStage2>
-            <button mat-button color='secondary' [attr.disabled]="_buttons ? null:'true'"
-                [matMenuTriggerFor]="menu">Customize</button>
-            <mat-menu #menu="matMenu" [attr.disabled]="_buttonsStage2 ?null:'true'">
-                <button mat-menu-item [attr.disabled]="_buttonsStage2 ? null:'true'" (click)="addNaturalNumberStage2()"
-                    aria-label="Bubble Sort Button">Push Natural Number</button>
-                <button mat-menu-item [attr.disabled]="_buttonsStage2 ? null :'true'" (click)="popStage2()"
-                    aria-label="Selection Sort Button">Pop</button>
-                <button mat-menu-item [attr.disabled]="_buttonsStage2 ? null : 'true'" (click)="addZeroStage2()"
-                    aria-label="Insertion Sort Button">Push Zero</button>
+            <button mat-button color='secondary' [matMenuTriggerFor]="menu">Customize</button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="addNaturalNumberStage2()" aria-label="Add Natural Button">Push Natural
+                    Number</button>
+                <button mat-menu-item (click)="popStage2()" aria-label="Pop Button">Pop</button>
+                <button mat-menu-item (click)="addZeroStage2()" aria-label="Push Zero Button">Push Zero</button>
             </mat-menu>
         </ng-template>
         <ng-template #webPortraitStage2>
-            <button mat-button [attr.disabled]="_buttonsStage2 ? null:'true'" (click)="addNaturalNumberStage2()"
-                aria-label="Bubble Sort Button">Push Natural Number</button>
-            <button mat-button [attr.disabled]="_buttonsStage2 ? null :'true'" (click)="popStage2()"
-                aria-label="Selection Sort Button">Pop</button>
-            <button mat-button [attr.disabled]="_buttonsStage2 ? null : 'true'" (click)="addZeroStage2()"
-                aria-label="Insertion Sort Button">Push Zero</button>
+            <button mat-button (click)="addNaturalNumberStage2()" aria-label="Push Natural Button">Push Natural
+                Number</button>
+            <button mat-button (click)="popStage2()" aria-label="Pop Button">Pop</button>
+            <button mat-button (click)="addZeroStage2()" aria-label="Push Zero Button">Push Zero</button>
         </ng-template>
     </span>
 
