@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 import { BreakpointObserver, LayoutModule, BreakpointState, Breakpoints } from '@angular/cdk/layout';
-import { InvokeMethodExpr } from '@angular/compiler';
 
 @Component({
   selector: 'app-duplicate-zeros',
@@ -9,8 +8,8 @@ import { InvokeMethodExpr } from '@angular/compiler';
   styleUrls: ['./duplicate-zeros.component.sass', '../coding-challenges.component.sass']
 })
 export class DuplicateZerosComponent implements OnInit, OnDestroy {
-  dataset = [8, 0, 2, 0, 2, 2, 8, 5, 0]
-  datasetStage2 = [8, 0, 2, 0, 2, 2, 8, 5, 0]
+  datasetStage1 = [4, 3, 3, 7, 0, 3, 0, 3]
+  datasetStage2 = [...this.datasetStage1];
 
   defaultDuration = 500;
   _buttons = false;
@@ -24,11 +23,15 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
   svgStage2 = 'coding-outlet-2'
   isPlayingAnimation = false;
   isPlayingAnimationStage2 = false;
+  isPlayingRandomSeq = false;
   currentI = 0
   currentJ = 0
   currentIStage2 = 0
   currentJStage2 = 0
+  totalZerosStage1 = 0
   totalZerosStage2 = 0
+  Stage1i = 0
+
 
   isHandheld: boolean = false;
 
@@ -44,7 +47,7 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
     });
 
     this.buildSVG();
-    this.update();
+    this.updateStage1();
     this.updateStage2();
   }
   ngOnDestroy(): void {
@@ -67,48 +70,80 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
       .attr('xmlns', this.xmlns)
   }
   async playAll() {
-    this.datasetStage2 = [...this.dataset]
+    this.resetAll();
+    this.isPlayingRandomSeq = true
+
+    this.datasetStage2 = [...this.datasetStage1]
     this.updateStage2();
-    return Promise.all([
+    this.updateStage1();
+    await Promise.all([
       this._animateStage2(),
-      this.animate()
-    ])
-
+      this._animateStage1()
+    ]).catch(e => this.resetAll());
   }
-  reset() {
-
-    this.update()
+  resetAll() {
+    this.stopAnimation()
+    this.stopAnimationStage2()
+    this.updateStage1()
     this.updateStage2()
-
     this.isPlayingAnimation = false
     this.isPlayingAnimationStage2 = false
+    this.isPlayingRandomSeq = false
+  }
+
+  async randomAll(sizeEach: number = this.getRandomInt(9, 9)) {
+
+    this.isPlayingRandomSeq = true
+    this.isPlayingAnimation = true
+    while (this.isPlayingAnimation) {
+
+      this.datasetStage1 = []
+
+      for (let j = 0; j < sizeEach; j++) {
+        this.datasetStage1.push(this.getRandomInt(0, 9))
+      }
+      this.datasetStage2 = [...this.datasetStage1]
+
+      this.updateStage1();
+      this.updateStage2();
+
+      await Promise.all([
+        this.animateStage1(),
+        this.animateStage2()
+      ]).catch(() => { this.resetAll() })
+    }
+  }
+  stopRandomAll() {
+    this.isPlayingRandomSeq = false
+    this.isPlayingAnimation = false
+    this.resetAll();
   }
   // Stage 1 Buttons
   async test(sizeEach: number = this.getRandomInt(9, 9)) {
     this.isPlayingAnimation = true
     while (this.isPlayingAnimation) {
 
-      this.dataset = []
-      this.update();
+      this.datasetStage1 = []
+      this.updateStage1();
 
       for (let j = 0; j < sizeEach; j++) {
-        this.dataset.push(this.getRandomInt(0, 9))
+        this.datasetStage1.push(this.getRandomInt(0, 9))
       }
-      this.update();
-      await this.animate();
+      this.updateStage1();
+      await this.animateStage1().catch(e => console.log(e));
     }
   }
   addNaturalNumber() {
-    this.dataset.push(this.getRandomInt(1, 9))
-    this.update();
+    this.datasetStage1.push(this.getRandomInt(1, 9))
+    this.updateStage1();
   }
   addZero() {
-    this.dataset.push(0)
-    this.update();
+    this.datasetStage1.push(0)
+    this.updateStage1();
   }
   pop() {
-    this.dataset.pop();
-    this.update();
+    this.datasetStage1.pop();
+    this.updateStage1();
   }
   //Stage 2 Buttons
   addNaturalNumberStage2() {
@@ -130,7 +165,6 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
 
       this.datasetStage2 = []
       this.updateStage2();
-
       for (let j = 0; j < sizeEach; j++) {
         this.datasetStage2.push(this.getRandomInt(0, 9))
       }
@@ -138,20 +172,20 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
       await this._animateStage2();
     }
   }
+
+  //// BEGIN STAGE 1 ANIMATIONS METHODS
   // STAGE 1 Update
-  update() {
-
+  updateStage1() {
     d3.select('#coding-outlet-1').selectAll('*').remove()
-
     d3.select('#coding-outlet-1')
       .selectAll('g')
-      .data(this.dataset)
+      .data(this.datasetStage1)
       .join(
         (enter) => {
           return enter
             .append('g')
             .attr('class', 'll-group')
-            .attr('id', (d: any, i: any) => `group-${i}`)
+            .attr('id', (_d: any, i: any) => `group-${i}`)
             .each(async (data: any, index: any, nodes: any) => {
 
               let node = d3.select(nodes[index])
@@ -178,107 +212,155 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
         })
   }
   /// STAGE 1 Animation
-  async animate() {
-    this._buttons = true;
+  async _animateStage1() {
+
     this.isPlayingAnimation = true;
-    let n = this.dataset.length;
+    let n = this.datasetStage1.length - 1;
+    this.totalZerosStage1 = 0;
+    let coords: any[] = [];
 
-
-    let totalZeros = 0;
-    let coords: any = [];
-    for (let i = 0; i < n; i++) {
-      let currRect = d3.select(`#rect${i}-${this.dataset[i]}`);
-      let currText = d3.select(`#text${i}-${this.dataset[i]}`);
+    for (let i = 0; i <= n; i++) {
+      let currRect = d3.select(`#rect${i}-${this.datasetStage1[i]}`);
+      let currText = d3.select(`#text${i}-${this.datasetStage1[i]}`);
       coords.push({ rectX: currRect.attr('x'), textX: currText.attr('x') });
     }
 
+    for (let i = 0; i <= n; i++) { // begin animation loop 
 
-    for (let i = 0; i < n; i++) {
-      let curr = `#rect${i}-${this.dataset[i]}`
-
-      this.currentI = Math.min(i + totalZeros, this.dataset.length - 1)
-      this.currentJ = 0
-      await Promise.all([
-
-        d3.select(curr)
-          .transition()
-          .duration(200)
-          .attr('fill', () =>
-            (this.dataset[i] === 0) ? 'cornflowerblue' : '#79d14d')
-          .end(),
-
-        await new Promise(async (resolve, reject) => {
-
-          if (this.dataset[i] === 0 && ((i + 1 + totalZeros) <= coords.length - 1)) {
-
-            let _ = d3.select(`#group-${n - 1 - totalZeros}`).transition().duration(200).attr('opacity', 0).remove()
-            for (let j = this.dataset.length - 1 - totalZeros; j > i + 1; j--) {
-              this.currentJ = j
-              let prevRect = d3.select(`#rect${j - 1}-${this.dataset[j - 1]}`)
-              let prevText = d3.select(`#text${j - 1}-${this.dataset[j - 1]}`)
-              await Promise.all([
-                prevRect.transition().duration(200)
-                  .attr('fill', '#fcba03')
-                  .attr('x', () => {
-
-                    return coords[j + totalZeros].rectX
-                  })
-                  .transition().duration(200)
-                  .attr('fill', '#bbb')
-                  .end(),
-
-                prevText.transition().duration(200)
-                  .attr('x', () => {
-                    return coords[j + totalZeros].textX
-                  })
-                  .transition().duration(200)
-                  .end(),
-              ])
+      let curr = `#rect${i}-${this.datasetStage1[i]}`;
+      this.currentI = i;
+      this.currentJ = 0;
+      let remaingSpace = n - i;
+      let currRect = d3.select(curr)
+      await currRect   // set tile colors here
+        .transition()
+        .duration(200)
+        .attr('fill', (_data: any, index: any, nodes: any) => {
+          if (this.datasetStage1[i] === 0) { // initial loop
+            if (this.totalZerosStage1 >= remaingSpace) {
+              return '#79d14d'; // green
             }
-
-            let newZeroGroup = d3.select(`#${this.svgStage1}`).append('g')
-
-            newZeroGroup
-              .append('rect')
-              .attr('class', 'element-shape')
-              .attr('width', 28)
-              .attr('height', 40)
-              .attr('id', () => `rectZero`)
-              .attr('y', 15)
-              .attr('x', () => coords[i + 1 + totalZeros].rectX)
-              .attr('fill', 'cornflowerblue')
-              .attr('opacity', 0)
-              .transition().duration(200)
-              .attr('opacity', 1)
-
-            newZeroGroup
-              .append('text')
-              .text('0')
-              .attr('y', 40)
-              .attr('x', () => coords[i + 1 + totalZeros].textX)
-              .attr('opacity', 0)
-              .transition().duration(200)
-              .attr('opacity', 1)
-
-            totalZeros++;
-
+            d3.select(nodes[index]).attr('isDuplicate', true);
+            this.totalZerosStage1++;
+            return 'cornflowerblue';
           }
-          setTimeout(resolve, 200);
-        }),
+          else {
+            if (i > n - this.totalZerosStage1) return '#fcba03' // yellow
+            return '#79d14d'  // green
+          }
+        }).on('interrupt', () => { i = this.datasetStage1.length + 1; return; })
+        .end().catch((e) => { i = this.datasetStage1.length + 1; this.resetAll(); console.log('promise interrupted ANIME A'), e })
 
-      ])
+
+      if (this.datasetStage1[i] === 0 && currRect.attr('isDuplicate')) // trigger second loop Loop
+        await this.checkZeros(i, coords).catch((e) => {
+          console.log('Promise Interrupted in _animateStage1(): ', e); i = this.datasetStage1.length + 1; this.resetAll();;
+        })
     }
-    //this.isPlayingAnimation = false;
-    this.update();
   }
-  /// STAGE 1 Stop Animation
+  async animateStage1() {
+    await this._animateStage1().catch(e => console.log(e));
+    this.Stage1i = 0
+    //this.updateStage1();
+  }
+  /// STAGE 1 Helper Methods
   stopAnimation() {
-    this._buttons = false;
+    this.totalZerosStage1 = 0;
+
     d3.select(`#${this.svgStage1}`).selectAll('*').interrupt()
-    this.update();
+    d3.select(`#${this.svgStage1}`).selectAll('g').remove()
+    this.updateStage1();
     this.isPlayingAnimation = false;
+    this._buttons = false;
+  }
+  async checkZeros(index: number, coords: any[]) {
+    return new Promise(async (resolve, recject) => {
+      if (index + this.totalZerosStage1 <= this.datasetStage1.length - 1) {
+        await this.shiftElements(coords, index).then(async () => {
+          await this.insertZeroStage1(coords, index);
+        })
+          .catch(e => { recject(e); })
+      }
+      setTimeout(resolve, 0)
+    })
+  }
+  async shiftElements(coords: any[], index: number) {
+    return new Promise(async (resolve, reject) => {
+      let n = this.datasetStage1.length - 1;
+      let len = this.datasetStage1.length;
+
+      let _ = d3.select(`#group-${len - this.totalZerosStage1}`)
+        .transition().duration(200).attr('opacity', 0)//.remove()
+
+      for (let j = n - this.totalZerosStage1; j > index; j--) { // Secondary Loop
+        this.currentJ = j;
+
+        let prevRect = d3.select(`#rect${j}-${this.datasetStage1[j]}`);
+        let prevText = d3.select(`#text${j}-${this.datasetStage1[j]}`);
+
+        await Promise.all([
+          prevRect.transition().duration(200)
+            .attr('fill', '#fcba03') // yellow
+            .attr('x', () => {
+              return coords[j + this.totalZerosStage1].rectX
+            })
+            .transition().duration(200)
+            .attr('fill', '#bbb').end(), // grey
+
+          prevText.transition().duration(200)
+            .attr('x', () => {
+              return coords[j + this.totalZerosStage1].textX
+            })
+            .transition().duration(200)
+        ]).catch((e) => {
+
+          j = 0;
+          reject(e);
+        })
+
+      }
+      setTimeout(resolve, 200)
+    })
+  }
+  async insertZeroStage1(coords: any[], index: number) {
+    return Promise.all([
+      d3.select(`#${this.svgStage1}`).append('g')
+        .append('rect')
+        .attr('class', 'element-shape')
+        .attr('width', 28)
+        .attr('height', 40)
+        .attr('id', () => `rect${index + this.totalZerosStage1}-0-stage1`)
+        .attr('y', 15)
+        .attr('x', () => {
+          return coords[index + this.totalZerosStage1].rectX
+        })
+        .attr('fill', () => {
+          if (this.Stage1i === this.datasetStage1.length + 1) return '#bbb'
+          return 'cornflowerblue'
+        })
+        .attr('T', true)
+        .attr('stroke', 1)
+        .attr('stroke-width', 1)
+        .attr('opacity', 0)
+        .transition().duration(200).attr('opacity', 1),
+
+      d3.select(`#${this.svgStage1}`).append('g')
+        .append('text')
+        .attr('class', 'element-text')
+        .text('0')
+        .attr('T', true)
+        .attr('id', () => `text${index}-0}-stage1`)
+        .attr('x', () => {
+          return coords[index + this.totalZerosStage1].textX
+        })
+        .attr('y', 40)
+        .attr('opacity', 0)
+        .transition().duration(200).attr('opacity', 1)
+
+    ]).catch((e) => { console.log('insertZeros promise') })
 
   }
+  //// BEGIN STAGE 2 ANIMATION METHODS
   // STAGE 2 Update
   updateStage2() {
     d3.select('#coding-outlet-2').selectAll('*').remove()
@@ -291,7 +373,7 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
           return enter
             .append('g')
             .attr('class', 'll-group-stage2')
-            .attr('id', (d: any, i: any) => `group-${i}-stage2`)
+            .attr('id', (_d: any, i: any) => `group-${i}-stage2`)
             .each(async (data: any, index: any, nodes: any) => {
 
               let node = d3.select(nodes[index])
@@ -320,25 +402,21 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
   /// STAGE 2 Stop Animation
   async stopAnimationStage2() {
     this.totalZerosStage2 = 0;
-
-    //this._buttonsStage2 = false;
     d3.select(`#${this.svgStage2}`).selectAll('*').interrupt()
     this.updateStage2();
     this.isPlayingAnimationStage2 = false;
-
   }
   async animateStage2() {
     await this._animateStage2();
     this._buttonsStage2 = false
-    //await this.updateAwait();
-    //this.isPlayingAnimationStage2 = false
+
   }
   /// STAGE 2 Animation
   async _animateStage2() {
     this._buttonsStage2 = true;
     this.isPlayingAnimationStage2 = true;
-    await this.firstPassStage2().catch(e => { console.log('Promise Interrupted') })
-    await this.secondPassStage2().catch(e => { console.log('Promise Interrupted') })
+    await this.firstPassStage2().catch(_e => { console.log('Promise Interrupted') })
+    await this.secondPassStage2().catch(_e => { console.log('Promise Interrupted') })
     await this.timeout(500) // time between each iteration
   }
   /// STAGE 2 Helper Methods
@@ -354,7 +432,7 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
       await d3.select(curr)
         .transition()
         .duration(200)
-        .attr('fill', (data: any, index: any, nodes: any) => {
+        .attr('fill', (_data: any, index: any, nodes: any) => {
           if (this.datasetStage2[i] === 0) {
             let remainSpace = n - i
             if (i > n - this.totalZerosStage2) return '#fcba03'; // yellow
@@ -375,7 +453,7 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
     }
   }
   async secondPassStage2() {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve, _reject) => {
       if (this.totalZerosStage2 < 1) resolve(false);
       else {
         let n = this.datasetStage2.length - 1;
@@ -409,7 +487,7 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
     })
   }
   insertAnimation(index: number, coords: any[]) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve, _reject) => {
       let lastRect = d3.select(`#rect${index}-${this.datasetStage2[index]}-stage2`)
       let lastText = d3.select(`#text${index}-${this.datasetStage2[index]}-stage2`)
 
@@ -445,7 +523,7 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
         .attr('class', 'element-shape')
         .attr('width', 28)
         .attr('height', 40)
-        .attr('id', () => `rect${index + this.totalZerosStage2}-'0'-stage2`)
+        .attr('id', () => `rect${index + this.totalZerosStage2}-0-stage2`)
         .attr('y', 15)
         .attr('x', () => {
           return coords[index + this.totalZerosStage2].rectX

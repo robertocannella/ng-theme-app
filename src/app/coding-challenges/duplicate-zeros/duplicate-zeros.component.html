@@ -1,10 +1,25 @@
 <a href='https://leetcode.com/problems/duplicate-zeros/'>
     <h3>Dulplicate Zeros</h3>
 </a>
-<button mat-button color="secondary" (click)='playAll()' aria-label="
+
+<ng-container *ngIf="isPlayingRandomSeq; then stopRandomSeq; else playRandomSeq;"></ng-container>
+<ng-template #playRandomSeq>
+    <button mat-button color="secondary" (click)='randomAll()' aria-label="
+    Animate Button">
+        Compare Random Sequences
+    </button>
+    <button mat-button color="secondary" (click)='playAll()' aria-label="
 Animate Button">
-    Compare
-</button>
+        Compare Once
+    </button>
+</ng-template>
+<ng-template #stopRandomSeq>
+    <button mat-button color="secondary" (click)='resetAll()' aria-label="
+    Animate Button">
+        <fa-icon icon="redo"></fa-icon>&nbsp;
+    </button>
+</ng-template>
+
 <span class="sub-header cc-sub-header">Approach 1:</span>
 Brute Force O(n<sup>2</sup>) time, O(1) space
 
@@ -20,12 +35,14 @@ Brute Force O(n<sup>2</sup>) time, O(1) space
     <span class="sub-header cc-sub-header">
 
         <button mat-button color="secondary" (click)='stopAnimation()' aria-label=" Animate Button">
-            Stop
+            <fa-icon icon="redo"></fa-icon>&nbsp;
         </button>
         <div class="index">
             <span>index i: {{ currentI}}</span>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <span>index j: {{ currentJ}}</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <span>Total Zeros: {{ totalZerosStage1}}</span>
         </div>
     </span>
 </ng-template>
@@ -36,7 +53,8 @@ Brute Force O(n<sup>2</sup>) time, O(1) space
 <ng-template #playRandom>
     <span class="sub-header cc-sub-header">
 
-        <button mat-button color="secondary" [attr.disabled]="_buttons ? null:'true' " (click)='animate()' aria-label="
+        <button mat-button color="secondary" [attr.disabled]="_buttons ? null:'true' " (click)='animateStage1()'
+            aria-label="
         Animate Button">
             Animate
         </button>
@@ -93,7 +111,7 @@ Two Passes O(n) time, O(1) space
     <span class="sub-header cc-sub-header">
 
         <button mat-button color="secondary" (click)='stopAnimationStage2()' aria-label=" Animate Button">
-            Reset
+            <fa-icon icon="redo"></fa-icon>&nbsp;
         </button>
         <div class="index">
             <span>index i: {{ currentIStage2}}</span>
