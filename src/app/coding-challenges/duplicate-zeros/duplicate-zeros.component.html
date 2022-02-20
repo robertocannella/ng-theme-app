@@ -4,14 +4,16 @@
 
 <ng-container *ngIf="isPlayingRandomSeq; then stopRandomSeq; else playRandomSeq;"></ng-container>
 <ng-template #playRandomSeq>
-    <button mat-button color="secondary" (click)='randomAll()' aria-label="
+    <span #tooltip="matTooltip" [matTooltip]="_topButtons ? 'Reset stages':''">
+        <button mat-button color="secondary" (click)='randomAll()' [disabled]="_topButtons" aria-label="
     Animate Button">
-        Compare Random Sequences
-    </button>
-    <button mat-button color="secondary" (click)='compareAll()' aria-label="
-Animate Button">
-        Compare Once
-    </button>
+            Compare Random Sequences
+        </button>
+        <button mat-button color="secondary" (click)='compareAll()' [disabled]="_topButtons" aria-label="
+Animate Button" matTooltipHideDelay="100000">
+            Compare Once
+        </button>
+    </span>
 </ng-template>
 <ng-template #stopRandomSeq>
     <button mat-button color="secondary" (click)='resetAll()' aria-label="
