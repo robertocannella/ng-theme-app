@@ -8,7 +8,7 @@
     Animate Button">
         Compare Random Sequences
     </button>
-    <button mat-button color="secondary" (click)='playAll()' aria-label="
+    <button mat-button color="secondary" (click)='compareAll()' aria-label="
 Animate Button">
         Compare Once
     </button>
@@ -34,7 +34,8 @@ Brute Force O(n<sup>2</sup>) time, O(1) space
 <ng-template #stop>
     <span class="sub-header cc-sub-header">
 
-        <button mat-button color="secondary" (click)='stopAnimation()' aria-label=" Animate Button">
+        <button mat-button color="secondary" (click)='stopAnimation()' [disabled]="_buttons"
+            aria-label=" Animate Button">
             <fa-icon icon="redo"></fa-icon>&nbsp;
         </button>
         <div class="index">
@@ -110,7 +111,8 @@ Two Passes O(n) time, O(1) space
 <ng-template #stopStage2>
     <span class="sub-header cc-sub-header">
 
-        <button mat-button color="secondary" (click)='stopAnimationStage2()' aria-label=" Animate Button">
+        <button mat-button color="secondary" (click)='stopAnimationStage2()' [disabled]="_buttons"
+            aria-label=" Animate Button">
             <fa-icon icon="redo"></fa-icon>&nbsp;
         </button>
         <div class="index">

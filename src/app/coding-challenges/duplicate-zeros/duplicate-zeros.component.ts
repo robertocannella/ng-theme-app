@@ -69,9 +69,10 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
       .attr('id', this.svgStage2)
       .attr('xmlns', this.xmlns)
   }
-  async playAll() {
+  async compareAll() {
     this.resetAll();
     this.isPlayingRandomSeq = true
+    this._buttons = true
 
     this.datasetStage2 = [...this.datasetStage1]
     this.updateStage2();
@@ -95,6 +96,7 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
 
     this.isPlayingRandomSeq = true
     this.isPlayingAnimation = true
+    this._buttons = true
     while (this.isPlayingAnimation) {
 
       this.datasetStage1 = []
@@ -112,6 +114,7 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
         this.animateStage2()
       ]).catch(() => { this.resetAll() })
     }
+
   }
   stopRandomAll() {
     this.isPlayingRandomSeq = false
