@@ -30,6 +30,7 @@ import { DuplicateZerosComponent } from './coding-challenges/duplicate-zeros/dup
 import { CodingChallengesComponent } from './coding-challenges/coding-challenges.component';
 import { SortedSquaresComponent } from './coding-challenges/sorted-squares/sorted-squares.component';
 import { D3Service } from "./d3.service";
+import { StageComponent } from './coding-challenges/stage/stage.component';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { D3Service } from "./d3.service";
     HeapComponent,
     DuplicateZerosComponent,
     CodingChallengesComponent,
-    SortedSquaresComponent
+    SortedSquaresComponent,
+    StageComponent
   ],
   imports: [
     BrowserModule,

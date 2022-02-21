@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 import { BreakpointObserver, LayoutModule, BreakpointState, Breakpoints } from '@angular/cdk/layout';
+import { ApproachTwo } from './approachTwo';
 
 @Component({
   selector: 'app-duplicate-zeros',
@@ -20,15 +21,23 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
   vbHeight = 150;
   xmlns = 'http://www.w3.org/2000/svg';
   svgStage1 = 'coding-outlet-1';
-  svgStage2 = 'coding-outlet-2'
+  svgStage2 = 'coding-outlet-2';
+  svgStage3 = 'codding-outlet-3';
+  approachStage3: any;
 
 
   // Button Toggles/Contols
   _buttons = false;
   _buttonsStage2 = false;
+  _buttonsStage1 = false;
   _topButtons = false;
+  _resetButton = false;
+  _statusButton = true;
+  _statusButtonStage1 = true;
+
   isPlayingAnimation = false;
   isPlayingAnimationStage2 = false;
+  isPlayingAnimationStage1 = false;
   isPlayingRandomSeq = false;
 
   // For Displaying content in DOM 
@@ -38,6 +47,9 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
   currentJStage2 = 0
   totalZerosStage1 = 0
   totalZerosStage2 = 0
+  status = 'Stop';
+  statusStage1 = 'Stop';
+  _controlsStage1 = false;
   // Not used - to be removed
   Stage1i = 0
 
@@ -47,10 +59,13 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
   datasetStage2 = [...this.datasetStage1];
 
 
-  constructor(public breakpointObserver: BreakpointObserver) { }
+  constructor(public breakpointObserver: BreakpointObserver) {
+    this.approachStage3 = new ApproachTwo([1, 2, 3, 4, 0, 0, 0, 3, 4, 5, 6])
+  }
 
   /// Angular Methods
   ngOnInit(): void {
+
     this.breakpointObserver.observe([
       Breakpoints.XSmall
     ]).subscribe((state: BreakpointState) => {
@@ -61,7 +76,7 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
     this.updateStage2();
   }
   ngOnDestroy(): void {
-    this.stopAnimation();
+    this.stopAnimationStage1();
     this.stopAnimationStage2();
     // unsubscribe from breakpoint subscription
   }
@@ -81,20 +96,28 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
   }
   async compareAll() {
     this.resetAll();
-    this.isPlayingRandomSeq = true
-    this._buttons = true
+    this._topButtons = true
+    return new Promise(async (resolve) => {
 
+      this.status = 'Comparing...'
+      this.isPlayingRandomSeq = true
+      this._buttons = true
+      this.datasetStage2 = [...this.datasetStage1]
+      this.updateStage2();
+      this.updateStage1();
+      await Promise.all([
+        this._animateStage2(),
+        this._animateStage1()
+      ])//.catch(e => this.resetAll());
 
-    this.datasetStage2 = [...this.datasetStage1]
-    this.updateStage2();
-    this.updateStage1();
-    await Promise.all([
-      this._animateStage2(),
-      this._animateStage1()
-    ]).catch(e => this.resetAll());
+      setTimeout(() => {
+        resolve(this.resolveAnimation())
+      }, 200)
+    })
   }
-  resetAll() {
-    this.stopAnimation()
+  async resetAll() {
+
+    this.stopAnimationStage1()
     this.stopAnimationStage2()
     this.updateStage1()
     this.updateStage2()
@@ -103,59 +126,106 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
     this.isPlayingRandomSeq = false
     this._topButtons = false
     this._buttons = false
+    this._resetButton = false
   }
-  async randomAll(sizeEach: number = this.getRandomInt(12, 12)) {
+  async randomAll(sizeEach: number = this.getRandomInt(9, 9)) {
+    this.resetAll();
+    this._topButtons = true
+    this._statusButton = false;
+    this.status = 'Stop';
+    return new Promise(async (resolve) => {
 
-    this.isPlayingRandomSeq = true
-    this.isPlayingAnimation = true
-    this.isPlayingAnimationStage2 = true;
+      this.isPlayingRandomSeq = true
+      this.isPlayingAnimation = true
+      this.isPlayingAnimationStage1 = true;
+      this.isPlayingAnimationStage2 = true;
+      this._buttons = true
 
-    this._buttons = true
-    while (this.isPlayingAnimation) {
+      while (this.isPlayingAnimation) {
 
-      this.datasetStage1 = []
+        this.datasetStage1 = []
 
-      for (let j = 0; j < sizeEach; j++) {
-        this.datasetStage1.push(this.getRandomInt(0, 9))
+        for (let j = 0; j < sizeEach; j++) {
+          this.datasetStage1.push(this.getRandomInt(0, 9))
+        }
+        if (!this.datasetStage1.includes(0))
+          continue;
+        this.datasetStage2 = [...this.datasetStage1]
+
+        this.updateStage1();
+        this.updateStage2();
+
+        await Promise.all([
+          this._animateStage1(),
+          this.animateStage2()
+        ]).catch(() => { this.resetAll() })
       }
-      if (!this.datasetStage1.includes(0))
-        continue;
-      this.datasetStage2 = [...this.datasetStage1]
-
-      this.updateStage1();
-      this.updateStage2();
-
-      await Promise.all([
-        this.animateStage1(),
-        this.animateStage2()
-      ]).catch(() => { this.resetAll() })
-    }
-
+      setTimeout(() => {
+        resolve(this.resolveAnimation())
+      }, 200)
+    })
   }
-  stopRandomAll() {
+  resolveAnimation() {
+    this._topButtons = false;
+    this.status = 'Finished';
+  }
+  stopAll() {
+    this._statusButton = true;
+    this.status = 'Ending...'
+    this.isPlayingAnimation = false
+  }
+
+  resetStages() {
     this.isPlayingRandomSeq = false
     this.isPlayingAnimation = false
+    // this.stopAnimation();
+    //this.stopAnimationStage2();
     this.isPlayingAnimationStage2 = false
-    this.resetAll();
+    this.isPlayingAnimationStage1 = false
+    this.updateStage1();
+    this.updateStage2();
+    // this._buttons = false;
   }
 
   //********************** DOM BUTTON LOGIC
   //
   //
   // Stage 1 Buttons
-  async test(sizeEach: number = this.getRandomInt(9, 9)) {
-    this.isPlayingAnimation = true
-    while (this.isPlayingAnimation) {
+  async playRandomStage1(sizeEach: number = this.getRandomInt(9, 9)) {
+    this.isPlayingAnimationStage1 = true;
+    this.statusStage1 = 'Stop'
+    this._statusButtonStage1 = false;
+    this._controlsStage1 = true;
 
-      this.datasetStage1 = []
-      this.updateStage1();
+    return new Promise(async (resolve) => {
 
-      for (let j = 0; j < sizeEach; j++) {
-        this.datasetStage1.push(this.getRandomInt(0, 9))
+      while (this.isPlayingAnimationStage1) {
+
+        this.datasetStage1 = []
+        this.updateStage1();
+
+        for (let j = 0; j < sizeEach; j++) {
+          this.datasetStage1.push(this.getRandomInt(0, 9))
+        }
+        this.updateStage1();
+        await this._animateStage1().catch(e => console.log(e));
       }
-      this.updateStage1();
-      await this.animateStage1().catch(e => console.log(e));
-    }
+      setTimeout(() => {
+        resolve(this.resolveAnimationPlayRandomStage1())
+      }, 200)
+    })
+
+  }
+  stopStage1() {
+    this._statusButtonStage1 = true;
+    this.statusStage1 = 'Ending...'
+    this.isPlayingAnimationStage1 = false
+
+  }
+  resolveAnimationPlayRandomStage1() {
+    this._buttonsStage1 = false;
+    this.statusStage1 = 'Finished';
+
   }
   addNaturalNumber() {
     this.datasetStage1.push(this.getRandomInt(1, 9))
@@ -240,18 +310,21 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
   }
   // STAGE 1 Animation
   async animateStage1() {
-    this._topButtons = true;
+    this.updateStage1();
+    this._topButtons = true
+    this._statusButton = false;
+    this._statusButtonStage1 = true;
+    this._controlsStage1 = true;
+    this.statusStage1 = 'Playing...';
     await this._animateStage1().catch(e => console.log(e));
-
-    this.Stage1i = 0
-
-    //this.updateStage1();
   }
+
   async _animateStage1() {
     return new Promise(async (resolve) => {
-
-
+      this._topButtons = true;
+      this._buttonsStage1 = true;
       this.isPlayingAnimation = true;
+      this.isPlayingAnimationStage1 = true;
       let n = this.datasetStage1.length - 1;
       this.totalZerosStage1 = 0;
       let coords: any[] = [];
@@ -286,30 +359,37 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
               return '#79d14d'  // green
             }
           }).on('interrupt', () => { i = this.datasetStage1.length + 1; return; })
-          .end().catch((e) => { i = this.datasetStage1.length + 1; this.stopAnimation(); })
+          .end().catch((e) => { i = this.datasetStage1.length + 1; this.stopAnimationStage1(); })
 
 
         if (this.datasetStage1[i] === 0 && currRect.attr('isDuplicate')) // trigger second loop Loop
           await this.checkZeros(i, coords).catch((e) => {
-            console.log('Promise Interrupted in _animateStage1(): ', e); i = this.datasetStage1.length + 1; this.stopAnimation();;
-          })
+            console.log('Promise Interrupted in _animateStage1(): ', e);
+            i = this.datasetStage1.length + 1;
 
+          })
       }
-      setTimeout(resolve, 200)
+      setTimeout(() => {
+        resolve(this.resolveStage1Animation())
+      }, 200)
     })
 
   }
+  resolveStage1Animation() {
+    //this._buttonsStage1 = false;
+    this.statusStage1 = 'Finished.'
+    this._topButtons = false;
+    this.isPlayingAnimationStage1 = false;
+    this._buttonsStage1 = false;
+  }
   /// STAGE 1 Helper Methods
-  stopAnimation() {
+  stopAnimationStage1() {
     this.totalZerosStage1 = 0;
-    if (!this.isPlayingAnimationStage2)
-      this._topButtons = false;
-
     d3.select(`#${this.svgStage1}`).selectAll('*').interrupt()
     d3.select(`#${this.svgStage1}`).selectAll('g').remove()
     this.updateStage1();
-
-    this.isPlayingAnimation = false;
+    this.isPlayingAnimationStage1 = false;
+    this._controlsStage1 = false;
   }
   async checkZeros(index: number, coords: any[]) {
     return new Promise(async (resolve, recject) => {
@@ -404,6 +484,7 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
   //
   // STAGE 2 Update
   updateStage2() {
+
     d3.select('#coding-outlet-2').selectAll('*').remove()
 
     d3.select('#coding-outlet-2')
@@ -440,25 +521,28 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
             })
         })
   }
-
   // STAGE 2 Animations
   async animateStage2() {
-    this._topButtons = true;
-    await this._animateStage2();
+    this._buttonsStage2 = true
+    return new Promise(async (resolve) => {
 
+      await this._animateStage2();
+      setTimeout(() => {
+        resolve(this._buttonsStage2 = false)
+      }, 200)
+    })
   }
   async _animateStage2() {
 
     this.isPlayingAnimationStage2 = true;
     await this.firstPassStage2().catch(_e => { console.log('Promise Interrupted') })
     await this.secondPassStage2().catch(_e => { console.log('Promise Interrupted') })
-    await this.timeout(2000) // time between each iteration
+    await this.timeout(200) // time between each iteration
   }
 
   // STAGE 2 Helper Methods
   async stopAnimationStage2() {
-    if (!this.isPlayingAnimation)
-      this._topButtons = false;
+
     this.totalZerosStage2 = 0;
     d3.select(`#${this.svgStage2}`).selectAll('*').interrupt()
     this.updateStage2();
@@ -541,7 +625,7 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
         })
       lastText.transition().duration(400).attr('x', coords[index + this.totalZerosStage2].textX)
 
-      setTimeout(resolve, 400)
+      setTimeout(resolve, 200)
 
     });
   }

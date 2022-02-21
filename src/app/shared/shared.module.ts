@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material/material.module';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { AppRoutingModule } from '../app-routing.module';
-import { faArrowCircleDown, faRecycle, faRedo, fas } from '@fortawesome/free-solid-svg-icons';
+import { faArrowCircleDown, faArrowLeft, faBackward, faRecycle, faRedo, fas, faUndo } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
@@ -100,6 +100,7 @@ export class SharedModule {
       faChevronRight, faChevronLeft, faBars,
       faCalculator, faCheckCircle, faHeart,
       faRandom, faSearch, faWindowClose,
-      faTimes, faCode, faBars, faRecycle, faRedo)
+      faTimes, faCode, faBars, faRecycle, faRedo, faUndo,
+      faBackward, faArrowLeft)
   }
 }

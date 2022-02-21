@@ -4,23 +4,31 @@
 
 <ng-container *ngIf="isPlayingRandomSeq; then stopRandomSeq; else playRandomSeq;"></ng-container>
 <ng-template #playRandomSeq>
-    <span #tooltip="matTooltip" [matTooltip]="_topButtons ? 'Reset stages':''">
-        <button mat-button color="secondary" (click)='randomAll()' [disabled]="_topButtons" aria-label="
+    <span #tooltip="matTooltip" [matTooltip]="isPlayingAnimation ? 'Reset stages':''">
+        <button mat-button color="secondary" (click)='randomAll()' [disabled]="isPlayingAnimation" aria-label="
     Animate Button">
-            Compare Random Sequences
+            Random Sequences
         </button>
-        <button mat-button color="secondary" (click)='compareAll()' [disabled]="_topButtons" aria-label="
+        <button mat-button color="secondary" (click)='compareAll()' [disabled]="isPlayingAnimation" aria-label="
 Animate Button" matTooltipHideDelay="100000">
-            Compare Once
+            Compare
         </button>
     </span>
 </ng-template>
 <ng-template #stopRandomSeq>
-    <button mat-button color="secondary" (click)='resetAll()' aria-label="
+    <button mat-button #tooltip="matTooltip" matTooltip="Reset" color="secondary" [disabled]="_topButtons"
+        (click)='resetStages()' aria-label="
     Animate Button">
-        <fa-icon icon="redo"></fa-icon>&nbsp;
+        <fa-icon icon="undo"></fa-icon>&nbsp;
+    </button>
+    <button mat-button color="secondary" [disabled]="_statusButton" (click)='stopAll()' aria-label="
+    Animate Button">
+        {{ status }}
     </button>
 </ng-template>
+
+<!-- STAGE 1 -->
+
 
 <span class="sub-header cc-sub-header">Approach 1:</span>
 Brute Force O(n<sup>2</sup>) time, O(1) space
@@ -28,7 +36,7 @@ Brute Force O(n<sup>2</sup>) time, O(1) space
 <div class='linebreak-light'></div>
 <span class="sub-header cc-sub-header">
 
-    <ng-container *ngIf="isPlayingAnimation; then stop; else playRandom">
+    <ng-container *ngIf="_controlsStage1 then stop; else playRandom">
     </ng-container>
 </span>
 
@@ -36,9 +44,13 @@ Brute Force O(n<sup>2</sup>) time, O(1) space
 <ng-template #stop>
     <span class="sub-header cc-sub-header">
 
-        <button mat-button color="secondary" (click)='stopAnimation()' [disabled]="_buttons"
+        <button mat-button color="secondary" (click)='stopAnimationStage1()' [disabled]="_buttonsStage1"
             aria-label=" Animate Button">
-            <fa-icon icon="redo"></fa-icon>&nbsp;
+            <fa-icon icon="undo"></fa-icon>&nbsp;
+        </button>
+        <button mat-button color="secondary" [disabled]="_statusButtonStage1" (click)='stopStage1()' aria-label="
+        Animate Button">
+            {{ statusStage1 }}
         </button>
         <div class="index">
             <span>index i: {{ currentI}}</span>
@@ -50,18 +62,15 @@ Brute Force O(n<sup>2</sup>) time, O(1) space
     </span>
 </ng-template>
 
-
-
-
 <ng-template #playRandom>
     <span class="sub-header cc-sub-header">
 
-        <button mat-button color="secondary" [attr.disabled]="_buttons ? null:'true' " (click)='animateStage1()'
-            aria-label="
+        <button mat-button color="secondary" [disabled]="_buttonsStage1" (click)='animateStage1()' aria-label="
         Animate Button">
             Animate
         </button>
-        <button mat-button color="secondary" (click)='test()' aria-label=" Animate Button">
+        <button mat-button color="secondary" [disabled]="_buttonsStage1" (click)='playRandomStage1()'
+            aria-label=" Animate Button">
             Play Random
         </button>
 
@@ -70,14 +79,14 @@ Brute Force O(n<sup>2</sup>) time, O(1) space
         </ng-container>
         <ng-template #handheld>
 
-            <button mat-button color='secondary' [attr.disabled]="_buttons ? null:'true'"
+            <button mat-button color='secondary' [attr.disabled]="_buttonsStage1"
                 [matMenuTriggerFor]="menu">Customize</button>
-            <mat-menu #menu="matMenu" [attr.disabled]="_buttons ?null:'true'">
-                <button mat-menu-item [attr.disabled]="_buttons ? null:'true'" (click)="addNaturalNumber()"
+            <mat-menu #menu="matMenu" [attr.disabled]="_buttonsStage1">
+                <button mat-menu-item [attr.disabled]="_buttonsStage1" (click)="addNaturalNumber()"
                     aria-label="Bubble Sort Button">Push Natural Number</button>
-                <button mat-menu-item [attr.disabled]="_buttons ? null :'true'" (click)="pop()"
+                <button mat-menu-item [attr.disabled]="_buttonsStage1" (click)="pop()"
                     aria-label="Selection Sort Button">Pop</button>
-                <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="addZero()"
+                <button mat-menu-item [attr.disabled]="_buttonsStage1" (click)="addZero()"
                     aria-label="Insertion Sort Button">Push Zero</button>
             </mat-menu>
         </ng-template>
@@ -113,9 +122,9 @@ Two Passes O(n) time, O(1) space
 <ng-template #stopStage2>
     <span class="sub-header cc-sub-header">
 
-        <button mat-button color="secondary" (click)='stopAnimationStage2()' [disabled]="_buttons"
+        <button mat-button color="secondary" (click)='stopAnimationStage2()' [disabled]="_buttonsStage2"
             aria-label=" Animate Button">
-            <fa-icon icon="redo"></fa-icon>&nbsp;
+            <fa-icon icon="undo"></fa-icon>&nbsp;
         </button>
         <div class="index">
             <span>index i: {{ currentIStage2}}</span>
@@ -164,3 +173,5 @@ Two Passes O(n) time, O(1) space
 </ng-template>
 <div id='svg-coding-stage-2' style="overflow:scroll;text-align:center">
 </div>
+<!-- [childProperty]="parentProperty" -->
+<app-stage [approach]="approachStage3"></app-stage>
