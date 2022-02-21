@@ -1,5 +1,8 @@
 import UtilityFunctions from "src/app/shared/UtiltiyFunctions";
+
+
 export class Approach {
+
     isPlayingAnimation = false;
     isPlayingRandom = false;
     totalZeros = 0;
@@ -12,6 +15,7 @@ export class Approach {
     description = 'use this for breif desc';
     status = 'Stop';
     randomLoop = false;
+    maxSize = 19;
 
 
     constructor(public dataset: any[]) {
@@ -19,40 +23,45 @@ export class Approach {
     }
 
     // Handle Single Play Animations Here
-    animate(): Promise<unknown> {
+    animate(controls?: boolean): Promise<unknown> {
         return new Promise(() => {
 
         });
     }
-    resolveAnimate() {
+    resolveAnimate(controlButtons?: boolean) {
         this.status = 'Finished.'
-        this.buttonsDisabled = false;
+        this.buttonsDisabled = controlButtons ? this.buttonsDisabled : false;
     }
-    beginAnimate() {
+    async beginAnimate() {
         this.status = 'Animating'
         this.buttonsDisabled = true;
         this.isPlayingAnimation = true;
         this.statusButtonDisabled = true;
-        this.animate();
+        return new Promise(async (resolve) => {
+            await this.animate();
+            setTimeout(() => {
+                resolve(true)
+            }, 200)
+        })
     }
     stopAnimation(): void {
-
     }
-
     // Handle Multiple Play Animations Here
 
-    playRandom(): Promise<void> {
-        return new Promise(() => {
+    async playRandom(): Promise<void> {
+        return new Promise(async () => {
 
         });
     }
     beginPlayRandom() {
+        console.log('playing')
         this.statusButtonDisabled = false;
         this.buttonsDisabled = true;
         this.isPlayingRandom = true;
         this.status = 'Stop'
         this.randomLoop = true;
         this.playRandom();
+
     }
     stopPlayRandom() {
         this.statusButtonDisabled = true;
@@ -62,7 +71,6 @@ export class Approach {
     resolvePlayRandom() {
         this.buttonsDisabled = false;
         this.status = 'Finished';
-
     }
     reset(): void {
         this.update()
@@ -77,8 +85,11 @@ export class Approach {
         this.update();
     }
     push(isZero?: number): void {
+        if (this.dataset.length > this.maxSize)
+            return;
         (isZero === 0) ? this.dataset.push(0) : this.dataset.push(UtilityFunctions.getRandomInt(1, 9))
         this.update();
     }
+
 
 }

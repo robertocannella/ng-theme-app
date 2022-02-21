@@ -5,11 +5,11 @@
 <ng-container *ngIf="isPlayingRandomSeq; then stopRandomSeq; else playRandomSeq;"></ng-container>
 <ng-template #playRandomSeq>
     <span #tooltip="matTooltip" [matTooltip]="isPlayingAnimation ? 'Reset stages':''">
-        <button mat-button color="secondary" (click)='randomAll()' [disabled]="isPlayingAnimation" aria-label="
+        <button mat-button color="secondary" (click)='randomAll()' [disabled]="isPlayingAnimation > 0" aria-label="
     Animate Button">
             Random Sequences
         </button>
-        <button mat-button color="secondary" (click)='compareAll()' [disabled]="isPlayingAnimation" aria-label="
+        <button mat-button color="secondary" (click)='compareAll()' [disabled]="isPlayingAnimation > 0" aria-label="
 Animate Button" matTooltipHideDelay="100000">
             Compare
         </button>
@@ -27,151 +27,7 @@ Animate Button" matTooltipHideDelay="100000">
     </button>
 </ng-template>
 
-<!-- STAGE 1 -->
-
-
-<span class="sub-header cc-sub-header">Approach 1:</span>
-Brute Force O(n<sup>2</sup>) time, O(1) space
-
-<div class='linebreak-light'></div>
-<span class="sub-header cc-sub-header">
-
-    <ng-container *ngIf="_controlsStage1 then stop; else playRandom">
-    </ng-container>
-</span>
-
-
-<ng-template #stop>
-    <span class="sub-header cc-sub-header">
-
-        <button mat-button color="secondary" (click)='stopAnimationStage1()' [disabled]="_buttonsStage1"
-            aria-label=" Animate Button">
-            <fa-icon icon="undo"></fa-icon>&nbsp;
-        </button>
-        <button mat-button color="secondary" [disabled]="_statusButtonStage1" (click)='stopStage1()' aria-label="
-        Animate Button">
-            {{ statusStage1 }}
-        </button>
-        <div class="index">
-            <span>index i: {{ currentI}}</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <span>index j: {{ currentJ}}</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <span>Total Zeros: {{ totalZerosStage1}}</span>
-        </div>
-    </span>
-</ng-template>
-
-<ng-template #playRandom>
-    <span class="sub-header cc-sub-header">
-
-        <button mat-button color="secondary" [disabled]="_buttonsStage1" (click)='animateStage1()' aria-label="
-        Animate Button">
-            Animate
-        </button>
-        <button mat-button color="secondary" [disabled]="_buttonsStage1" (click)='playRandomStage1()'
-            aria-label=" Animate Button">
-            Play Random
-        </button>
-
-        <ng-container *ngIf="isHandheld; then handheld; else webPortrait">
-
-        </ng-container>
-        <ng-template #handheld>
-
-            <button mat-button color='secondary' [attr.disabled]="_buttonsStage1"
-                [matMenuTriggerFor]="menu">Customize</button>
-            <mat-menu #menu="matMenu" [attr.disabled]="_buttonsStage1">
-                <button mat-menu-item [attr.disabled]="_buttonsStage1" (click)="addNaturalNumber()"
-                    aria-label="Bubble Sort Button">Push Natural Number</button>
-                <button mat-menu-item [attr.disabled]="_buttonsStage1" (click)="pop()"
-                    aria-label="Selection Sort Button">Pop</button>
-                <button mat-menu-item [attr.disabled]="_buttonsStage1" (click)="addZero()"
-                    aria-label="Insertion Sort Button">Push Zero</button>
-            </mat-menu>
-        </ng-template>
-        <ng-template #webPortrait>
-
-            <button mat-button [attr.disabled]="_buttons ? null:'true'" (click)="addNaturalNumber()"
-                aria-label="Bubble Sort Button">Push Natural Number</button>
-            <button mat-button [attr.disabled]="_buttons ? null :'true'" (click)="pop()"
-                aria-label="Selection Sort Button">Pop</button>
-            <button mat-button [attr.disabled]="_buttons ? null : 'true'" (click)="addZero()"
-                aria-label="Insertion Sort Button">Push Zero</button>
-
-        </ng-template>
-    </span>
-</ng-template>
-
-<div id='svg-coding-stage-1' style="overflow:scroll;text-align:center">
-</div>
-
-<span class="sub-header cc-sub-header">Approach 2:</span>
-Two Passes O(n) time, O(1) space
-
-<div class='linebreak-light'></div>
-
-
-<span class="sub-header cc-sub-header">
-
-    <ng-container *ngIf="isPlayingAnimationStage2; then stopStage2; else playRandomStage2">
-    </ng-container>
-</span>
-
-
-<ng-template #stopStage2>
-    <span class="sub-header cc-sub-header">
-
-        <button mat-button color="secondary" (click)='stopAnimationStage2()' [disabled]="_buttonsStage2"
-            aria-label=" Animate Button">
-            <fa-icon icon="undo"></fa-icon>&nbsp;
-        </button>
-        <div class="index">
-            <span>index i: {{ currentIStage2}}</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <span>index j: {{ currentJStage2}}</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <span>Total Zeros: {{ totalZerosStage2 }}</span>
-        </div>
-    </span>
-</ng-template>
-
-<ng-template #playRandomStage2>
-    <span class="sub-header cc-sub-header">
-
-        <button mat-button color="secondary" (click)='animateStage2()' aria-label="
-        Animate Button">
-            Animate
-        </button>
-        <button mat-button color="secondary" (click)='testStage2()' aria-label=" Animate Button">
-            Play Random
-        </button>
-
-
-
-        <ng-container *ngIf="isHandheld; then handheldStage2; else webPortraitStage2">
-
-        </ng-container>
-
-        <ng-template #handheldStage2>
-            <button mat-button color='secondary' [matMenuTriggerFor]="menu">Customize</button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="addNaturalNumberStage2()" aria-label="Add Natural Button">Push Natural
-                    Number</button>
-                <button mat-menu-item (click)="popStage2()" aria-label="Pop Button">Pop</button>
-                <button mat-menu-item (click)="addZeroStage2()" aria-label="Push Zero Button">Push Zero</button>
-            </mat-menu>
-        </ng-template>
-        <ng-template #webPortraitStage2>
-            <button mat-button (click)="addNaturalNumberStage2()" aria-label="Push Natural Button">Push Natural
-                Number</button>
-            <button mat-button (click)="popStage2()" aria-label="Pop Button">Pop</button>
-            <button mat-button (click)="addZeroStage2()" aria-label="Push Zero Button">Push Zero</button>
-        </ng-template>
-    </span>
-
-</ng-template>
-<div id='svg-coding-stage-2' style="overflow:scroll;text-align:center">
-</div>
-<!-- [childProperty]="parentProperty" -->
-<app-stage [approach]="approachStage3"></app-stage>
+<div class="linebreak-light"> </div>
+<app-stage (isPlayingEvent)="setIsPlaying($event)" [approach]="approachStage1"></app-stage>
+<div class="linebreak-light"> </div>
+<app-stage (isPlayingEvent)="setIsPlaying($event)" [approach]="approachStage2"></app-stage>

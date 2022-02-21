@@ -28,11 +28,12 @@
 <ng-template #showMenu>
     <span class="sub-header cc-sub-header">
 
-        <button mat-button color="secondary" (click)="approach.beginAnimate()" aria-label="
+        <button mat-button color="secondary" [disabled]="approach.buttonsDisabled" (click)="animate()" aria-label="
         Animate Button">
             Animate
         </button>
-        <button mat-button color="secondary" (click)="approach.beginPlayRandom()" aria-label=" Play Randome Button">
+        <button mat-button color="secondary" [disabled]="approach.buttonsDisabled" (click)="approach.beginPlayRandom()"
+            aria-label=" Play Randome Button">
             Play Random
         </button>
         <ng-container *ngIf="isHandheld; then handheldStage2; else webPortraitStage2">
@@ -40,19 +41,26 @@
         </ng-container>
 
         <ng-template #handheldStage2>
-            <button mat-button color='secondary' [matMenuTriggerFor]="menu">Customize</button>
+            <button mat-button color='secondary' [disabled]="approach.buttonsDisabled"
+                [matMenuTriggerFor]="menu">Customize</button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="pushNaturalNumber()" aria-label="Add Natural Button">Push Natural
+                <button mat-menu-item [disabled]="approach.buttonsDisabled" (click)="pushNaturalNumber()"
+                    aria-label="Add Natural Button">Push Natural
                     Number</button>
-                <button mat-menu-item (click)="pop()" aria-label="Pop Button">Pop</button>
-                <button mat-menu-item (click)="pushZero()" aria-label="Push Zero Button">Push Zero</button>
+                <button mat-menu-item [disabled]="approach.buttonsDisabled" (click)="pop()"
+                    aria-label="Pop Button">Pop</button>
+                <button mat-menu-item [disabled]="approach.buttonsDisabled" (click)="pushZero()"
+                    aria-label="Push Zero Button">Push Zero</button>
             </mat-menu>
         </ng-template>
         <ng-template #webPortraitStage2>
-            <button mat-button (click)="pushNaturalNumber()" aria-label="Push Natural Button">Push Natural
+            <button mat-button [disabled]="approach.buttonsDisabled" (click)="pushNaturalNumber()"
+                aria-label="Push Natural Button">Push Natural
                 Number</button>
-            <button mat-button (click)="pop()" aria-label="Pop Button">Pop</button>
-            <button mat-button (click)="pushZero()" aria-label="Push Zero Button">Push Zero</button>
+            <button mat-button [disabled]="approach.buttonsDisabled" (click)="pop()"
+                aria-label="Pop Button">Pop</button>
+            <button mat-button [disabled]="approach.buttonsDisabled" (click)="pushZero()"
+                aria-label="Push Zero Button">Push Zero</button>
         </ng-template>
     </span>
 

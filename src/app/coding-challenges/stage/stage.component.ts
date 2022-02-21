@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, Output, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { Approach } from '../duplicate-zeros/Approach';
 import * as d3 from 'd3';
 import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/layout';
@@ -9,7 +9,7 @@ import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/l
   templateUrl: './stage.component.html',
   styleUrls: ['./stage.component.sass', '../coding-challenges.component.sass']
 })
-export class StageComponent implements OnInit, AfterViewInit {
+export class StageComponent implements OnInit, AfterViewInit, OnDestroy {
   width = 600;
   height = 200;
   vbWidth = 325;
@@ -17,15 +17,15 @@ export class StageComponent implements OnInit, AfterViewInit {
   xmlns = 'http://www.w3.org/2000/svg';
   @Input('dataset') dataset: any[] = [];
   @Input() approach!: Approach;
-
-  // Page Setup 
+  @Output() isPlayingEvent = new EventEmitter<number>();
+  @Input() isParentPlaying = false;
+  isPlaying: boolean = false;
   isHandheld: boolean = false;
-  isPlayingAnimation = false;
   stageId = '';
+
   constructor(public breakpointObserver: BreakpointObserver) {
 
   }
-
   ngOnInit(): void {
     this.breakpointObserver.observe([
       Breakpoints.XSmall
@@ -34,10 +34,16 @@ export class StageComponent implements OnInit, AfterViewInit {
     });
     this.stageId = `coding-stage-${this.approach.svgId}`;
   }
+  ngOnDestroy(): void {
+    d3.select(`#coding-stage-${this.approach.svgId}`).remove();
+  }
   ngAfterViewInit(): void {
     this.buildSVG();
     this.approach.update();
-    console.log(this.approach)
+  }
+  async animate() {
+    this.isPlayingEvent.emit(1)
+    await this.approach.beginAnimate().then(() => { this.isPlayingEvent.emit(-1) });
   }
   pop() {
     this.approach.pop();

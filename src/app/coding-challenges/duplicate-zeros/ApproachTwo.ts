@@ -48,25 +48,18 @@ export class ApproachTwo extends Approach {
                         })
                 })
     }
-    // STAGE 2 Animations
-    override async animate(): Promise<unknown> {
+    override async animate(controlButtons?: boolean): Promise<unknown> {
         return new Promise(async (resolve) => {
             await this._animate();
             setTimeout(() => {
-                resolve(this.resolveAnimate())
+                resolve(this.resolveAnimate(controlButtons))
             }, 200)
         })
     }
-
     async _animate() {
-
         await this.firstPass().catch(_e => { console.log('Promise Interrupted') })
         await this.secondPass().catch(_e => { console.log('Promise Interrupted') })
         await UtilityFunctions.timeout(200) // time between each iteration
-    }
-    // STAGE 2 Helper Methods
-    override async stopAnimation(): Promise<void> {
-
     }
 
     async firstPass() {
@@ -142,7 +135,6 @@ export class ApproachTwo extends Approach {
                 }
                 if (!this.dataset.includes(0))
                     continue;
-                console.log('loop')
                 this.update();
                 await this._animate();
             }
@@ -150,7 +142,6 @@ export class ApproachTwo extends Approach {
                 resolve(this.resolvePlayRandom())
             }, 200)
         })
-
     }
 
     insertAnimation(index: number, coords: any[]) {
