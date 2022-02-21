@@ -45,6 +45,9 @@ export class StageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isPlayingEvent.emit(1)
     await this.approach.beginAnimate().then(() => { this.isPlayingEvent.emit(-1) });
   }
+  playRand() {
+    this.approach.beginPlayRandom();
+  }
   pop() {
     this.approach.pop();
   }

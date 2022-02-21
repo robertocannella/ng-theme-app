@@ -6,7 +6,7 @@ export class ApproachOne extends Approach {
     svgId = 'ApproachOne';
     d3Sel = `#coding-outlet-${this.svgId}`
     subHeading = 'Approach 1'
-    description = 'Brute Force O(n^2) time, O(1) space'
+    description = 'Brute Force O(n<sup>2</sup>) time, O(1) space'
 
     constructor(public dataset: any[]) {
         super(dataset)

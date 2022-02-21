@@ -147,6 +147,7 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
     this._topButtons = false;
     this.approachStage1.buttonsDisabled = false;
     this.approachStage2.buttonsDisabled = false;
+    this.isPlayingRandomSeq = false;
   }
   resolveAnimate() {
     this._topButtons = false;

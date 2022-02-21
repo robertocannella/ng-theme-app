@@ -16,8 +16,8 @@ Animate Button" matTooltipHideDelay="100000">
     </span>
 </ng-template>
 <ng-template #stopRandomSeq>
-    <button mat-button #tooltip="matTooltip" matTooltip="Reset" color="secondary" [disabled]="_topButtons"
-        (click)='resetStages()' aria-label="
+    <button mat-button #tooltip="matTooltip" matTooltip="Reset" color="secondary"
+        [disabled]="_topButtons || isPlayingAnimation > 0" (click)='resetStages()' aria-label="
     Animate Button">
         <fa-icon icon="undo"></fa-icon>&nbsp;
     </button>
