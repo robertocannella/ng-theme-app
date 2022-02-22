@@ -31,6 +31,7 @@ import { CodingChallengesComponent } from './coding-challenges/coding-challenges
 import { SortedSquaresComponent } from './coding-challenges/sorted-squares/sorted-squares.component';
 import { D3Service } from "./d3.service";
 import { StageComponent } from './coding-challenges/stage/stage.component';
+import { SortedSquaresStageComponent } from './coding-challenges/sorted-squares/sorted-squares-stage/sorted-squares-stage.component';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { StageComponent } from './coding-challenges/stage/stage.component';
     DuplicateZerosComponent,
     CodingChallengesComponent,
     SortedSquaresComponent,
-    StageComponent
+    StageComponent,
+    SortedSquaresStageComponent
   ],
   imports: [
     BrowserModule,

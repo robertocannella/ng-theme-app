@@ -4,6 +4,8 @@ import { BreakpointObserver, LayoutModule, BreakpointState, Breakpoints } from '
 import { ApproachTwo } from './ApproachTwo';
 import { ApproachOne } from './ApproachOne';
 import { Approach } from './Approach';
+import { BasicArray } from '../BasicArray';
+import { AppRoutingModule } from 'src/app/app-routing.module';
 
 @Component({
   selector: 'app-duplicate-zeros',
@@ -151,6 +153,7 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
     this.approachStage1.buttonsDisabled = false;
     this.approachStage2.buttonsDisabled = false;
     this.isPlayingRandomSeq = false;
+
   }
   resolveAnimate() {
     this._topButtons = false;

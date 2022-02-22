@@ -48,19 +48,24 @@ export class Approach {
     }
     // Handle Multiple Play Animations Here
 
-    async playRandom(): Promise<void> {
+    async playRandom(controlButtons?: boolean): Promise<void> {
         return new Promise(async () => {
 
         });
     }
-    beginPlayRandom() {
-        console.log('playing')
-        this.statusButtonDisabled = false;
-        this.buttonsDisabled = true;
-        this.isPlayingRandom = true;
-        this.status = 'Stop'
-        this.randomLoop = true;
-        this.playRandom();
+    async beginPlayRandom(controlButtons?: boolean) {
+        return new Promise(async (resolve) => {
+            console.log('playing')
+            this.statusButtonDisabled = false;
+            this.buttonsDisabled = true;
+            this.isPlayingRandom = true;
+            this.status = 'Stop'
+            this.randomLoop = true;
+            await this.playRandom(controlButtons);
+            setTimeout(() => {
+                resolve(true)
+            }, 200)
+        })
 
     }
     stopPlayRandom() {
@@ -68,8 +73,9 @@ export class Approach {
         this.status = 'Ending...'
         this.randomLoop = false;
     }
-    resolvePlayRandom() {
-        this.buttonsDisabled = false;
+    resolvePlayRandom(controlButtons?: boolean) {
+        if (!controlButtons)
+            this.buttonsDisabled = false;
         this.status = 'Finished';
     }
     reset(): void {
@@ -84,7 +90,7 @@ export class Approach {
         this.dataset.pop();
         this.update();
     }
-    push(isZero?: number): void {
+    push(isZero?: number, isNegative?: boolean): void {
         if (this.dataset.length > this.maxSize)
             return;
         (isZero === 0) ? this.dataset.push(0) : this.dataset.push(UtilityFunctions.getRandomInt(1, 9))
@@ -93,7 +99,7 @@ export class Approach {
     pushNegative(isNegative?: boolean): void {
         if (this.dataset.length > this.maxSize)
             return;
-        (isNegative) ? this.dataset.push(UtilityFunctions.getRandomInt(-99, -1)) : this.dataset.push(UtilityFunctions.getRandomInt(1, 9))
+        (isNegative) ? this.dataset.push(UtilityFunctions.getRandomInt(-9, -1)) : this.dataset.push(UtilityFunctions.getRandomInt(1, 9))
         this.update();
     }
 

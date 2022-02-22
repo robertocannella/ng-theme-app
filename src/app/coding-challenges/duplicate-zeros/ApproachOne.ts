@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 import UtilityFunctions from '../../shared/UtiltiyFunctions';
-import { Approach } from '../duplicate-zeros/Approach';
+import { Approach } from './Approach';
+import { BasicArray } from '../BasicArray';
 
 export class ApproachOne extends Approach {
     svgId = 'ApproachOne';
@@ -47,7 +48,6 @@ export class ApproachOne extends Approach {
                         })
                 })
     }
-
     override async animate(controlButtons?: boolean): Promise<unknown> {
         return new Promise(async (resolve) => {
             await this._animate();
@@ -194,7 +194,8 @@ export class ApproachOne extends Approach {
         ]).catch((e) => { console.log('insertZeros promise') })
 
     }
-    override async playRandom(sizeEach: number = UtilityFunctions.getRandomInt(9, 9)): Promise<void> {
+    override async playRandom(controlButtons?: boolean): Promise<void> {
+        let sizeEach = UtilityFunctions.getRandomInt(9, 9)
         return new Promise(async (resolve) => {
 
             while (this.randomLoop) {
@@ -210,12 +211,11 @@ export class ApproachOne extends Approach {
                 await this._animate();
             }
             setTimeout(() => {
-                resolve(this.resolvePlayRandom())
+                resolve(this.resolvePlayRandom(controlButtons))
             }, 200)
         })
 
     }
-
     insertAnimation(index: number, coords: any[]) {
         return new Promise(async (resolve, _reject) => {
             let lastRect = d3.select(`#rect${index}-${this.dataset[index]}-${this.svgId}`)

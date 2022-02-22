@@ -4,7 +4,7 @@
 
 <ng-container *ngIf="isPlayingRandomSeq; then stopRandomSeq; else playRandomSeq;"></ng-container>
 <ng-template #playRandomSeq>
-    <span #tooltip="matTooltip" [matTooltip]="isPlayingAnimation ? 'Reset stages':''">
+    <span #tooltip="matTooltip" [matTooltip]="isPlayingAnimation ? 'Animation Playing':''">
         <button mat-button color="secondary" (click)='randomAll()' [disabled]="isPlayingAnimation > 0" aria-label="
     Animate Button">
             Random Sequences

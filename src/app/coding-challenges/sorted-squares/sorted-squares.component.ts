@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Approach } from './Approach';
-import { ApproachOne } from './ApproachOne';
+import { BasicArray } from '../BasicArray';
+import { Approach } from '../duplicate-zeros/Approach';
+import { SSApproachOne } from './SSApproachOne';
 import UtilityFunctions from 'src/app/shared/UtiltiyFunctions';
 import { BreakpointObserver, LayoutModule, BreakpointState, Breakpoints } from '@angular/cdk/layout';
 
@@ -12,7 +13,7 @@ import { BreakpointObserver, LayoutModule, BreakpointState, Breakpoints } from '
 export class SortedSquaresComponent implements OnInit {
 
   isHandheld: boolean = false;
-  approachStage1: Approach;
+  approachStage1: BasicArray;
   //approachStage2: Approach;
 
 
@@ -40,16 +41,16 @@ export class SortedSquaresComponent implements OnInit {
   _controlsStage1 = false;
   // Avtivate these buttons:
   pushNegativeButton = true;
-  pushZeroButton = false;
+  pushZeroButton = true;
 
 
   // Starter datasets for each stage
-  datasetStage1 = [-40, -10, -3, -1, 0, 2, 4, 7, 11, 30]
+  datasetStage1 = [-9, -7, -3, -1, 0, 2, 4, 7, 8, 9]
   datasetStage2 = [...this.datasetStage1];
 
 
   constructor(public breakpointObserver: BreakpointObserver) {
-    this.approachStage1 = new ApproachOne(this.datasetStage1)
+    this.approachStage1 = new SSApproachOne(this.datasetStage1)
     // this.approachStage2 = new ApproachTwo(this.datasetStage2)
   }
 

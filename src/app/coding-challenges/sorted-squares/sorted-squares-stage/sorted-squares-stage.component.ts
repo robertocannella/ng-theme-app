@@ -1,22 +1,21 @@
 import { AfterViewInit, Component, Input, Output, EventEmitter, OnDestroy, OnInit } from '@angular/core';
-import { Approach } from '../duplicate-zeros/Approach';
+import { BasicArray } from '../../BasicArray';
 import * as d3 from 'd3';
 import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/layout';
 
-
 @Component({
-  selector: 'app-stage',
-  templateUrl: './stage.component.html',
-  styleUrls: ['./stage.component.sass', '../coding-challenges.component.sass']
+  selector: 'app-sorted-squares-stage',
+  templateUrl: './sorted-squares-stage.component.html',
+  styleUrls: ['./sorted-squares-stage.component.sass']
 })
-export class StageComponent implements OnInit, AfterViewInit, OnDestroy {
+export class SortedSquaresStageComponent implements OnInit {
   width = 600;
-  height = 200;
+  height = 400;
   vbWidth = 325;
   vbHeight = 150;
   xmlns = 'http://www.w3.org/2000/svg';
   @Input('dataset') dataset: any[] = [];
-  @Input() approach!: Approach;
+  @Input() approach!: BasicArray;
   @Output() isPlayingEvent = new EventEmitter<number>();
   @Input() isParentPlaying = false;
   @Input() pushZeroButton: boolean = false;
@@ -24,7 +23,6 @@ export class StageComponent implements OnInit, AfterViewInit, OnDestroy {
   isPlaying: boolean = false;
   isHandheld: boolean = false;
   stageId = '';
-
   constructor(public breakpointObserver: BreakpointObserver) {
 
   }
@@ -54,6 +52,9 @@ export class StageComponent implements OnInit, AfterViewInit, OnDestroy {
   pop() {
     this.approach.pop();
   }
+  clear() {
+    this.approach.clear();
+  }
   pushZero() {
     this.approach.push(0);
   }
@@ -64,7 +65,9 @@ export class StageComponent implements OnInit, AfterViewInit, OnDestroy {
     d3.select(`#coding-stage-${this.approach.svgId}`)
       .append('svg')
       .attr('width', this.width)
+      .attr('height', this.height)
       .attr('id', `coding-outlet-${this.approach.svgId}`)
       .attr('xmlns', this.xmlns)
   }
+
 }

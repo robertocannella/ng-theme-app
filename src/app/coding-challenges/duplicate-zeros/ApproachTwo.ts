@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 import UtilityFunctions from '../../shared/UtiltiyFunctions';
-import { Approach } from '../duplicate-zeros/Approach';
+import { Approach } from './Approach';
+import { BasicArray } from '../BasicArray';
 
 export class ApproachTwo extends Approach {
     svgId = 'ApproachTwo';
@@ -123,7 +124,8 @@ export class ApproachTwo extends Approach {
             }
         }).catch(e => console.log(e))
     }
-    override async playRandom(sizeEach: number = UtilityFunctions.getRandomInt(9, 9)): Promise<void> {
+    override async playRandom(controlButtons?: boolean): Promise<void> {
+        let sizeEach = UtilityFunctions.getRandomInt(9, 9)
         return new Promise(async (resolve) => {
 
             while (this.randomLoop) {
@@ -139,7 +141,7 @@ export class ApproachTwo extends Approach {
                 await this._animate();
             }
             setTimeout(() => {
-                resolve(this.resolvePlayRandom())
+                resolve(this.resolvePlayRandom(controlButtons))
             }, 200)
         })
     }
