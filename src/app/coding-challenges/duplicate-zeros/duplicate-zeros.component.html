@@ -28,6 +28,8 @@ Animate Button" matTooltipHideDelay="100000">
 </ng-template>
 
 <div class="linebreak-light"> </div>
-<app-stage (isPlayingEvent)="setIsPlaying($event)" [approach]="approachStage1"></app-stage>
+<app-stage (isPlayingEvent)="setIsPlaying($event)" [pushZeroButton]="pushZeroButton" [approach]="approachStage1">
+</app-stage>
 <div class="linebreak-light"> </div>
-<app-stage (isPlayingEvent)="setIsPlaying($event)" [approach]="approachStage2"></app-stage>
+<app-stage (isPlayingEvent)="setIsPlaying($event)" [pushZeroButton]="pushZeroButton" [approach]="approachStage2">
+</app-stage>

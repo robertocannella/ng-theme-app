@@ -19,6 +19,8 @@ export class StageComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() approach!: Approach;
   @Output() isPlayingEvent = new EventEmitter<number>();
   @Input() isParentPlaying = false;
+  @Input() pushZeroButton: boolean = false;
+  @Input() pushNegativeButton: boolean = false;
   isPlaying: boolean = false;
   isHandheld: boolean = false;
   stageId = '';

@@ -25,6 +25,9 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
   _resetButton = false;
   _statusButton = true;
   _statusButtonStage1 = true;
+  // Avtivate these buttons:
+  pushNegativeButton = false;
+  pushZeroButton = true;
 
   isPlayingAnimation = 0;
   isPlayingRandomSeq = false;

@@ -90,6 +90,11 @@ export class Approach {
         (isZero === 0) ? this.dataset.push(0) : this.dataset.push(UtilityFunctions.getRandomInt(1, 9))
         this.update();
     }
-
+    pushNegative(isNegative?: boolean): void {
+        if (this.dataset.length > this.maxSize)
+            return;
+        (isNegative) ? this.dataset.push(UtilityFunctions.getRandomInt(-99, -1)) : this.dataset.push(UtilityFunctions.getRandomInt(1, 9))
+        this.update();
+    }
 
 }

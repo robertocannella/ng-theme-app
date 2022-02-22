@@ -49,8 +49,10 @@
                     Number</button>
                 <button mat-menu-item [disabled]="approach.buttonsDisabled" (click)="pop()"
                     aria-label="Pop Button">Pop</button>
-                <button mat-menu-item [disabled]="approach.buttonsDisabled" (click)="pushZero()"
+                <button *ngIf="pushZeroButton" mat-menu-item [disabled]="approach.buttonsDisabled" (click)="pushZero()"
                     aria-label="Push Zero Button">Push Zero</button>
+                <button *ngIf="pushNegativeButton" mat-menu-item [disabled]="approach.buttonsDisabled"
+                    (click)="approach.pushNegative(true)" aria-label="Push Negative Button">Push Negative</button>
             </mat-menu>
         </ng-template>
         <ng-template #webPortraitStage2>
@@ -59,8 +61,10 @@
                 Number</button>
             <button mat-button [disabled]="approach.buttonsDisabled" (click)="pop()"
                 aria-label="Pop Button">Pop</button>
-            <button mat-button [disabled]="approach.buttonsDisabled" (click)="pushZero()"
+            <button mat-button *ngIf="pushZeroButton" [disabled]="approach.buttonsDisabled" (click)="pushZero()"
                 aria-label="Push Zero Button">Push Zero</button>
+            <button mat-button *ngIf="pushNegativeButton" [disabled]="approach.buttonsDisabled"
+                (click)="approach.pushNegative(true)" aria-label="Push Negative Button">Push Negative</button>
         </ng-template>
     </span>
 
