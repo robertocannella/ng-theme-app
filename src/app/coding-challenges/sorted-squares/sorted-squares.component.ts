@@ -51,6 +51,9 @@ export class SortedSquaresComponent implements OnInit {
   datasetStage2 = [...this.datasetStage1];
 
 
+  // APPROACH 2 is actually a cleaner version of APPROACH 1.  
+  // Approach 1 from leetcode is actually to square each item, then sort them
+  // TODO: implement Approach 1 with two different sorting algos. (selection and mergesort)
   constructor(public breakpointObserver: BreakpointObserver) {
     this.approachStage1 = new SSApproachOne(this.datasetStage1)
     this.approachStage2 = new SSApproachTwo(this.datasetStage2)

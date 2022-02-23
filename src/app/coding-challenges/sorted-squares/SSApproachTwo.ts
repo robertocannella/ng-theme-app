@@ -8,7 +8,7 @@ export class SSApproachTwo extends BasicArray {
     svgId = 'ApproachTwo';
     d3Sel = `#coding-outlet-${this.svgId}`
     subHeading = 'Approach 2'
-    description = 'O(N log N) time, O(N) or O(logN) space'
+    description = 'Two Pointer: O(N log N) time, O(N) or O(logN) space'
     duration = 300;
 
     constructor(public dataset: any[]) {
@@ -80,12 +80,38 @@ export class SSApproachTwo extends BasicArray {
             }, 200)
         })
     }
+
+    override async playRandom(controlButtons?: boolean): Promise<void> {
+        let sizeEach = UtilityFunctions.getRandomInt(10, 10)
+        return new Promise(async (resolve) => {
+
+            while (this.randomLoop) {
+
+                this.dataset = []
+                this.update();
+                for (let j = 0; j < sizeEach; j++) {
+                    this.dataset.push(UtilityFunctions.getRandomInt(-9, 9))
+                }
+                this.dataset.sort((a, b) => a - b)
+                this.update();
+                await this._animate();
+            }
+            setTimeout(() => {
+                resolve(this.resolvePlayRandom())
+            }, 0)
+        })
+    }
     async _animate() {
         let hiddenArray = d3.select(`.new-array-group-${this.svgId}`).selectAll('rect')
             .each((data: any, index: any, nodes: any) => {
                 d3.select(nodes[index]).attr('y', 150)
             })
-        await this.startAnimation();
+        return new Promise(async (resolve) => {
+            await this.startAnimation();
+            setTimeout(() => {
+                resolve(true)
+            }, 1000)
+        })
     }
     async createEmptyDuplicateArray() {
         return new Promise(async (resolve) => {
@@ -252,9 +278,10 @@ export class SSApproachTwo extends BasicArray {
                     continue;
                 }
 
-
                 // Move Down for comparison
                 await Promise.all([
+                    leftRect.attr('fill', '#79d14d'),
+                    rightRect.attr('fill', '#79d14d'),
                     this.moveDown(75, leftRect, leftText),
                     this.moveDown(75, rightRect, rightText)
                 ])
