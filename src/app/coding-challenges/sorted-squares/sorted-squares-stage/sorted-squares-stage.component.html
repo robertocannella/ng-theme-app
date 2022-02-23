@@ -53,6 +53,8 @@
                     aria-label="Push Zero Button">Push Zero</button>
                 <button *ngIf="pushNegativeButton" mat-menu-item [disabled]="approach.buttonsDisabled"
                     (click)="approach.pushNegative(true)" aria-label="Push Negative Button">Push Negative</button>
+                <button mat-button [disabled]="approach.buttonsDisabled" (click)="clear()"
+                    aria-label="Clear Button">Clear</button>
             </mat-menu>
 
 
@@ -73,7 +75,7 @@
             <button mat-button [disabled]="approach.buttonsDisabled" (click)="pop()"
                 aria-label="Pop Button">Pop</button>
             <button mat-button [disabled]="approach.buttonsDisabled" (click)="clear()"
-                aria-label="Pop Button">Clear</button>
+                aria-label="Clear Button">Clear</button>
 
         </ng-template>
     </span>

@@ -10,7 +10,7 @@ import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/l
 })
 export class SortedSquaresStageComponent implements OnInit {
   width = 600;
-  height = 400;
+  height = 250;
   vbWidth = 325;
   vbHeight = 150;
   xmlns = 'http://www.w3.org/2000/svg';

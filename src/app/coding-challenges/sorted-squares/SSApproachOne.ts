@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import { timeThursdays } from 'd3';
 import UtilityFunctions from '../../shared/UtiltiyFunctions';
 import { BasicArray } from '../BasicArray';
 
@@ -7,8 +8,8 @@ export class SSApproachOne extends BasicArray {
 
     svgId = 'ApproachOne';
     d3Sel = `#coding-outlet-${this.svgId}`
-    subHeading = 'Approach 1'
-    description = 'O(N log N) time, O(N) or O(logN) space'
+    subHeading = 'Approach 1: Create an array of the squares of each element, and sort them (selection sort).'
+    description = 'O(n<sup>2</sup>) time, O(1) space'
     duration = 300;
 
     constructor(public dataset: any[]) {
@@ -68,6 +69,26 @@ export class SSApproachOne extends BasicArray {
                         })
                 })
     }
+    override async playRandom(controlButtons?: boolean): Promise<void> {
+        let sizeEach = UtilityFunctions.getRandomInt(10, 10)
+        return new Promise(async (resolve) => {
+
+            while (this.randomLoop) {
+
+                this.dataset = []
+                this.update();
+                for (let j = 0; j < sizeEach; j++) {
+                    this.dataset.push(UtilityFunctions.getRandomInt(-9, 9))
+                }
+                this.dataset.sort((a, b) => a - b) // <-- For this class DATA set needs to be sorted
+                this.update();
+                await this._animate();
+            }
+            setTimeout(() => {
+                resolve(this.resolvePlayRandom())
+            }, 0)
+        })
+    }
     // arrays need to be sorted initially //
     override pushNegative(isNegative?: boolean): void {
         if (this.dataset.length > this.maxSize)
@@ -93,225 +114,44 @@ export class SSApproachOne extends BasicArray {
         })
     }
     async _animate() {
-        await this.createEmptyDuplicateArray();
-        await this.getEnds();
+        await this.sqareAllElements();
+        await this.selectionSort();
     }
-    async createEmptyDuplicateArray() {
+    async sqareAllElements() {
         return new Promise(async (resolve) => {
-            d3.select(this.d3Sel)
-                .append('g')
-                .attr('class', `new-array-group-${this.svgId}`)
-                .selectAll('g')
-                .data(this.dataset)
-                .join(
-                    (enter) => {
-                        return enter
-                            .append('g')
-                            .attr('class', `new-array-group-${this.svgId}`)
-                            .attr('id', (_d: any, i: any) => `new-array-group-${i}-${this.svgId}`)
-                            .each(async (data: any, index: any, nodes: any) => {
+            let n = this.dataset.length;
 
-                                let node = d3.select(nodes[index])
-                                node
-                                    .append('rect')
-                                    .attr('class', 'new-array-element-shape')
-                                    .attr('width', 28)
-                                    .attr('height', 40)
-                                    .attr('id', () => `new-array-rect-${index}-${data}-${this.svgId}`)
-                                    .attr('y', 55)
-                                    .attr('x', () => 30 * index)
-                                    .attr('fill', '#bbb')
-                                    .attr('stroke', 1)
-                                    .attr('stroke-width', 1)
-                                    .transition().duration(this.duration)
-                                    .attr('y', 200)
-
-                                node
-                                    .append('text')
-                                    .attr('class', 'new-array-element-text')
-                                    .text('')
-                                    .attr('id', () => `new-array-text-${index}-${data}-${this.svgId}`)
-                                    .attr('x', () => {
-                                        let currX = parseInt(node.select('rect').attr('x'));
-                                        let width = parseInt(node.select('rect').attr('width'));
-                                        return currX + (width / 2)
-                                    })
-                                    .attr('y', () => {
-                                        let currY = parseInt(node.select('rect').attr('y'));
-                                        let height = parseInt(node.select('rect').attr('height'));
-                                        return currY + (height / 2)
-                                    })
-                                    .attr('dominant-baseline', 'middle')
-                                    .attr('text-anchor', 'middle')
-                                    .transition().duration(this.duration)
-                                    .attr('y', 200 + 20)
-                            })
-                    })
-
+            for (let i = 0; i < n; i++) {
+                let currentRect = d3.select(`#rect${i}-${this.dataset[i]}-${this.svgId}`);
+                let currentText = d3.select(`#text${i}-${this.dataset[i]}-${this.svgId}`);
+                await Promise.all([
+                    currentRect.transition().duration(this.duration).attr('fill', '#79d14d').end(),
+                    currentText.text((d: any) => this.square(d)),
+                ])
+            }
             setTimeout(() => {
                 resolve('true')
-            }, this.duration)
-        })
-    }
-    async compareAndDrop(leftRect: d3.Selection<d3.BaseType, unknown, HTMLElement, any>,
-        rightRect: d3.Selection<d3.BaseType, unknown, HTMLElement, any>,
-        leftText: d3.Selection<d3.BaseType, unknown, HTMLElement, any>,
-        rightText: d3.Selection<d3.BaseType, unknown, HTMLElement, any>) {
-        return new Promise(async (resolve, reject) => {
-
-            let left = this.square(leftRect.data()[0]);
-            let right = this.square(rightRect.data()[0]);
-            if (right >= left) {
-                await this.moveDown(130, rightRect, rightText);
-                //console.log('shift right down')
-                resolve('rightShift')
-            }
-            if (right < left) {
-                await this.moveDown(130, leftRect, leftText);
-                //console.log('shift left down')
-                resolve('leftShift')
-            }
-            reject('error')
-        })
-    }
-    async getEnds() {
-        return new Promise(async (resolve) => {
-            let n = this.dataset.length - 1;
-            let nums = this.dataset
-            let left = 0
-            let right = n
-            let leftRect = d3.select(`#rect${0}-${this.dataset[0]}-${this.svgId}`);
-            let rightRect = d3.select(`#rect${n}-${this.dataset[n]}-${this.svgId}`);
-            let leftText = d3.select(`#text${0}-${this.dataset[0]}-${this.svgId}`);
-            let rightText = d3.select(`#text${n}-${this.dataset[n]}-${this.svgId}`);
-
-            let width = parseInt(rightRect.attr('width'));
-            let padding = 1;
-            let center = this.getCenter(leftRect.attr('x'), rightRect.attr('x'), rightRect.attr('width'));
-
-            for (let i = n; i >= 0; i--) {
-
-                // get new location of next element
-
-                let leftRect = d3.select(`#rect${left}-${this.dataset[left]}-${this.svgId}`);
-                let rightRect = d3.select(`#rect${right}-${this.dataset[right]}-${this.svgId}`);
-                let leftText = d3.select(`#text${left}-${this.dataset[left]}-${this.svgId}`);
-                let rightText = d3.select(`#text${right}-${this.dataset[right]}-${this.svgId}`);
-
-                let leftOrigX = leftText.attr('x')
-                let rightOrigX = rightText.attr('x')
-
-                let rightRectLocation = d3.select(`#rect${right}-${this.dataset[right]}-${this.svgId}`).attr('x');
-                let rightTextLocation = d3.select(`#text${right}-${this.dataset[right]}-${this.svgId}`).attr('x');
-                let leftRectLocation = d3.select(`#rect${left}-${this.dataset[left]}-${this.svgId}`).attr('x');
-                let leftTextLocation = d3.select(`#text${left}-${this.dataset[left]}-${this.svgId}`).attr('x');
-                let newRectRight = d3.select(`#new-array-rect-${i}-${this.dataset[i]}-${this.svgId}`)
-                let newRectX = newRectRight.attr('x')
-                let newTextX = parseInt(newRectX) + 15;
-                let newTextRight = d3.select(`#new-array-text-${i}-${this.dataset[i]}-${this.svgId}`)
-                // Last Item
-                if (i === 0) {
-                    await this.moveLastItem(leftRect, leftText);
-                    break;
-                }
-                // Move Down for comparison
-                await Promise.all([
-                    this.moveDown(75, leftRect, leftText),
-                    this.moveDown(75, rightRect, rightText)
-                ])
-
-                //Center Items
-                let center = this.getCenter(leftRect.attr('x'), rightRect.attr('x'), rightRect.attr('width'));
-                let width = parseInt(rightRect.attr('width'));
-                // let padding = 1;
-
-                let groupLeft = d3.select(`#group-${left}-${this.svgId}`)
-                let groupRight = d3.select(`#group-${right}-${this.svgId}`)
-                await Promise.all([
-                    groupLeft.transition().duration(this.duration).attr('transform', `translate(${center - parseInt(leftRect.attr('x')) - width - padding}, 0)`).end(),
-                    groupRight.transition().duration(this.duration).attr('transform', `translate(${-center + (parseInt(leftRect.attr('x')) + width + padding)}, 0)`).end(),
-                ])
-                // Display Square
-                await Promise.all([
-                    leftRect.transition().duration(this.duration).attr('fill', 'cornflowerblue').end(),
-                    leftText.text((d: any) => this.square(d)),
-                    rightRect.transition().duration(this.duration).attr('fill', 'cornflowerblue').end(),
-                    rightText.text((d: any) => this.square(d)),
-                ])
-                var trigger = "2",
-                    regexp = new RegExp('^[1-9]\d{0,2}$'),
-                    test = regexp.test(trigger);
-                //alert(test + ""); // will display true
-                let match: any = groupLeft.attr('transform').match(/\d+/)
-
-                // Begin Comparing and dropping into new array
-                await Promise.all([
-                    groupLeft.transition().duration(this.duration).attr('transform', `translate(0, 0)`).end(),
-                    groupRight.transition().duration(this.duration).attr('transform', `translate(0, 0)`).end(),
-                ])
-                let result = await this.compareAndDrop(leftRect, rightRect, leftText, rightText)
-
-                if (result === 'rightShift') {
-                    await Promise.all([
-                        // groupLeft.transition().duration(this.duration).attr('transform', `translate(0, 0)`).end(),
-                        //rightRect.attr('x', () => groupRight.attr('transform').match(/\d+/)),
-                        rightRect.transition().duration(this.duration).attr('x', () => newRectX).end(),
-                        rightText.transition().duration(this.duration).attr('x', () => newTextX).end(),
-                        ///leftRect.transition().duration(this.duration).attr('x', () => leftRectLocation).end(),
-                        //leftText.transition().duration(this.duration).attr('x', () => leftTextLocation).end()
-                    ])
-                    await this.moveDown(200, rightRect, rightText)
-                    rightText.remove()
-                    rightRect.transition().duration(this.duration).attr('fill', '#79d14d').end()
-                    newTextRight
-                        .text(() => { return this.square(rightRect.data().toString()) })
-                    newRectRight
-                        .attr('stroke-width', 2)
-                        .attr('stroke', 'black')
-                        .transition().duration(this.duration)
-                        .attr('opacity', 0)
-                    right--;
-                    rightRect = d3.select(`#rect${right}-${this.dataset[right]}-${this.svgId}`);
-                    rightText = d3.select(`#text${right}-${this.dataset[right]}-${this.svgId}`);
-                }
-                if (result === 'leftShift') {
-                    //leftRect.attr('x', () => groupLeft.attr('transform').match(/\d+/))
-
-                    await Promise.all([
-                        // groupRight.transition().duration(this.duration).attr('transform', `translate(0, 0)`).end(),
-
-                        leftRect.transition().duration(this.duration).attr('x', () => newRectX).end(),
-                        leftText.transition().duration(this.duration).attr('x', () => newTextX).end(),
-
-                        //rightRect.transition().duration(this.duration).attr('x', () => rightRectLocation).end(),
-                        //rightText.transition().duration(this.duration).attr('x', () => rightTextLocation).end()
-                    ])
-                    await this.moveDown(200, leftRect, leftText).then()
-
-                    leftText.remove()
-                    leftRect.transition().duration(this.duration).attr('fill', '#79d14d').end()
-                    newTextRight
-                        .text(() => { return this.square(leftRect.data().toString()) })
-                    newRectRight
-                        .attr('stroke-width', 2)
-                        .attr('stroke', 'black')
-                        .transition().duration(this.duration)
-                        .attr('opacity', 0)
-
-                    // set up next iteration
-                    left++;
-                    leftRect = d3.select(`#rect${left}-${this.dataset[left]}-${this.svgId}`);
-                    leftText = d3.select(`#text${left}-${this.dataset[left]}-${this.svgId}`);
-                }
-
-            }
-
-            setTimeout(() => {
-                resolve('true')
-
             }, 0)
         })
+    }
+    async selectionSort() {
+        return new Promise(async (resolve) => {
 
+            let n = this.dataset.length;
+
+            for (let i = 0; i < n; i++) {           // exchange a[i] with the smallest entry in a[i], ... , a[n-1].
+                let min = i;                        // index of a minimal entry
+                for (let j = i + 1; j < n; j++)     // we are comparing with the next element  a[i + 1]
+                    if (this.less(this.dataset[j], this.dataset[min])) min = j;
+
+
+                await this.swapAnimation(this.dataset[i], i, this.dataset[min], min, 1000, 0);
+                this.exchange(this.dataset, i, min);
+            }
+            setTimeout(() => {
+                resolve(this.dataset.sort((a, b) => a - b))
+            }, 1000)
+        })
     }
     async moveLastItem(leftRect: any, leftText: any) {
         let newRectRight = d3.select(`#new-array-rect-${0}-${this.dataset[0]}-${this.svgId}`);
@@ -362,5 +202,98 @@ export class SSApproachOne extends BasicArray {
                 }).end(),
         ])
 
+    }
+    async swapAnimation(d: any, i: any, d1: any, i1: any, durationTime: number, delayTime: number) {
+
+        let textSel = `#text${i}-${d}-${this.svgId}`;
+        let textSelX = d3.select(textSel).attr('x');
+
+        let textSel1 = `#text${i1}-${d1}-${this.svgId}`;
+        let textSel1X = d3.select(textSel1).attr('x');
+
+        let rectSel = `#rect${i}-${d}-${this.svgId}`;
+        let rectSelX = d3.select(rectSel).attr('x');
+
+        let rectSel1 = `#rect${i1}-${d1}-${this.svgId}`;
+        let rectSel1X = d3.select(rectSel1).attr('x');
+
+        //**********************************************************//
+        //   Edge Case during selection sort.                       //
+        //   No need to swap.                                       //
+        //                                                          //
+        if (rectSel1 === rectSel) {
+            return Promise.all([
+                d3.select(rectSel)
+                    .transition()
+                    .duration(durationTime)
+                    .delay(delayTime)
+                    .attr('x', () => rectSel1X)
+                    .attr('fill', '#fcba03') // <-- yellow
+                    .transition()
+                    .duration(100)
+                    .attr('fill', 'cornflowerblue')
+                    .end().catch(error => console.log(error)),
+            ])
+
+        }
+
+        return Promise.all([
+            d3.select(textSel)
+                .transition()
+                .duration(durationTime)
+                .delay(delayTime)
+                .attr('x', textSel1X)
+                .end().catch(error => console.log(error)),
+
+            d3.select(textSel1)
+                .transition()
+                .duration(durationTime)
+                .delay(delayTime)
+                .attr('x', textSelX)
+                .end().catch(error => console.log(error)),
+
+            d3.select(rectSel)
+                .transition()
+                .duration(durationTime)
+                .delay(delayTime)
+                .attr('x', () => rectSel1X)
+                .attr('fill', '#fcba03') //<-- yellow
+                .transition()
+                .duration(100)
+                .attr('fill', 'cornflowerblue')
+                .end().catch(error => console.log(error)),
+
+            d3.select(rectSel1)
+                .transition()
+                .duration(durationTime)
+                .delay(delayTime)
+                .attr('x', rectSelX)
+                .attr('fill', '#fcba03') // <-- yellow
+                .transition()
+                .duration(100)
+                .attr('fill', 'cornflowerblue')
+                .end().catch(error => console.log(error))
+
+        ]).then(() => {
+            d3.select(textSel).attr('id', `text${i1}-${d}-${this.svgId}`)   // <-- NOTICE that HASH IS REMOVED ON ID's
+            d3.select(textSel1).attr('id', `text${i}-${d1}-${this.svgId}`)  // <-- NOTICE that HASH IS REMOVED ON ID's
+            d3.select(rectSel).attr('id', `rect${i1}-${d}-${this.svgId}`)   // <-- NOTICE that HASH IS REMOVED ON ID's
+            d3.select(rectSel1).attr('id', `rect${i}-${d1}-${this.svgId}`)  // <-- NOTICE that HASH IS REMOVED ON ID's
+        }
+        ).catch(error => {
+            console.log(error.message)
+        })
+    }
+    //***********************************************************//
+    //   For this ALGORITHM, WE NEED to SQUARE the numbers       //
+    //   DO NOT USE FOR LESS COMPARISONS in OTHER CLASSES        //
+
+    less(v: number, w: number) {
+        return (v * v) < (w * w);
+    }
+    exchange(arr: number[], i: number, j: number) {
+        let temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
     }
 }

@@ -315,7 +315,6 @@ export class SSApproachTwo extends BasicArray {
         return curr + (width / 2)
     }
     setTextYAlignment(node: any) {
-        console.log(node)
         let curr = parseInt(node.select('rect').attr('y'));
         let height = parseInt(node.select('rect').attr('height'));
         return curr + (height / 2)
