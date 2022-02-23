@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BasicArray } from '../BasicArray';
 import { Approach } from '../duplicate-zeros/Approach';
 import { SSApproachOne } from './SSApproachOne';
+import { SSApproachTwo } from './SSApproachTwo';
 import UtilityFunctions from 'src/app/shared/UtiltiyFunctions';
 import { BreakpointObserver, LayoutModule, BreakpointState, Breakpoints } from '@angular/cdk/layout';
 
@@ -14,6 +15,7 @@ export class SortedSquaresComponent implements OnInit {
 
   isHandheld: boolean = false;
   approachStage1: BasicArray;
+  approachStage2: BasicArray;
   //approachStage2: Approach;
 
 
@@ -51,7 +53,7 @@ export class SortedSquaresComponent implements OnInit {
 
   constructor(public breakpointObserver: BreakpointObserver) {
     this.approachStage1 = new SSApproachOne(this.datasetStage1)
-    // this.approachStage2 = new ApproachTwo(this.datasetStage2)
+    this.approachStage2 = new SSApproachTwo(this.datasetStage2)
   }
 
   /// Angular Methods
