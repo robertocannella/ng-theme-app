@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BasicArray } from '../BasicArray';
 import { Approach } from '../duplicate-zeros/Approach';
 import { SSApproachOne } from './SSApproachOne';
@@ -11,12 +11,11 @@ import { BreakpointObserver, LayoutModule, BreakpointState, Breakpoints } from '
   templateUrl: './sorted-squares.component.html',
   styleUrls: ['./sorted-squares.component.sass', '../coding-challenges.component.sass']
 })
-export class SortedSquaresComponent implements OnInit {
+export class SortedSquaresComponent implements OnInit, OnDestroy {
 
   isHandheld: boolean = false;
   approachStage1: BasicArray;
   approachStage2: BasicArray;
-  //approachStage2: Approach;
 
 
   // Button Toggles/Contols
@@ -51,9 +50,6 @@ export class SortedSquaresComponent implements OnInit {
   datasetStage2 = [...this.datasetStage1];
 
 
-  // APPROACH 2 is actually a cleaner version of APPROACH 1.  
-  // Approach 1 from leetcode is actually to square each item, then sort them
-  // TODO: implement Approach 1 with two different sorting algos. (selection and mergesort)
   constructor(public breakpointObserver: BreakpointObserver) {
     this.approachStage1 = new SSApproachOne(this.datasetStage1)
     this.approachStage2 = new SSApproachTwo(this.datasetStage2)
@@ -68,9 +64,120 @@ export class SortedSquaresComponent implements OnInit {
     });
   }
   ngOnDestroy(): void {
-    //this.approachStage1.stopAnimation();
-    //this.approachStage2.stopAnimation();
+    this.approachStage1.stopAnimation();
+    this.approachStage2.stopAnimation();
     // unsubscribe from breakpoint subscription
+  }
+  async compareAll() {
+    this.approachStage1.isPlayingAnimation = true;
+    this.approachStage2.isPlayingAnimation = true;
+    this.approachStage1.statusButtonDisabled = true;
+    this.approachStage2.statusButtonDisabled = true;
+    this.approachStage1.buttonsDisabled = true;
+    this.approachStage2.buttonsDisabled = true;
+    this.approachStage1.status = 'Comparing...';
+    this.approachStage2.status = 'Comparing...';
+    this._topButtons = true
+    return new Promise(async (resolve) => {
+
+      this.status = 'Comparing...'
+      this.isPlayingRandomSeq = true
+      this._buttons = true
+
+      this.approachStage2.dataset = [...this.approachStage1.dataset]
+      this.approachStage1.update();
+      this.approachStage2.update();
+      //this.updateStage1();
+      await Promise.all([
+        this.approachStage1.animate(),
+        this.approachStage2.animate()
+      ])//.catch(e => this.resetAll());
+
+      setTimeout(() => {
+        resolve([
+          this.approachStage1.resolveAnimate(),
+          this.approachStage2.resolveAnimate(),
+          this.resolveAnimate()
+        ])
+      }, 200)
+    })
+  }
+  async randomAll(sizeEach: number = UtilityFunctions.getRandomInt(9, 9)) {
+
+    this._topButtons = true
+    this._statusButton = false;
+    this.status = 'Stop';
+    return new Promise(async (resolve) => {
+      this.approachStage2.clear();
+      //this.approachStage2.clearSVG();
+
+      this.isPlayingRandomSeq = true
+      this.isPlaying = true;
+      this.isPlayingAnimation = 0
+
+      this._buttons = true
+
+      while (this.isPlaying) {
+        this.approachStage1.status = 'Comparing...';
+        this.approachStage2.status = 'Comparing...';
+        this.approachStage1.isPlayingAnimation = true;
+        this.approachStage2.isPlayingAnimation = true;
+        this.approachStage1.statusButtonDisabled = true;
+        this.approachStage2.statusButtonDisabled = true;
+        this.approachStage1.buttonsDisabled = true;
+        this.approachStage2.buttonsDisabled = true;
+        this.approachStage1.dataset = []
+        this.approachStage2.dataset = []
+
+        for (let j = 0; j < sizeEach; j++) {
+          let int = UtilityFunctions.getRandomInt(-9, 9)
+          this.approachStage1.dataset.push(int)
+        }
+
+        this.approachStage2.dataset = [...this.approachStage1.dataset]
+        this.datasetStage1.sort((a, b) => a - b) // <--- For this algorithm, the Array starts out SORTED
+        this.datasetStage2.sort((a, b) => a - b)    // <--- For this algorithm, the Array starts out SORTED
+
+        this.approachStage1.update();
+        this.approachStage2.update();
+
+        await Promise.all([
+          this.approachStage1.animate(true),
+          this.approachStage2.animate(true)
+        ])//.catch(() => { this.resetAll() })
+      }
+      setTimeout(() => {
+        resolve(this.resolvePlayRandom())
+      }, 200)
+    })
+  }
+  stopAll() {
+    this._statusButton = true;
+    this.status = 'Ending...'
+    this.isPlaying = false;
+  }
+  resolvePlayRandom() {
+    this.status = 'Finished';
+    this._topButtons = false;
+    this.approachStage1.buttonsDisabled = false;
+    this.approachStage2.buttonsDisabled = false;
+    this.isPlayingRandomSeq = false;
+
+  }
+  resolveAnimate() {
+    this._topButtons = false;
+    this.status = 'Finished';
+  }
+  setIsPlaying(event: any) {
+    this.isPlayingAnimation += event;
+  }
+  resetStages() {
+    this.isPlayingRandomSeq = false
+    this.isPlayingAnimation = 0
+    this.approachStage1.update();
+    this.approachStage2.update();
+    this.approachStage1.reset();
+    this.approachStage2.reset();
   }
 
 }

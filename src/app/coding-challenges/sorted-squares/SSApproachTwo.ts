@@ -10,6 +10,7 @@ export class SSApproachTwo extends BasicArray {
     subHeading = 'Approach 2'
     description = 'Two Pointer: O(N log N) time, O(N) or O(logN) space'
     duration = 300;
+    height = 250;
 
     constructor(public dataset: any[]) {
         super(dataset)
@@ -73,6 +74,9 @@ export class SSApproachTwo extends BasicArray {
         this.update();
     }
     override async animate(controlButtons?: boolean): Promise<unknown> {
+        // Logic here to support continuous play of random arrays
+        this.dataset.sort((a, b) => a - b)
+        this.update();
         return new Promise(async (resolve) => {
             await this._animate();
             setTimeout(() => {
@@ -106,6 +110,7 @@ export class SSApproachTwo extends BasicArray {
             .each((data: any, index: any, nodes: any) => {
                 d3.select(nodes[index]).attr('y', 150)
             })
+
         return new Promise(async (resolve) => {
             await this.startAnimation();
             setTimeout(() => {
@@ -344,5 +349,8 @@ export class SSApproachTwo extends BasicArray {
                 }).end(),
         ])
 
+    }
+    clearSVG() {
+        d3.select(this.d3Sel).remove();
     }
 }

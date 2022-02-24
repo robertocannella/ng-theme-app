@@ -1,11 +1,37 @@
 <a href='https://leetcode.com/problems/squares-of-a-sorted-array/'>
     <h3>Squares of a Sorted Array</h3>
 </a>
+
+<ng-container *ngIf="isPlayingRandomSeq; then stopRandomSeq; else playRandomSeq;"></ng-container>
+<ng-template #playRandomSeq>
+    <span #tooltip="matTooltip" [matTooltip]="isPlayingAnimation ? 'Animation Playing':''">
+        <button mat-button color="secondary" (click)='randomAll()' [disabled]="isPlayingAnimation > 0" aria-label="
+    Animate Button">
+            Random Sequences
+        </button>
+        <button mat-button color="secondary" (click)='compareAll()' [disabled]="isPlayingAnimation > 0" aria-label="
+Animate Button" matTooltipHideDelay="100000">
+            Compare
+        </button>
+    </span>
+</ng-template>
+<ng-template #stopRandomSeq>
+    <button mat-button #tooltip="matTooltip" matTooltip="Reset" color="secondary"
+        [disabled]="_topButtons || isPlayingAnimation > 0" (click)='resetStages()' aria-label="
+    Animate Button">
+        <fa-icon icon="undo"></fa-icon>&nbsp;
+    </button>
+    <button mat-button color="secondary" [disabled]="_statusButton" (click)='stopAll()' aria-label="
+    Animate Button">
+        {{ status }}
+    </button>
+</ng-template>
+
 <div class="linebreak-light"></div>
-<app-sorted-squares-stage [pushZeroButton]="pushZeroButton" [pushNegativeButton]="pushNegativeButton"
-    [approach]="approachStage1">
+<app-sorted-squares-stage (isPlayingEvent)="setIsPlaying($event)" [pushZeroButton]="pushZeroButton"
+    [pushNegativeButton]="pushNegativeButton" [approach]="approachStage1">
 </app-sorted-squares-stage>
 <div class="linebreak-light"></div>
-<app-sorted-squares-stage [pushZeroButton]="pushZeroButton" [pushNegativeButton]="pushNegativeButton"
-    [approach]="approachStage2">
+<app-sorted-squares-stage (isPlayingEvent)="setIsPlaying($event)" [pushZeroButton]="pushZeroButton"
+    [pushNegativeButton]="pushNegativeButton" [approach]="approachStage2">
 </app-sorted-squares-stage>

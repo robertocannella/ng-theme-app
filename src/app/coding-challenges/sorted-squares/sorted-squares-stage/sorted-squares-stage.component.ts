@@ -10,7 +10,7 @@ import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/l
 })
 export class SortedSquaresStageComponent implements OnInit {
   width = 600;
-  height = 250;
+  height = 250;  // <--- Moved to base Class due to different implementations
   vbWidth = 325;
   vbHeight = 150;
   xmlns = 'http://www.w3.org/2000/svg';
@@ -65,7 +65,7 @@ export class SortedSquaresStageComponent implements OnInit {
     d3.select(`#coding-stage-${this.approach.svgId}`)
       .append('svg')
       .attr('width', this.width)
-      .attr('height', this.height)
+      .attr('height', this.approach.height)
       .attr('id', `coding-outlet-${this.approach.svgId}`)
       .attr('xmlns', this.xmlns)
   }

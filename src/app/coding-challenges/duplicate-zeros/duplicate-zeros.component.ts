@@ -4,8 +4,7 @@ import { BreakpointObserver, LayoutModule, BreakpointState, Breakpoints } from '
 import { ApproachTwo } from './ApproachTwo';
 import { ApproachOne } from './ApproachOne';
 import { Approach } from './Approach';
-import { BasicArray } from '../BasicArray';
-import { AppRoutingModule } from 'src/app/app-routing.module';
+
 
 @Component({
   selector: 'app-duplicate-zeros',
@@ -147,6 +146,11 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
       }, 200)
     })
   }
+  stopAll() {
+    this._statusButton = true;
+    this.status = 'Ending...'
+    this.isPlaying = false;
+  }
   resolvePlayRandom() {
     this.status = 'Finished';
     this._topButtons = false;
@@ -158,11 +162,6 @@ export class DuplicateZerosComponent implements OnInit, OnDestroy {
   resolveAnimate() {
     this._topButtons = false;
     this.status = 'Finished';
-  }
-  stopAll() {
-    this._statusButton = true;
-    this.status = 'Ending...'
-    this.isPlaying = false;
   }
   setIsPlaying(event: any) {
     this.isPlayingAnimation += event;

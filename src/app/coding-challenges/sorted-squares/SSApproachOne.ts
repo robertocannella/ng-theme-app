@@ -11,6 +11,7 @@ export class SSApproachOne extends BasicArray {
     subHeading = 'Approach 1: Create an array of the squares of each element, and sort them (selection sort).'
     description = 'O(n<sup>2</sup>) time, O(1) space'
     duration = 300;
+    override height = 150;
 
     constructor(public dataset: any[]) {
         super(dataset)
@@ -145,7 +146,7 @@ export class SSApproachOne extends BasicArray {
                     if (this.less(this.dataset[j], this.dataset[min])) min = j;
 
 
-                await this.swapAnimation(this.dataset[i], i, this.dataset[min], min, 1000, 0);
+                await this.swapAnimation(this.dataset[i], i, this.dataset[min], min, 500, 0);
                 this.exchange(this.dataset, i, min);
             }
             setTimeout(() => {

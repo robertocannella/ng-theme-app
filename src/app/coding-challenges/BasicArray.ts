@@ -16,6 +16,7 @@ export class BasicArray {
     status = 'Stop';
     randomLoop = false;
     maxSize = 19;
+    height = 150;
 
 
     constructor(public dataset: any[]) {
@@ -105,6 +106,9 @@ export class BasicArray {
         (isNegative) ? this.dataset.push(UtilityFunctions.getRandomInt(-9, -1)) : this.dataset.push(UtilityFunctions.getRandomInt(1, 9))
         //this.dataset.sort((a, b) => a - b)
         this.update();
+    }
+    clearSVG(): void {
+
     }
 
 
