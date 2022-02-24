@@ -110,6 +110,7 @@ export class ArrayComponent implements OnInit {
       .data(arr, (data: any, index: any, nodes: any) => data)
       .enter()
       .append('g')
+      .attr('class', 'arr-group')
       // .join('g')
       .attr('id', (d: any, i: any) => 'group' + i + '-' + d)
       .each((data: any, i: any, nodes: any) => {
@@ -423,31 +424,32 @@ export class ArrayComponent implements OnInit {
     // console.log(textSel, textSel1, rectSel, rectSel1)
 
 
-    // let textSelX = d3.select(textSel).attr('x');
-    // let textSel1X = d3.select(textSel1).attr('x');
-    let rectSelX = d3.select(rectSel).attr('x');
-    let rectSel1X = d3.select(rectSel1).attr('x');
+    // let textSelX = d3.selectAll('.arr-group').select(textSel).attr('x');
+    // let textSel1X = d3.selectAll('.arr-group').select(textSel1).attr('x');
+    //
+    let rectSelX = d3.selectAll('.arr-group').select(rectSel).attr('x');
+    let rectSel1X = d3.selectAll('.arr-group').select(rectSel1).attr('x');
     if (rectSel1 === rectSel)     // added this for selection sort error on duplicate tags
       return;
 
     return Promise.all([
 
 
-      // d3.select(textSel)
+      // d3.selectAll('.arr-group').select(textSel)
       //   .transition()
       //   .duration(durationTime)
       //   .delay(delayTime)
       //   .attr('x', textSel1X)
       //   .end().catch(error => console.log(error)),
 
-      // d3.select(textSel1)
+      // d3.selectAll('.arr-group').select(textSel1)
       //   .transition()
       //   .duration(durationTime)
       //   .delay(delayTime)
       //   .attr('x', textSelX)
       //   .end().catch(error => console.log(error)),
 
-      d3.select(rectSel)
+      d3.selectAll('.arr-group').select(rectSel)
         .transition()
         .duration(durationTime)
         .delay(delayTime)
@@ -461,7 +463,7 @@ export class ArrayComponent implements OnInit {
         // .attr('fill', 'orange')
         .end().catch(error => console.log(error)),
 
-      d3.select(rectSel1)
+      d3.selectAll('.arr-group').select(rectSel1)
         .transition()
         .duration(durationTime)
         .delay(delayTime)

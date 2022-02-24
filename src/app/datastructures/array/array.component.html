@@ -12,7 +12,8 @@ array, along with numerous sorting algorithms.
     Add SVG2 Node
 </button> -->
 
-<button mat-button color='primary' [matMenuTriggerFor]="menu">Sort</button>
+<button mat-button [color]="_buttons ? 'primary':'warn'" [matMenuTriggerFor]="menu">{{ _buttons ? 'Sort':'
+    Animating...' }}</button>
 <mat-menu #menu="matMenu" [attr.disabled]="_buttons ?null:'true'">
     <button mat-menu-item [attr.disabled]="_buttons ? null:'true'" (click)="bubbleSort()"
         aria-label="Bubble Sort Button">Bubble Sort O(n<sup>2</sup>)</button>
@@ -32,14 +33,15 @@ array, along with numerous sorting algorithms.
     <button mat-menu-item [attr.disabled]="_buttons ? null : 'true'" (click)="traverse()"
         aria-label="Bucket Sort Button">Bucket Sort</button> -->
 </mat-menu>
-<button mat-button color="primary" (click)="obliterate()" aria-label="Obliterate Button">
+<button mat-button color="primary" [disabled]="_buttons ?null:'true'" (click)="obliterate()"
+    aria-label="Obliterate Button">
     Obliterate
 </button>
-<button style="touch-action: manipulation;" mat-button color="primary" (click)="addRandomElement()"
-    aria-label="Add Random Element Button">
+<button style="touch-action: manipulation;" [disabled]="_buttons ?null:'true'" mat-button color="primary"
+    (click)="addRandomElement()" aria-label="Add Random Element Button">
     Append Element
 </button>
-<button mat-button color="primary" (click)="shuffle()" aria-label="Shuffle Button">
+<button mat-button color="primary" [disabled]="_buttons ?null:'true'" (click)="shuffle()" aria-label="Shuffle Button">
     Shuffle
 </button>
 <mat-expansion-panel>
