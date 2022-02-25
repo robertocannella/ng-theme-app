@@ -64,6 +64,9 @@ export class MaxConsecutiveOnesStageComponent implements OnInit {
   pushNaturalNumber() {
     this.approach.push()
   }
+  step(direction: string) {
+    this.approach.step(direction);
+  }
   buildSVG() {
     d3.select(`#coding-stage-${this.approach.svgId}`)
       .append('svg')

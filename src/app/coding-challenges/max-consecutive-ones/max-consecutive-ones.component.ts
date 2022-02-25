@@ -14,7 +14,7 @@ export class MaxConsecutiveOnesComponent implements OnInit {
 
   isHandheld: boolean = false;
   //approachStage1: BasicArray;
-  approachStage2: BasicArray;
+  approachStage2: MaxOnesApproachTwo;
 
 
   // Button Toggles/Contols

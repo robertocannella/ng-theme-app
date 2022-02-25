@@ -13,18 +13,21 @@
         </button>
         <button mat-button color="secondary" [disabled]="approach.statusButtonDisabled"
             (click)='approach.stopPlayRandom()' aria-label="
-        Animate Button">
+        Stop Play Random Button">
             {{ approach.status }}
         </button>
+        <!-- <button mat-button color="primary" (click)="step('forward')">Step</button> -->
     </span>
-    <!-- <div class="index">
-        <span>index i: {{approach.currentI}}</span>
-        &nbsp;
-        <span>index j: {{approach.currentJ}}</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <span>Total Zeros: {{approach.totalZeros}}</span>
-    </div> -->
+
 </ng-template>
+<br>
+<div class="index">
+    <span>Current Consecutive: {{approach.currentConsecutive}}</span>
+    &nbsp;
+    <span>Longest Consecutive: {{approach.longestConsecutive}}</span>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <!-- <span>Total Zeros: {{approach.totalZeros}}</span> -->
+</div>
 <ng-template #showMenu>
     <span class="sub-header cc-sub-header">
 

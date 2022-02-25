@@ -17,6 +17,8 @@ export class BasicArray {
     randomLoop = false;
     maxSize = 19;
     height = 150;
+    longestConsecutive = 0;
+    currentConsecutive = 0;
 
 
     constructor(public dataset: any[]) {
@@ -49,6 +51,13 @@ export class BasicArray {
     }
     // Handle Multiple Play Animations Here
 
+    step(direction: string) {
+        return new Promise((resolve) => {
+            resolve(true);
+        })
+
+
+    }
     async playRandom(controlButtons?: boolean): Promise<void> {
         return new Promise(async () => {
 

@@ -11,6 +11,10 @@ export class MaxOnesApproachTwo extends BasicArray {
     description = 'Sliding Window: O(n) time, O(1) space'
     duration = 300;
     height = 250;
+    stepForward = false;
+    stepBackward = false;
+    totalZeros = 0;
+    longestConsecutive = 0;
 
     constructor(public dataset: any[]) {
         super(dataset)
@@ -59,24 +63,9 @@ export class MaxOnesApproachTwo extends BasicArray {
                 })
 
     }
-    // arrays need to be sorted initially //
-    override pushNegative(isNegative?: boolean): void {
-        if (this.dataset.length > this.maxSize)
-            return;
-        (isNegative) ? this.dataset.push(UtilityFunctions.getRandomInt(-9, -1)) : this.dataset.push(UtilityFunctions.getRandomInt(1, 9))
-        this.dataset.sort((a, b) => a - b)
-        this.update();
-    }
-    // arrays need to be sorted initially //
-    override push(isZero?: number): void {
-        if (this.dataset.length > this.maxSize)
-            return;
-        (isZero === 0) ? this.dataset.push(0) : this.dataset.push(UtilityFunctions.getRandomInt(1, 9))
-        this.update();
-    }
+
     override async animate(controlButtons?: boolean): Promise<unknown> {
         // Logic here to support continuous play of random arrays
-        this.dataset.sort((a, b) => a - b)
         this.update();
         return new Promise(async (resolve) => {
             await this._animate();
@@ -107,27 +96,104 @@ export class MaxOnesApproachTwo extends BasicArray {
     }
     async _animate() {
         return new Promise(async (resolve) => {
+            await this.addWindow();
             await this.startAnimation();
             setTimeout(() => {
                 resolve(true)
             }, 1000)
         })
     }
-
+    async addWindow() {
+        return d3.select(this.d3Sel)
+            .append('g')
+            .attr('class', 'window')
+            .attr('id', `${this.svgId}-window`)
+            .append('rect')
+            .attr('x', 0)
+            .attr('height', 40)
+            .attr('width', 0)
+            .attr('y', 15)
+            .attr('fill-opacity', 0)
+            .attr('stroke', 'black')
+            .attr('stroke-width', 1)
+    }
     async startAnimation() {
         return new Promise(async (resolve) => {
-            let n = this.dataset.length - 1;
+            this.longestConsecutive = 0
+            let totalZeros = 0;
+            this.totalZeros = 0;
+            let len = this.dataset.length;
             let left = 0
-            let right = n
+            let right = 0
 
+            //D3 Attributes
+            let index = 0
+            let rightWindowEdge = 0
+            let leftWindowEdge = 0
 
+            while (right < len) {
 
+                if (this.dataset[right] == 0) {
+                    let currentZero = d3.select(`#rect${right}-0-${this.svgId}`)
+                    await currentZero
+                        .transition().duration(this.duration)
+                        .attr('fill', 'cornflowerblue').end()
+                    totalZeros++;
+                    this.totalZeros++;
+                }
+                while (totalZeros == 2) {
+                    let currentZero = d3.select(`#rect${left}-0-${this.svgId}`)
+                    await currentZero
+                        .transition().duration(this.duration)
+                        .attr('fill', '#bbb').end()
+                    if (this.dataset[left] == 0) {
+                        totalZeros--;
+                        this.totalZeros--;
+                    }
+
+                    let currentRect = d3.select(`#rect${left}-1-${this.svgId}`)
+                    // Change to back to gray if 1 is no longer part of the group
+                    currentRect
+                        .attr('fill', () => '#bbb')
+                    left++;
+                    leftWindowEdge += 30;
+                }
+                this.currentConsecutive = right - left + 1;
+                this.longestConsecutive = Math.max(this.longestConsecutive, right - left + 1);
+                let window = d3.select(`#${this.svgId}-window`).select('rect')
+                right++;
+                rightWindowEdge += (index == 0) ? 28 : 30;
+
+                await Promise.all([
+                    window.transition().duration(this.duration * 2)
+                        .attr('x', () => leftWindowEdge)
+                        .attr('width', () => rightWindowEdge - leftWindowEdge).end()
+                ])
+                let currentRect = d3.select(`#rect${index}-${this.dataset[index]}-${this.svgId}`)
+                // Change to green if it's a 1
+                currentRect
+                    .call((sel: any) => {
+                        let fill = sel.attr('fill')
+                        sel.attr('fill', (d: any) => (d == 1) ? '#79d14d' : fill)
+                    })
+
+                index++;
+            }
             setTimeout(() => {
-
                 resolve('true')
             }, 200)
         })
 
+    }
+    override step(direction: string) {
+        return new Promise((resolve) => {
+            if (direction === 'forward')
+                this.stepForward = true;
+            if (direction === 'backward')
+                this.stepBackward = true;
+
+            resolve(true);
+        })
     }
 
     // Utility Functions
