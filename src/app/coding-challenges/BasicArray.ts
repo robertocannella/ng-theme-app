@@ -89,6 +89,9 @@ export class BasicArray {
         this.dataset.pop();
         this.update();
     }
+    pushOne() {
+        this.dataset.push(1);
+    }
     push(isZero?: number): void {
         if (this.dataset.length > this.maxSize)
             return;

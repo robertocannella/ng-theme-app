@@ -13,6 +13,7 @@ import { MathComponent } from './math/math.component';
 import { DuplicateZerosComponent } from './coding-challenges/duplicate-zeros/duplicate-zeros.component';
 import { CodingChallengesComponent } from './coding-challenges/coding-challenges.component';
 import { SortedSquaresComponent } from './coding-challenges/sorted-squares/sorted-squares.component';
+import { MaxConsecutiveOnesComponent } from './coding-challenges/max-consecutive-ones/max-consecutive-ones.component';
 
 
 const routes: Routes = [
@@ -35,6 +36,10 @@ const routes: Routes = [
       {
         path: 'sorted-squares',
         component: SortedSquaresComponent
+      },
+      {
+        path: 'max-consecutive-ones',
+        component: MaxConsecutiveOnesComponent
       }
     ]
   },

@@ -10,4 +10,14 @@ export default class UtilityFunctions {
 
         //The maximum is exclusive and the minimum is inclusive
     }
+    static generateRandomBinary(binaryLength: number) {
+        let binary = "0b";
+        for (let i = 0; i < binaryLength; ++i) {
+            binary += this.randomDigit();
+        }
+        return binary;
+    }
+    static randomDigit() {
+        return Math.floor(Math.random() * Math.floor(2));
+    }
 }

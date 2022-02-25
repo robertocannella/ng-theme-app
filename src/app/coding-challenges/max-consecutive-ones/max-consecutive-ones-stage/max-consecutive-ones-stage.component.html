@@ -1,0 +1,93 @@
+<span class="sub-header cc-sub-header">{{approach.subHeading}}</span>
+<span [innerHTML]="approach.description"></span>
+<span class="sub-header cc-sub-header">
+    <ng-container *ngIf="approach.isPlayingAnimation || approach.isPlayingRandom; then showControls; else showMenu">
+    </ng-container>
+</span>
+<ng-template #showControls>
+    <span class="sub-header cc-sub-header">
+
+        <button mat-button color="secondary" [disabled]="approach.buttonsDisabled" (click)="approach.reset()"
+            aria-label="Reset Button">
+            <fa-icon icon="undo"></fa-icon>&nbsp;
+        </button>
+        <button mat-button color="secondary" [disabled]="approach.statusButtonDisabled"
+            (click)='approach.stopPlayRandom()' aria-label="
+        Animate Button">
+            {{ approach.status }}
+        </button>
+    </span>
+    <!-- <div class="index">
+        <span>index i: {{approach.currentI}}</span>
+        &nbsp;
+        <span>index j: {{approach.currentJ}}</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <span>Total Zeros: {{approach.totalZeros}}</span>
+    </div> -->
+</ng-template>
+<ng-template #showMenu>
+    <span class="sub-header cc-sub-header">
+
+        <button mat-button color="secondary" [disabled]="approach.buttonsDisabled" (click)="animate()" aria-label="
+        Animate Button">
+            Animate
+        </button>
+        <button mat-button color="secondary" [disabled]="approach.buttonsDisabled" (click)="playRand()"
+            aria-label=" Play Randome Button">
+            Play Random
+        </button>
+
+        <ng-container *ngIf="isHandheld; then handheldStage2; else webPortraitStage2">
+        </ng-container>
+
+        <ng-template #handheldStage2>
+            <button mat-button color='secondary' [disabled]="approach.buttonsDisabled"
+                [matMenuTriggerFor]="menu">Customize</button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item *ngIf="pushNaturalNumberButton" [disabled]="approach.buttonsDisabled"
+                    (click)="pushNaturalNumber()" aria-label="Add Natural Button">Push Natural
+                    Number</button>
+                <button mat-menu-item [disabled]="approach.buttonsDisabled" (click)="pop()"
+                    aria-label="Pop Button">Pop</button>
+                <button *ngIf="pushZeroButton" mat-menu-item [disabled]="approach.buttonsDisabled" (click)="pushZero()"
+                    aria-label="Push Zero Button">Push Zero</button>
+                <button *ngIf="pushOnesButton" mat-menu-item [disabled]="approach.buttonsDisabled"
+                    (click)="approach.pushOne()" aria-label="Push Ones Button">Push One</button>
+                <button *ngIf="pushNegativeButton" mat-menu-item [disabled]="approach.buttonsDisabled"
+                    (click)="approach.pushNegative(true)" aria-label="Push Negative Button">Push Negative</button>
+                <button mat-button [disabled]="approach.buttonsDisabled" (click)="clear()"
+                    aria-label="Clear Button">Clear</button>
+            </mat-menu>
+
+
+        </ng-template>
+        <ng-template #webPortraitStage2>
+            <button mat-button color='secondary' [disabled]="approach.buttonsDisabled"
+                [matMenuTriggerFor]="menu">Push</button>
+            <mat-menu #menu="matMenu">
+                <button *ngIf="pushZeroButton" mat-menu-item [disabled]="approach.buttonsDisabled" (click)="pushZero()"
+                    aria-label="Push Zero Button">Push Zero</button>
+                <button mat-menu-item *ngIf="pushNaturalNumberButton" [disabled]="approach.buttonsDisabled"
+                    (click)="pushNaturalNumber()" aria-label="Add Natural Button">Push Natural
+                    Number</button>
+                <button mat-menu-item *ngIf="pushPositiveButton" [disabled]="approach.buttonsDisabled"
+                    aria-label="Push Zero Button">Push Postive</button>
+                <button *ngIf="pushOnesButton" mat-menu-item [disabled]="approach.buttonsDisabled"
+                    (click)="approach.pushOne()" aria-label="Push Ones Button">Push One</button>
+                <button *ngIf="pushNegativeButton" mat-menu-item [disabled]="approach.buttonsDisabled"
+                    (click)="approach.pushNegative(true)" aria-label="Push Negative Button">Negative</button>
+            </mat-menu>
+
+
+            <button mat-button [disabled]="approach.buttonsDisabled" (click)="pop()"
+                aria-label="Pop Button">Pop</button>
+            <button mat-button [disabled]="approach.buttonsDisabled" (click)="clear()"
+                aria-label="Clear Button">Clear</button>
+
+        </ng-template>
+    </span>
+
+</ng-template>
+
+<div [id]="stageId" style="overflow:scroll;text-align:center">
+</div>

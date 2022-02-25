@@ -32,6 +32,8 @@ import { SortedSquaresComponent } from './coding-challenges/sorted-squares/sorte
 import { D3Service } from "./d3.service";
 import { StageComponent } from './coding-challenges/stage/stage.component';
 import { SortedSquaresStageComponent } from './coding-challenges/sorted-squares/sorted-squares-stage/sorted-squares-stage.component';
+import { MaxConsecutiveOnesComponent } from './coding-challenges/max-consecutive-ones/max-consecutive-ones.component';
+import { MaxConsecutiveOnesStageComponent } from './coding-challenges/max-consecutive-ones/max-consecutive-ones-stage/max-consecutive-ones-stage.component';
 
 
 @NgModule({
@@ -61,7 +63,9 @@ import { SortedSquaresStageComponent } from './coding-challenges/sorted-squares/
     CodingChallengesComponent,
     SortedSquaresComponent,
     StageComponent,
-    SortedSquaresStageComponent
+    SortedSquaresStageComponent,
+    MaxConsecutiveOnesComponent,
+    MaxConsecutiveOnesStageComponent,
   ],
   imports: [
     BrowserModule,
