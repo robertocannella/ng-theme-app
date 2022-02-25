@@ -19,7 +19,7 @@ export class BasicArray {
     height = 150;
     longestConsecutive = 0;
     currentConsecutive = 0;
-
+    note = '*Note: Animation times are not reflective of the algorithm run time. In some cases, the algorithm is slowed down for easier visual comprehension.'
 
     constructor(public dataset: any[]) {
 

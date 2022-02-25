@@ -8,7 +8,7 @@ import { MaxOnesApproachTwo } from './MaxOnesApproachTwo';
 @Component({
   selector: 'app-max-consecutive-ones',
   templateUrl: './max-consecutive-ones.component.html',
-  styleUrls: ['./max-consecutive-ones.component.sass']
+  styleUrls: ['./max-consecutive-ones.component.sass', '../coding-challenges.component.sass']
 })
 export class MaxConsecutiveOnesComponent implements OnInit {
 
