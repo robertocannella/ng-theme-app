@@ -22,12 +22,20 @@
 </ng-template>
 <br>
 <div class="index">
+    <span>index left: {{approach.currentI}}</span>
+    &nbsp;
+    <span>index right: {{approach.currentJ}}</span>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <span>Total Zeros: {{approach.totalZeros}}</span>
+</div>
+<div class="index">
     <span>Current Consecutive: {{approach.currentConsecutive}}</span>
     &nbsp;
-    <span>Longest Consecutive: {{approach.longestConsecutive}}</span>
+    <span>Longest Consecutive: <b> {{approach.longestConsecutive}}</b></span>
     &nbsp;&nbsp;&nbsp;&nbsp;
     <!-- <span>Total Zeros: {{approach.totalZeros}}</span> -->
 </div>
+
 <ng-template #showMenu>
     <span class="sub-header cc-sub-header">
 
@@ -94,4 +102,3 @@
 
 <div [id]="stageId" style="overflow:scroll;text-align:center">
 </div>
-{{this.approach.note}}

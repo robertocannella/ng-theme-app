@@ -3,6 +3,7 @@ import { BasicArray } from '../BasicArray';
 import UtilityFunctions from 'src/app/shared/UtiltiyFunctions';
 import { BreakpointObserver, LayoutModule, BreakpointState, Breakpoints } from '@angular/cdk/layout';
 import { MaxOnesApproachTwo } from './MaxOnesApproachTwo';
+import { MaxOnesApproachOne } from './MaxOnesApproachOne';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { MaxOnesApproachTwo } from './MaxOnesApproachTwo';
 export class MaxConsecutiveOnesComponent implements OnInit {
 
   isHandheld: boolean = false;
-  //approachStage1: BasicArray;
+  approachStage1: MaxOnesApproachOne;
   approachStage2: MaxOnesApproachTwo;
 
 
@@ -54,7 +55,7 @@ export class MaxConsecutiveOnesComponent implements OnInit {
 
 
   constructor(public breakpointObserver: BreakpointObserver) {
-    //this.approachStage1 = new BasicArray(this.datasetStage1)
+    this.approachStage1 = new MaxOnesApproachOne(this.datasetStage1)
     this.approachStage2 = new MaxOnesApproachTwo(this.datasetStage2)
   }
 

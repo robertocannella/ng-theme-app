@@ -1,10 +1,17 @@
 <img class="svg-logo" src='../../assets/images/leetcode.svg' /> LeetCode
 
 <h3><a href='https://leetcode.com/problems/max-consecutive-ones-ii/'>Max Consecutive Ones ii</a></h3>
-
-
+<div class="linebreak-light"></div>
+<app-max-consecutive-ones-stage (isPlayingEvent)="setIsPlaying($event)" [pushZeroButton]="pushZeroButton"
+    [pushNegativeButton]="pushNegativeButton" [pushPositiveButton]="pushPositiveButton"
+    [pushOnesButton]="pushOnesButton" [pushNaturalNumberButton]="pushNaturalNumberButton" [approach]="approachStage1">
+</app-max-consecutive-ones-stage>
 <div class="linebreak-light"></div>
 <app-max-consecutive-ones-stage (isPlayingEvent)="setIsPlaying($event)" [pushZeroButton]="pushZeroButton"
     [pushNegativeButton]="pushNegativeButton" [pushPositiveButton]="pushPositiveButton"
     [pushOnesButton]="pushOnesButton" [pushNaturalNumberButton]="pushNaturalNumberButton" [approach]="approachStage2">
 </app-max-consecutive-ones-stage>
+
+
+<!-- Can reference either Approach 'note' property.  -->
+{{this.approachStage2.note}}

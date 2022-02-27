@@ -1,14 +1,15 @@
+import { transition } from '@angular/animations';
 import * as d3 from 'd3';
 import UtilityFunctions from '../../shared/UtiltiyFunctions';
 import { BasicArray } from '../BasicArray';
 
 
-export class MaxOnesApproachTwo extends BasicArray {
+export class MaxOnesApproachOne extends BasicArray {
 
-    svgId = 'ApproachTwo';
+    svgId = 'ApproachOne';
     d3Sel = `#coding-outlet-${this.svgId}`
-    subHeading = 'Approach 2'
-    description = 'Sliding Window: O(n) time, O(1) space'
+    subHeading = 'Approach 1'
+    description = 'Brute Force: O(n<sup>2</sup>) time, O(1) space'
     duration = 300;
     height = 200;
     stepForward = false;
@@ -128,56 +129,34 @@ export class MaxOnesApproachTwo extends BasicArray {
 
             //D3 Attributes
             let index = 0
-            let rightWindowEdge = 0
-            let leftWindowEdge = 0
+            this.currentI = 0;
 
-            while (right < len) {
+            for (let left = 0; left < len; left++) {
 
-                if (this.dataset[right] == 0) {
-                    let currentZero = d3.select(`#rect${right}-0-${this.svgId}`)
-                    await currentZero
-                        .transition().duration(this.duration)
-                        .attr('fill', 'cornflowerblue').end()
-                    totalZeros++;
-                    this.totalZeros++;
-                }
-                while (totalZeros == 2) {
-                    let currentZero = d3.select(`#rect${left}-0-${this.svgId}`)
-                    await currentZero
-                        .transition().duration(this.duration)
-                        .attr('fill', '#bbb').end()
-                    if (this.dataset[left] == 0) {
-                        totalZeros--;
-                        this.totalZeros--;
+                let currentRectI = d3.select(`#rect${left}-${this.dataset[left]}-${this.svgId}`)
+                this.currentI++;
+                this.totalZeros = 0;
+                this.currentJ = 0;
+
+                for (let right = left; right < len; right++) {
+                    currentRectI.transition().duration(this.duration).attr('fill', 'cornflowerblue')
+                    let currentRectJ = d3.select(`#rect${right}-${this.dataset[right]}-${this.svgId}`)
+                    this.currentJ++;
+
+                    if (this.dataset[right] == 0) this.totalZeros++;
+
+                    await currentRectJ.transition().duration(this.duration).attr('fill', () => {
+                        return (this.totalZeros < 2) ? 'cornflowerblue' : '#fcba03'; // yellow
+                    }).end()
+
+                    if (this.totalZeros <= 1) {
+                        this.currentConsecutive = right - left + 1;
+                        this.longestConsecutive = Math.max(this.longestConsecutive, this.currentConsecutive);
                     }
-
-                    let currentRect = d3.select(`#rect${left}-1-${this.svgId}`)
-                    // Change to back to gray if 1 is no longer part of the group
-                    currentRect
-                        .attr('fill', () => '#bbb')
-                    left++;
-                    leftWindowEdge += 30;
                 }
-                this.currentConsecutive = right - left + 1;
-                this.longestConsecutive = Math.max(this.longestConsecutive, right - left + 1);
-                let window = d3.select(`#${this.svgId}-window`).select('rect')
-                right++;
-                rightWindowEdge += (index == 0) ? 28 : 30;
+                // clear indicators
+                d3.select(this.d3Sel).selectAll('rect').transition().duration(this.duration).attr('fill', '#bbb')
 
-                await Promise.all([
-                    window.transition().duration(this.duration * 2)
-                        .attr('x', () => leftWindowEdge)
-                        .attr('width', () => rightWindowEdge - leftWindowEdge).end()
-                ])
-                let currentRect = d3.select(`#rect${index}-${this.dataset[index]}-${this.svgId}`)
-                // Change to green if it's a 1
-                currentRect
-                    .call((sel: any) => {
-                        let fill = sel.attr('fill')
-                        sel.attr('fill', (d: any) => (d == 1) ? '#79d14d' : fill)
-                    })
-
-                index++;
             }
             setTimeout(() => {
                 resolve('true')
@@ -232,5 +211,9 @@ export class MaxOnesApproachTwo extends BasicArray {
     }
     clearSVG() {
         d3.select(this.d3Sel).remove();
+        this.longestConsecutive = 0;
+        this.totalZeros = 0;
+        this.currentI = 0;
+        this.currentJ = 0;
     }
 }
