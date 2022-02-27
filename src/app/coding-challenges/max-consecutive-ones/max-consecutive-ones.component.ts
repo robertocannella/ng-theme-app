@@ -161,7 +161,7 @@ export class MaxConsecutiveOnesComponent implements OnInit {
   resolvePlayRandom() {
     this.status = 'Finished';
     this._topButtons = false;
-    //this.approachStage1.buttonsDisabled = false;
+    this.approachStage1.buttonsDisabled = false;
     this.approachStage2.buttonsDisabled = false;
     this.isPlayingRandomSeq = false;
 

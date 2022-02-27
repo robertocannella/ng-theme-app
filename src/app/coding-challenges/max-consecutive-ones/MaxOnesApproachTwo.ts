@@ -121,6 +121,8 @@ export class MaxOnesApproachTwo extends BasicArray {
 
         return new Promise(async (resolve) => {
             this.longestConsecutive = 0
+            this.currentI = 0;
+            this.currentJ = 0;
             let totalZeros = 0;
             this.totalZeros = 0;
             let len = this.dataset.length;
@@ -158,11 +160,13 @@ export class MaxOnesApproachTwo extends BasicArray {
                     currentRect
                         .attr('fill', () => '#bbb')
                     left++;
+                    this.currentI++;
                     leftWindowEdge += 30;
                 }
                 this.currentConsecutive = right - left + 1;
                 this.longestConsecutive = Math.max(this.longestConsecutive, right - left + 1);
                 right++;
+                this.currentJ++
                 rightWindowEdge += (index == 0) ? 28 : 30;
 
                 await Promise.all([
@@ -177,11 +181,9 @@ export class MaxOnesApproachTwo extends BasicArray {
                         let fill = sel.attr('fill')
                         sel.attr('fill', (d: any) => (d == 1) ? '#79d14d' : fill)
                     })
-
-
                 index++;
             }
-            return Promise.all([
+            await Promise.all([
 
                 await d3.select(this.d3Sel).selectAll('rect').transition().duration(this.duration).attr('fill', '#bbb').end(),
                 await window.transition().duration(this.duration).attr('x', rightWindowEdge).attr('width', 0).remove().end()
