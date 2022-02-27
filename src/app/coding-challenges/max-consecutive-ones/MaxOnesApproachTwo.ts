@@ -118,6 +118,7 @@ export class MaxOnesApproachTwo extends BasicArray {
             .attr('stroke-width', 1)
     }
     async startAnimation() {
+
         return new Promise(async (resolve) => {
             this.longestConsecutive = 0
             let totalZeros = 0;
@@ -130,6 +131,7 @@ export class MaxOnesApproachTwo extends BasicArray {
             let index = 0
             let rightWindowEdge = 0
             let leftWindowEdge = 0
+            let window = d3.select(`#${this.svgId}-window`).select('rect')
 
             while (right < len) {
 
@@ -160,12 +162,11 @@ export class MaxOnesApproachTwo extends BasicArray {
                 }
                 this.currentConsecutive = right - left + 1;
                 this.longestConsecutive = Math.max(this.longestConsecutive, right - left + 1);
-                let window = d3.select(`#${this.svgId}-window`).select('rect')
                 right++;
                 rightWindowEdge += (index == 0) ? 28 : 30;
 
                 await Promise.all([
-                    window.transition().duration(this.duration * 2)
+                    window.transition().duration(this.duration + 200)
                         .attr('x', () => leftWindowEdge)
                         .attr('width', () => rightWindowEdge - leftWindowEdge).end()
                 ])
@@ -177,9 +178,17 @@ export class MaxOnesApproachTwo extends BasicArray {
                         sel.attr('fill', (d: any) => (d == 1) ? '#79d14d' : fill)
                     })
 
+
                 index++;
             }
+            return Promise.all([
+
+                await d3.select(this.d3Sel).selectAll('rect').transition().duration(this.duration).attr('fill', '#bbb').end(),
+                await window.transition().duration(this.duration).attr('x', rightWindowEdge).attr('width', 0).remove().end()
+            ])
+
             setTimeout(() => {
+
                 resolve('true')
             }, 200)
         })
@@ -232,5 +241,9 @@ export class MaxOnesApproachTwo extends BasicArray {
     }
     clearSVG() {
         d3.select(this.d3Sel).remove();
+        this.longestConsecutive = 0;
+        this.totalZeros = 0;
+        this.currentI = 0;
+        this.currentJ = 0;
     }
 }

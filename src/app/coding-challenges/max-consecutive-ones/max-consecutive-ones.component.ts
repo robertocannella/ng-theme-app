@@ -73,13 +73,13 @@ export class MaxConsecutiveOnesComponent implements OnInit {
     // unsubscribe from breakpoint subscription
   }
   async compareAll() {
-    //this.approachStage1.isPlayingAnimation = true;
+    this.approachStage1.isPlayingAnimation = true;
     this.approachStage2.isPlayingAnimation = true;
-    //this.approachStage1.statusButtonDisabled = true;
+    this.approachStage1.statusButtonDisabled = true;
     this.approachStage2.statusButtonDisabled = true;
-    //this.approachStage1.buttonsDisabled = true;
+    this.approachStage1.buttonsDisabled = true;
     this.approachStage2.buttonsDisabled = true;
-    //this.approachStage1.status = 'Comparing...';
+    this.approachStage1.status = 'Comparing...';
     this.approachStage2.status = 'Comparing...';
     this._topButtons = true
     return new Promise(async (resolve) => {
@@ -88,18 +88,18 @@ export class MaxConsecutiveOnesComponent implements OnInit {
       this.isPlayingRandomSeq = true
       this._buttons = true
 
-      //this.approachStage2.dataset = [...this.approachStage1.dataset]
-      //this.approachStage1.update();
+      this.approachStage2.dataset = [...this.approachStage1.dataset]
+      this.approachStage1.update();
       this.approachStage2.update();
       //this.updateStage1();
       await Promise.all([
-        //this.approachStage1.animate(),
+        this.approachStage1.animate(),
         this.approachStage2.animate()
       ])//.catch(e => this.resetAll());
 
       setTimeout(() => {
         resolve([
-          //this.approachStage1.resolveAnimate(),
+          this.approachStage1.resolveAnimate(),
           this.approachStage2.resolveAnimate(),
           this.resolveAnimate()
         ])
@@ -112,7 +112,7 @@ export class MaxConsecutiveOnesComponent implements OnInit {
     this._statusButton = false;
     this.status = 'Stop';
     return new Promise(async (resolve) => {
-      this.approachStage2.clear();
+      //this.approachStage2.clear();
       //this.approachStage2.clearSVG();
 
       this.isPlayingRandomSeq = true
@@ -122,31 +122,29 @@ export class MaxConsecutiveOnesComponent implements OnInit {
       this._buttons = true
 
       while (this.isPlaying) {
-        //this.approachStage1.status = 'Comparing...';
+        this.approachStage1.status = 'Comparing...';
         this.approachStage2.status = 'Comparing...';
-        // this.approachStage1.isPlayingAnimation = true;
+        this.approachStage1.isPlayingAnimation = true;
         this.approachStage2.isPlayingAnimation = true;
-        // this.approachStage1.statusButtonDisabled = true;
+        this.approachStage1.statusButtonDisabled = true;
         this.approachStage2.statusButtonDisabled = true;
-        //this.approachStage1.buttonsDisabled = true;
+        this.approachStage1.buttonsDisabled = true;
         this.approachStage2.buttonsDisabled = true;
-        // this.approachStage1.dataset = []
+        this.approachStage1.dataset = []
         this.approachStage2.dataset = []
 
         for (let j = 0; j < sizeEach; j++) {
-          let int = UtilityFunctions.getRandomInt(0, 1)
-          this.approachStage2.dataset.push(int)
+          let int = UtilityFunctions.getRandomInt(0, 2)
+          this.approachStage1.dataset.push(int)
         }
 
-        // this.approachStage2.dataset = [...this.approachStage1.dataset]
-        //this.datasetStage1.sort((a, b) => a - b) // <--- For this algorithm, the Array starts out SORTED
-        //this.datasetStage2.sort((a, b) => a - b)    // <--- For this algorithm, the Array starts out SORTED
+        this.approachStage2.dataset = [...this.approachStage1.dataset]
 
-        //this.approachStage1.update();
+        this.approachStage1.update();
         this.approachStage2.update();
 
         await Promise.all([
-          //this.approachStage1.animate(true),
+          this.approachStage1.animate(true),
           this.approachStage2.animate(true)
         ])//.catch(() => { this.resetAll() })
       }

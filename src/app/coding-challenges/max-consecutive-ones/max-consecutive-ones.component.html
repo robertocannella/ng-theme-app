@@ -1,7 +1,39 @@
 <img class="svg-logo" src='../../assets/images/leetcode.svg' /> LeetCode
 
 <h3><a href='https://leetcode.com/problems/max-consecutive-ones-ii/'>Max Consecutive Ones ii</a></h3>
+
+<ng-container *ngIf="isPlayingRandomSeq; then stopRandomSeq; else playRandomSeq;"></ng-container>
+<ng-template #playRandomSeq>
+    <span #tooltip="matTooltip" [matTooltip]="isPlayingAnimation ? 'Animation Playing':''">
+        <button mat-button color="secondary" (click)='randomAll()' [disabled]="isPlayingAnimation > 0" aria-label="
+    Animate Button">
+            Random Sequences
+        </button>
+        <button mat-button color="secondary" (click)='compareAll()' [disabled]="isPlayingAnimation > 0" aria-label="
+Animate Button" matTooltipHideDelay="100000">
+            Compare
+        </button>
+    </span>
+</ng-template>
+<ng-template #stopRandomSeq>
+    <button mat-button #tooltip="matTooltip" matTooltip="Reset" color="secondary"
+        [disabled]="_topButtons || isPlayingAnimation > 0" (click)='resetStages()' aria-label="
+    Animate Button">
+        <fa-icon icon="undo"></fa-icon>&nbsp;
+    </button>
+    <button mat-button color="secondary" [disabled]="_statusButton" (click)='stopAll()' aria-label="
+    Animate Button">
+        {{ status }}
+    </button>
+</ng-template>
+
+
 <div class="linebreak-light"></div>
+
+
+
+
+
 <app-max-consecutive-ones-stage (isPlayingEvent)="setIsPlaying($event)" [pushZeroButton]="pushZeroButton"
     [pushNegativeButton]="pushNegativeButton" [pushPositiveButton]="pushPositiveButton"
     [pushOnesButton]="pushOnesButton" [pushNaturalNumberButton]="pushNaturalNumberButton" [approach]="approachStage1">
