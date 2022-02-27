@@ -10,7 +10,7 @@ export class MaxOnesApproachTwo extends BasicArray {
     subHeading = 'Approach 2'
     description = 'Sliding Window: O(n) time, O(1) space'
     duration = 300;
-    height = 200;
+    height = 150;
     stepForward = false;
     stepBackward = false;
     totalZeros = 0;

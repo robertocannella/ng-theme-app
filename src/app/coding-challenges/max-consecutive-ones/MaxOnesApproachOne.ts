@@ -11,7 +11,7 @@ export class MaxOnesApproachOne extends BasicArray {
     subHeading = 'Approach 1'
     description = 'Brute Force: O(n<sup>2</sup>) time, O(1) space'
     duration = 300;
-    height = 200;
+    height = 150;
     stepForward = false;
     stepBackward = false;
     totalZeros = 0;

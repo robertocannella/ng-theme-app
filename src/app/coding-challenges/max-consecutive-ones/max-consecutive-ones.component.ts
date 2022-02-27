@@ -68,7 +68,7 @@ export class MaxConsecutiveOnesComponent implements OnInit {
     });
   }
   ngOnDestroy(): void {
-    //this.approachStage1.stopAnimation();
+    this.approachStage1.stopAnimation();
     this.approachStage2.stopAnimation();
     // unsubscribe from breakpoint subscription
   }
