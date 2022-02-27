@@ -139,17 +139,23 @@ export class MaxOnesApproachOne extends BasicArray {
                 this.currentJ = 0;
 
                 for (let right = left; right < len; right++) {
-                    currentRectI.transition().duration(this.duration).attr('fill', 'cornflowerblue')
+                    //currentRectI.transition().duration(this.duration).attr('fill', 'cornflowerblue')
                     let currentRectJ = d3.select(`#rect${right}-${this.dataset[right]}-${this.svgId}`)
                     this.currentJ++;
 
                     if (this.dataset[right] == 0) this.totalZeros++;
 
                     await currentRectJ.transition().duration(this.duration).attr('fill', () => {
-                        return (this.totalZeros < 2) ? 'cornflowerblue' : '#fcba03'; // yellow
+                        if (this.dataset[right] === 1 && this.totalZeros < 2)
+                            return '#79d14d'; // green
+                        if (this.dataset[right] === 0 && this.totalZeros < 2)
+                            return 'cornflowerblue';
+
+                        return '#fcba03'; // yellow
                     }).end()
 
                     if (this.totalZeros <= 1) {
+
                         this.currentConsecutive = right - left + 1;
                         this.longestConsecutive = Math.max(this.longestConsecutive, this.currentConsecutive);
                     }
