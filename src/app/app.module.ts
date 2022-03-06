@@ -34,6 +34,7 @@ import { StageComponent } from './coding-challenges/stage/stage.component';
 import { SortedSquaresStageComponent } from './coding-challenges/sorted-squares/sorted-squares-stage/sorted-squares-stage.component';
 import { MaxConsecutiveOnesComponent } from './coding-challenges/max-consecutive-ones/max-consecutive-ones.component';
 import { MaxConsecutiveOnesStageComponent } from './coding-challenges/max-consecutive-ones/max-consecutive-ones-stage/max-consecutive-ones-stage.component';
+import { DatapipesComponent } from './projects/datapipes/datapipes.component';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import { MaxConsecutiveOnesStageComponent } from './coding-challenges/max-consec
     SortedSquaresStageComponent,
     MaxConsecutiveOnesComponent,
     MaxConsecutiveOnesStageComponent,
+    DatapipesComponent,
   ],
   imports: [
     BrowserModule,

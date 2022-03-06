@@ -5,7 +5,7 @@ import { BasicArray } from '../BasicArray';
 
 export class SSApproachTwo extends BasicArray {
 
-    svgId = 'ApproachTwo';
+    svgId = 'ApproachTwo-sorted-squares';
     d3Sel = `#coding-outlet-${this.svgId}`
     subHeading = 'Approach 2'
     description = 'Two Pointer: O(N log N) time, O(N) or O(logN) space'

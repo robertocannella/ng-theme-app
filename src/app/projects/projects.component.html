@@ -1,41 +1,27 @@
 <div class=container>
-    <span class="sub-header">
-        <div class="t2">Projects</div>
+    <span class="sub-header proj-sub-header">
+        <div class="t2">{{title}}</div>
+        <button mat-button color='secodary' [matMenuTriggerFor]="menu">
+            <fa-icon class='proj-bars' [icon]="['fas','bars']"></fa-icon>&nbsp;
+        </button>
     </span>
+
     <div class="linebreak"></div>
-    <div>
+    <div class='summary'>
+        <div>
+            <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item routerLink="recipe" aria-label="Cocktails App Button">Cocktails App</button>
+                <button mat-menu-item routerLink="datapipes" aria-label="DataPipes Button">DataPipes</button>
+            </mat-menu>
+        </div>
+        <div class="mobile-container" style="display: flex; align-items: center; justify-content: center;">
+            <router-outlet></router-outlet>
+        </div>
 
-
-        <p></p>
-        <h2>Cocktail App</h2>
-
-
-
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Details
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-card>
-                <mat-card-content>
-                    <ul style="list-style: none; text-align: left;">
-                        <li>Inspriation: <a href="https://www.youtube.com/channel/UCeU-1X402kT-JlLdAitxSMA">Florin
-                                Pop</a></li>
-                        <li>API: <a href="https://www.thecocktaildb.com/api.php?ref=public-apis">the CocktailDB</a>
-                        </li>
-                        <li>Date Coded: Feb 2022</li>
-                        <li>Coding Time: 17 hrs</li>
-
-                    </ul>
-                </mat-card-content>
-            </mat-card>
-        </mat-expansion-panel>
-        <br>
-        <app-recipe style="display: flex; align-items: center; justify-content: center;"></app-recipe>
     </div>
-    <br>
-    <div class='linebreak'></div>
+    <div class="linebreak"></div>
+    <h2>Older Projects</h2>
+
     <div>
         <h2>Interactive Bar Chart (Mean Probability Comparison)</h2><br>
         <h3><a href="https://github.com/robertocannella/InteractiveBarChart/blob/master/main.py">code</a></h3>
@@ -66,9 +52,6 @@
         </video>
 
     </div>
-
-
-
     <mat-nav-list>
         <a href="https://o-store-e0c91.web.app" rel="noopener noreferrer" target='blank'>
             <mat-list-item>
@@ -85,6 +68,5 @@
                 WordPress Journal
             </mat-list-item>
         </a>
-
     </mat-nav-list>
 </div>

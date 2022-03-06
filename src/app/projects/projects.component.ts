@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectsComponent implements OnInit {
   public innerWidth: number = 0;
+  title = 'Projects'
   constructor() { }
 
   ngOnInit() {

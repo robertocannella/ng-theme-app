@@ -6,7 +6,7 @@ import { BasicArray } from '../BasicArray';
 
 export class MaxOnesApproachOne extends BasicArray {
 
-    svgId = 'ApproachOne';
+    svgId = 'ApproachOne-max-consecutive-ones-ii';
     d3Sel = `#coding-outlet-${this.svgId}`
     subHeading = 'Approach 1'
     description = 'Brute Force: O(n<sup>2</sup>) time, O(1) space'
@@ -63,6 +63,10 @@ export class MaxOnesApproachOne extends BasicArray {
                         })
                 })
 
+    }
+    override stopAnimation(): void {
+        this.clearSVG();
+        d3.select(this.d3Sel).remove()
     }
 
     override async animate(controlButtons?: boolean): Promise<unknown> {

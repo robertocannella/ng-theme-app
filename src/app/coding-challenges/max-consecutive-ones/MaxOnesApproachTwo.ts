@@ -5,7 +5,7 @@ import { BasicArray } from '../BasicArray';
 
 export class MaxOnesApproachTwo extends BasicArray {
 
-    svgId = 'ApproachTwo';
+    svgId = 'ApproachTwo-max-consecutive-ones-ii';
     d3Sel = `#coding-outlet-${this.svgId}`
     subHeading = 'Approach 2'
     description = 'Sliding Window: O(n) time, O(1) space'
@@ -22,6 +22,10 @@ export class MaxOnesApproachTwo extends BasicArray {
     override pushOne(): void {
         this.dataset.push(1);
         this.update();
+    }
+    override stopAnimation(): void {
+        this.clearSVG();
+        d3.select(this.d3Sel).remove()
     }
     override update(): void {
         d3.select(this.d3Sel).selectAll('*').remove()

@@ -1,6 +1,7 @@
 import UtilityFunctions from "src/app/shared/UtiltiyFunctions";
-
-
+import * as d3 from 'd3';
+import { faDiceD20 } from "@fortawesome/free-solid-svg-icons";
+import { D3Service } from "../d3.service";
 export class BasicArray {
 
     isPlayingAnimation = false;
@@ -48,6 +49,10 @@ export class BasicArray {
         })
     }
     stopAnimation(): void {
+
+        // d3.selectAll('*').remove();
+
+
     }
     // Handle Multiple Play Animations Here
 

@@ -14,6 +14,8 @@ import { DuplicateZerosComponent } from './coding-challenges/duplicate-zeros/dup
 import { CodingChallengesComponent } from './coding-challenges/coding-challenges.component';
 import { SortedSquaresComponent } from './coding-challenges/sorted-squares/sorted-squares.component';
 import { MaxConsecutiveOnesComponent } from './coding-challenges/max-consecutive-ones/max-consecutive-ones.component';
+import { RecipeComponent } from './projects/recipe/recipe.component';
+import { DatapipesComponent } from './projects/datapipes/datapipes.component';
 
 
 const routes: Routes = [
@@ -77,7 +79,21 @@ const routes: Routes = [
   },
   {
     path: 'projects',
-    component: ProjectsComponent
+    component: ProjectsComponent,
+    children: [
+      {
+        path: '',
+        component: DatapipesComponent // DEFAULT
+      },
+      {
+        path: 'recipe',
+        component: RecipeComponent
+      },
+      {
+        path: 'datapipes',
+        component: DatapipesComponent
+      },
+    ]
   },
 
 ];
