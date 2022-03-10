@@ -1,12 +1,9 @@
-import { coerceStringArray } from '@angular/cdk/coercion';
 import { Component, OnInit } from '@angular/core';
-import { async } from '@firebase/util';
-import { sort } from 'd3';
 
 @Component({
   selector: 'app-recipe',
   templateUrl: './recipe.component.html',
-  styleUrls: ['./recipe.component.sass']
+  styleUrls: ['./recipe.component.sass', '../projects.component.sass']
 })
 export class RecipeComponent implements OnInit {
 
