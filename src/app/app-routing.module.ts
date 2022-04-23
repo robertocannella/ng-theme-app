@@ -16,6 +16,8 @@ import { SortedSquaresComponent } from './coding-challenges/sorted-squares/sorte
 import { MaxConsecutiveOnesComponent } from './coding-challenges/max-consecutive-ones/max-consecutive-ones.component';
 import { RecipeComponent } from './projects/recipe/recipe.component';
 import { DatapipesComponent } from './projects/datapipes/datapipes.component';
+import { NinjawongaComponent } from './projects/ninjawonga/ninjawonga.component';
+import { PythonDataComponent } from './projects/python-data/python-data.component';
 
 
 const routes: Routes = [
@@ -83,11 +85,19 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: DatapipesComponent // DEFAULT
+        component: NinjawongaComponent // DEFAULT
+      },
+      {
+        path: 'python-data',
+        component: PythonDataComponent
       },
       {
         path: 'recipe',
         component: RecipeComponent
+      },
+      {
+        path: 'ninja-wonga',
+        component: NinjawongaComponent
       },
       {
         path: 'datapipes',
