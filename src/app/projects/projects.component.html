@@ -1,7 +1,7 @@
 <div class=container>
     <span class="sub-header proj-sub-header">
         <div class="t2">{{title}}</div>
-        <button mat-button color='secodary' [matMenuTriggerFor]="menu">
+        <button mat-button color='secondary' [matMenuTriggerFor]="menu">
             <fa-icon class='proj-bars' [icon]="['fas','bars']"></fa-icon>&nbsp;
         </button>
     </span>
@@ -12,6 +12,9 @@
             <mat-menu #menu="matMenu" xPosition="before">
                 <button mat-menu-item routerLink="recipe" aria-label="Cocktails App Button">Cocktails App</button>
                 <button mat-menu-item routerLink="datapipes" aria-label="DataPipes Button">DataPipes</button>
+                <button mat-menu-item routerLink="ninja-wonga" aria-label="DataPipes Button">Online Tutorial
+                    Projects</button>
+                <button mat-menu-item routerLink="python-data" aria-label="Cocktails App Button">Python Data</button>
             </mat-menu>
         </div>
         <div class="mobile-container" style="display: flex; align-items: center; justify-content: center;">
@@ -19,54 +22,8 @@
         </div>
 
     </div>
-    <div class="linebreak"></div>
-    <h2>Older Projects</h2>
 
-    <div>
-        <h2>Interactive Bar Chart (Mean Probability Comparison)</h2><br>
-        <h3><a href="https://github.com/robertocannella/InteractiveBarChart/blob/master/main.py">code</a></h3>
 
-        <video width="80%" controls>
-            <source src=" ../../assets/movies/mean_comparison.mov" type="video/mp4">
 
-            Your browser does not support the video tag.
-        </video>
-    </div>
-    <div>
-        Normal distribution data plotted against multiple distribution types<br>
 
-        <video width="80%" controls>
-            <source src="../../assets/movies/animated_dist.mov" type="video/mp4">
-
-            Your browser does not support the video tag.
-        </video>
-    </div>
-    <div>
-
-        Normal distribution data plotted against uniform distribution data<br>
-
-        <video width="80%" controls>
-            <source src="../../assets/movies/normal_vs_uniform_dist.mp4" type="video/mp4">
-
-            Your browser does not support the video tag.
-        </video>
-
-    </div>
-    <mat-nav-list>
-        <a href="https://o-store-e0c91.web.app" rel="noopener noreferrer" target='blank'>
-            <mat-list-item>
-                'Code With Mosh' 0-shop <br>(implemented using Angular 12 & Google FireStore)
-            </mat-list-item>
-        </a>
-        <a href="#">
-            <mat-list-item>
-                FireStore Runner App
-            </mat-list-item>
-        </a>
-        <a href="#">
-            <mat-list-item>
-                WordPress Journal
-            </mat-list-item>
-        </a>
-    </mat-nav-list>
 </div>
